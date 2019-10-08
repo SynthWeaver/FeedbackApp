@@ -105,7 +105,7 @@ class HomeScreen extends React.Component {
                 <View style={styles.search}>
                     <TextInput
                         ref="searchBar"
-                        placeholder="Search"
+                        placeholder="Search for apps..."
                         value={this.state.text}
                         onChangeText={text => this.SearchFilterFunction(text)}
 
