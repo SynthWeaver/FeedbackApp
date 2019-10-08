@@ -6,6 +6,9 @@ import DeviceInfo from 'react-native-device-info';
 import Smile50 from './smileform/SmileyForm'
 
 export default class FeedbackScreen extends Component {
+    static navigationOptions = {
+        title: 'Feedback',
+    };
     constructor() {
         super();
         this.state = {

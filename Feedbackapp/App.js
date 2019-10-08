@@ -8,6 +8,9 @@ import _ from 'lodash';
 import FeedbackScreen from './components/FeedbackScreen'
 
 class HomeScreen extends React.Component {
+    static navigationOptions = {
+        title: 'Home',
+    };
     state = {
         text: '',
 
@@ -87,7 +90,7 @@ class HomeScreen extends React.Component {
         return (
 
             <View>
-                <TouchableOpacity activeOpacity={.7} onPress={() => this.props.navigation.navigate('Details', {
+                <TouchableOpacity style={styles.shadow} activeOpacity={.7} onPress={() => this.props.navigation.navigate('Details', {
                     app: item.name
                 })}>
                 <Image style={styles.logoicons} source={{ uri: item.url }} />
@@ -188,11 +191,20 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     logoicons: {
-
         margin: 10,
         height: Dimensions.get('window').width / 3.2,
         width: Dimensions.get('window').width / 2.4,
         borderRadius: 15,
+
+    },
+    shadow: {
+        shadowColor: '#000000',
+        shadowOffset: {
+            width: 0,
+            height: 3
+        },
+        shadowRadius: 5,
+        shadowOpacity: 1.0
     },
     search: {
         marginTop: 0,
