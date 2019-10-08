@@ -1,350 +1,45 @@
 package database;
 
-import com.mysql.cj.jdbc.MysqlDataSource;
-import objects.DateTime;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class DB {
 
-    private MysqlDataSource dataSource = new MysqlDataSource();
-    private Connection conn ;
-    private Statement stmt;
-    ResultSet rs ;
+    public void insert(JSONObject jsonObject){
+        //get old data
+        JSONArray jsonArray = this.selectAll();
 
-    public DB(){
-        dataSource.setURL(
-                "jdbc:mysql://localhost/feedbacks?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
-        );
-        dataSource.setUser("root");
-        dataSource.setPassword("Team24iDB");
-    }
+        //add new data to old data
+        jsonArray.add(jsonObject);
 
-    private void open() throws SQLException {
-        conn = dataSource.getConnection();
-        stmt = conn.createStatement();
-
-        //set a result set or you cant close it later
-        rs = stmt.executeQuery("SELECT * FROM feedback WHERE id=-1");
-        rs.close();
-    }
-
-    private void close() throws SQLException {
-        rs.close();
-        stmt.close();
-        conn.close();
-    }
-
-    public JSONArray selectAll() throws SQLException {
-        open();
-        rs = stmt.executeQuery("SELECT * FROM feedback");
-
-        // Fetch each row from the result set
-        JSONArray jsonArray = new JSONArray();
-        while (rs.next()) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", rs.getInt("id"));
-            jsonObject.put("smiley", rs.getInt("smiley"));
-            jsonObject.put("feedback", rs.getString("feedback"));
-            jsonObject.put("time", rs.getString("time"));
-            jsonObject.put("device", rs.getString("device"));
-            jsonObject.put("os", rs.getString("os"));
-            jsonObject.put("app", rs.getString("app"));
-            jsonObject.put("image", rs.getString("image"));
-
-            jsonArray.add(jsonObject);
+        //write to local data
+        try (FileWriter file = new FileWriter("DB.json")) {
+            file.write(jsonArray.toJSONString());
+            file.flush();
+            System.out.println("Added");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        close();
-        return jsonArray;
     }
 
-    public void insert(JSONObject jsonObject) throws SQLException {
-        open();
+    public JSONArray selectAll(){
+        //JSON parser object to parse read file
+        JSONParser jsonParser = new JSONParser();
 
-        String smiley = jsonObject.get("smiley").toString();
-        String feedback = jsonObject.get("feedback").toString();
-        String time = DateTime.now();
-        String device = jsonObject.get("device").toString();
-        String os = jsonObject.get("os").toString();
-        String app = jsonObject.get("app").toString();
-        String image = jsonObject.get("image").toString();
-
-        String query = String.format("INSERT INTO feedbacks.feedback" +
-                "(smiley,feedback,time,device,os,app,image)" +
-                "VALUES" +
-                "(%s, '%s','%s','%s','%s','%s','%s');",
-                smiley, feedback, time, device, os, app, image
-                );
-
-        stmt.executeUpdate(query);
-        close();
-    }
-
-
-    // Sort by time, old to new
-    public JSONArray timeAsc() throws SQLException {
-        open();
-        rs = stmt.executeQuery("SELECT * FROM feedback ORDER BY time");
-
-        JSONArray jsonArray = new JSONArray();
-        while (rs.next()) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", rs.getInt("id"));
-            jsonObject.put("smiley", rs.getInt("smiley"));
-            jsonObject.put("feedback", rs.getString("feedback"));
-            jsonObject.put("time", rs.getString("time"));
-            jsonObject.put("device", rs.getString("device"));
-            jsonObject.put("os", rs.getString("os"));
-            jsonObject.put("app", rs.getString("app"));
-            jsonObject.put("image", rs.getString("image"));
-
-            jsonArray.add(jsonObject);
+        try (FileReader reader = new FileReader("DB.json"))
+        {
+            //Read JSON file
+            return (JSONArray) jsonParser.parse(reader);
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
         }
-        close();
-        return jsonArray;
+        return null;
     }
-
-    // Sort by time, new to old
-    public JSONArray timeDesc() throws SQLException {
-        open();
-        rs = stmt.executeQuery("SELECT * FROM feedback ORDER BY time DESC");
-
-        // Fetch each row from the result set
-        JSONArray jsonArray = new JSONArray();
-        while (rs.next()) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", rs.getInt("id"));
-            jsonObject.put("smiley", rs.getInt("smiley"));
-            jsonObject.put("feedback", rs.getString("feedback"));
-            jsonObject.put("time", rs.getString("time"));
-            jsonObject.put("device", rs.getString("device"));
-            jsonObject.put("os", rs.getString("os"));
-            jsonObject.put("app", rs.getString("app"));
-            jsonObject.put("image", rs.getString("image"));
-
-            jsonArray.add(jsonObject);
-        }
-        close();
-        return jsonArray;
-    }
-
-    //  Sort by smiley, ascending
-    public JSONArray smileyAsc() throws SQLException {
-        open();
-        rs = stmt.executeQuery("SELECT * FROM feedback ORDER BY smiley");
-
-        // Fetch each row from the result set
-        JSONArray jsonArray = new JSONArray();
-        while (rs.next()) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", rs.getInt("id"));
-            jsonObject.put("smiley", rs.getInt("smiley"));
-            jsonObject.put("feedback", rs.getString("feedback"));
-            jsonObject.put("time", rs.getString("time"));
-            jsonObject.put("device", rs.getString("device"));
-            jsonObject.put("os", rs.getString("os"));
-            jsonObject.put("app", rs.getString("app"));
-            jsonObject.put("image", rs.getString("image"));
-
-            jsonArray.add(jsonObject);
-        }
-        close();
-        return jsonArray;
-    }
-
-    //  Sort by smiley, descending
-    public JSONArray smileyDesc() throws SQLException {
-        open();
-        rs = stmt.executeQuery("SELECT * FROM feedback ORDER BY smiley DESC");
-
-        // Fetch each row from the result set
-        JSONArray jsonArray = new JSONArray();
-        while (rs.next()) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", rs.getInt("id"));
-            jsonObject.put("smiley", rs.getInt("smiley"));
-            jsonObject.put("feedback", rs.getString("feedback"));
-            jsonObject.put("time", rs.getString("time"));
-            jsonObject.put("device", rs.getString("device"));
-            jsonObject.put("os", rs.getString("os"));
-            jsonObject.put("app", rs.getString("app"));
-            jsonObject.put("image", rs.getString("image"));
-
-            jsonArray.add(jsonObject);
-        }
-        close();
-        return jsonArray;
-    }
-
-    //  Sort by smiley, ascending
-    public JSONArray deviceAsc() throws SQLException {
-        open();
-        rs = stmt.executeQuery("SELECT * FROM feedback ORDER BY device");
-
-        // Fetch each row from the result set
-        JSONArray jsonArray = new JSONArray();
-        while (rs.next()) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", rs.getInt("id"));
-            jsonObject.put("smiley", rs.getInt("smiley"));
-            jsonObject.put("feedback", rs.getString("feedback"));
-            jsonObject.put("time", rs.getString("time"));
-            jsonObject.put("device", rs.getString("device"));
-            jsonObject.put("os", rs.getString("os"));
-            jsonObject.put("app", rs.getString("app"));
-            jsonObject.put("image", rs.getString("image"));
-
-            jsonArray.add(jsonObject);
-        }
-        close();
-        return jsonArray;
-    }
-
-    //  Sort by device, descending
-    public JSONArray deviceDesc() throws SQLException {
-        open();
-        rs = stmt.executeQuery("SELECT * FROM feedback ORDER BY device DESC");
-
-        // Fetch each row from the result set
-        JSONArray jsonArray = new JSONArray();
-        while (rs.next()) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", rs.getInt("id"));
-            jsonObject.put("smiley", rs.getInt("smiley"));
-            jsonObject.put("feedback", rs.getString("feedback"));
-            jsonObject.put("time", rs.getString("time"));
-            jsonObject.put("device", rs.getString("device"));
-            jsonObject.put("os", rs.getString("os"));
-            jsonObject.put("app", rs.getString("app"));
-            jsonObject.put("image", rs.getString("image"));
-
-            jsonArray.add(jsonObject);
-        }
-        close();
-        return jsonArray;
-    }
-
-    //  Only smileys "1"
-    public JSONArray smiley1() throws SQLException {
-        open();
-        rs = stmt.executeQuery("SELECT * FROM feedback WHERE smiley = 1");
-
-        JSONArray jsonArray = new JSONArray();
-        while (rs.next()) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", rs.getInt("id"));
-            jsonObject.put("smiley", rs.getInt("smiley"));
-            jsonObject.put("feedback", rs.getString("feedback"));
-            jsonObject.put("time", rs.getString("time"));
-            jsonObject.put("device", rs.getString("device"));
-            jsonObject.put("os", rs.getString("os"));
-            jsonObject.put("app", rs.getString("app"));
-            jsonObject.put("image", rs.getString("image"));
-
-            jsonArray.add(jsonObject);
-        }
-        close();
-        return jsonArray;
-    }
-
-    //  Only smileys "2"
-    public JSONArray smiley2() throws SQLException {
-        open();
-        rs = stmt.executeQuery("SELECT * FROM feedback WHERE smiley = 2");
-
-        JSONArray jsonArray = new JSONArray();
-        while (rs.next()) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", rs.getInt("id"));
-            jsonObject.put("smiley", rs.getInt("smiley"));
-            jsonObject.put("feedback", rs.getString("feedback"));
-            jsonObject.put("time", rs.getString("time"));
-            jsonObject.put("device", rs.getString("device"));
-            jsonObject.put("os", rs.getString("os"));
-            jsonObject.put("app", rs.getString("app"));
-            jsonObject.put("image", rs.getString("image"));
-
-            jsonArray.add(jsonObject);
-        }
-        close();
-        return jsonArray;
-    }
-
-    //  Only smileys "3"
-    public JSONArray smiley3() throws SQLException {
-        open();
-        rs = stmt.executeQuery("SELECT * FROM feedback WHERE smiley = 3");
-
-        JSONArray jsonArray = new JSONArray();
-        while (rs.next()) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", rs.getInt("id"));
-            jsonObject.put("smiley", rs.getInt("smiley"));
-            jsonObject.put("feedback", rs.getString("feedback"));
-            jsonObject.put("time", rs.getString("time"));
-            jsonObject.put("device", rs.getString("device"));
-            jsonObject.put("os", rs.getString("os"));
-            jsonObject.put("app", rs.getString("app"));
-            jsonObject.put("image", rs.getString("image"));
-
-            jsonArray.add(jsonObject);
-        }
-        close();
-        return jsonArray;
-    }
-
-    //  Only smileys "4"
-    public JSONArray smiley4() throws SQLException {
-        open();
-        rs = stmt.executeQuery("SELECT * FROM feedback WHERE smiley = 4");
-
-        JSONArray jsonArray = new JSONArray();
-        while (rs.next()) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", rs.getInt("id"));
-            jsonObject.put("smiley", rs.getInt("smiley"));
-            jsonObject.put("feedback", rs.getString("feedback"));
-            jsonObject.put("time", rs.getString("time"));
-            jsonObject.put("device", rs.getString("device"));
-            jsonObject.put("os", rs.getString("os"));
-            jsonObject.put("app", rs.getString("app"));
-            jsonObject.put("image", rs.getString("image"));
-
-            jsonArray.add(jsonObject);
-        }
-        close();
-        return jsonArray;
-    }
-
-    //  Only smileys "5"
-    public JSONArray smiley5() throws SQLException {
-        open();
-        rs = stmt.executeQuery("SELECT * FROM feedback WHERE smiley = 5");
-
-        JSONArray jsonArray = new JSONArray();
-        while (rs.next()) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", rs.getInt("id"));
-            jsonObject.put("smiley", rs.getInt("smiley"));
-            jsonObject.put("feedback", rs.getString("feedback"));
-            jsonObject.put("time", rs.getString("time"));
-            jsonObject.put("device", rs.getString("device"));
-            jsonObject.put("os", rs.getString("os"));
-            jsonObject.put("app", rs.getString("app"));
-            jsonObject.put("image", rs.getString("image"));
-
-            jsonArray.add(jsonObject);
-        }
-        close();
-        return jsonArray;
-    }
-
-
-
 
 }
