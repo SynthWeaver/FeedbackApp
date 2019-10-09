@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
         color   : 'gray'
     },
     searchSection: {
-        flex: 0.3,
+        flex: 0.5,
         flexDirection: 'column',
         justifyContent: 'space-between',
         borderColor: 'gray',
