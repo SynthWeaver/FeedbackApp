@@ -160,6 +160,7 @@ const styles = StyleSheet.create({
         padding: 5,
         margin: 5,
         width: Dimensions.get('window').width - 50,
+        height: 100
     },
     button: {
         marginBottom: 20,
@@ -185,7 +186,7 @@ const styles = StyleSheet.create({
         color   : 'gray'
     },
     searchSection: {
-        flex: 0.5,
+        flex: 0.3,
         flexDirection: 'column',
         justifyContent: 'space-between',
         borderColor: 'gray',
