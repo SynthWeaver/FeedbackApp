@@ -90,12 +90,13 @@ class HomeScreen extends React.Component {
         return (
 
             <View>
-                <TouchableOpacity style={styles.shadow} activeOpacity={.7} onPress={() => this.props.navigation.navigate('Details', {
-                    app: item.name
-                })}>
-                <Image style={styles.logoicons} source={{ uri: item.url }} />
-                    </TouchableOpacity>
-                </View >
+                <TouchableOpacity style={styles.shadow} activeOpacity={.7}
+                                  onPress={() => this.props.navigation.navigate('Details', {
+                                      app: item.name
+                                  })}>
+                    <Image style={styles.logoicons} source={{uri: item.url}}/>
+                </TouchableOpacity>
+            </View>
            
         );
     }
@@ -114,12 +115,9 @@ class HomeScreen extends React.Component {
 
 
                     />
-                    {/* <TextInput onChangeText={text => this.SearchFilterFunction(text)}
-                        value={this.state.text}
-                        placeholder='Search here...' /> */}
                 </View>
 
-                <View style={{ flex: 3 }}>
+                <View style={{flex: 3}}>
                     <FlatList
                         numColumns={2}
                         horizontal={false}
@@ -127,10 +125,10 @@ class HomeScreen extends React.Component {
                         data={this.state.dataSource}
                         renderItem={this.renderItem}
 
-                        style={{ backgroundColor: '#ecf0f1' }} />
+                        style={{backgroundColor: '#ecf0f1'}}/>
                 </View>
 
-                
+
             </View>
         );
     }
