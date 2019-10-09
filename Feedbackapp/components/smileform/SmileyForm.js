@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         textAlign: 'center',
         margin: 20,
+        marginTop: 0
     },
     rating: {
         textAlign: 'center',

@@ -97,14 +97,13 @@ export default class FeedbackScreen extends Component {
         var appText = this.state.appName;
         return (
                     <View style={styles.container}>
-                        <View>
+                        <View >
                             <Text style={styles.modalHeader}>Give us your thoughts about {appText}!</Text>
-
-                            <TextInput style={styles.txtInput}
+                                <TextInput style={styles.txtInput}
                                        numberOfLines = {4}
                                        multiline={true} onChangeText={(text) => this.setState({text})}
                                        value={this.state.text} blurOnSubmit={true}/>
-                            <TouchableHighlight style={[styles.button, {backgroundColor: 'orange'}]}
+                            <TouchableHighlight style={[styles.button, {marginBottom: 0}, {backgroundColor: 'orange'}]}
                                                 onPress={this.imagePickerHandler}
                                                 underlayColor="#74b9ff">
                                 <Text style={styles.btnText}>Choose Photo</Text>
@@ -116,7 +115,7 @@ export default class FeedbackScreen extends Component {
                                                 underlayColor="#74b9ff">
                                 <Text style={styles.btnText}>Submit!</Text>
                             </TouchableHighlight>
-                        </View>
+                        </View >
                     </View>
         );
     }

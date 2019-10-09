@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, Button, StyleSheet, TouchableHighlight, Image, Dimensions, FlatList, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, Button, StyleSheet, KeyboardAvoidingView , Image, Dimensions, FlatList, TouchableOpacity, TextInput } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import _ from 'lodash';
