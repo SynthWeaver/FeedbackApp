@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Text, TouchableHighlight, View, Alert, TextInput, StyleSheet, Dimensions, Image, Platform} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome'
 import ImagePicker from 'react-native-image-picker';
 import DeviceInfo from 'react-native-device-info';
 
@@ -8,6 +9,7 @@ import Smile50 from './smileform/SmileyForm'
 export default class FeedbackScreen extends Component {
     static navigationOptions = {
         title: 'Feedback',
+
     };
     constructor() {
         super();
@@ -35,9 +37,19 @@ export default class FeedbackScreen extends Component {
 
 
     submit() {
+        const createFormData = (photo) => {
+            const data = new FormData();
+
+            data.append("photo", {
+                name: photo.fileName,
+                type: photo.type,
+                uri:
+                    Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
+            });
+
+            return data;
+        };
         if (this.state.text) {
-            console.log(4);
-            
             DeviceInfo.getDeviceName().then(deviceName => {
                 this.setState({
                      deviceInfo: deviceName,
@@ -49,7 +61,7 @@ export default class FeedbackScreen extends Component {
                         appName: this.state.appName,
                         feedback: this.state.text,
                         smiley: this.state.smile,
-                        image: this.state.image,
+                        image: createFormData(this.state.image),
                         deviceInfo: this.state.deviceInfo,
                         deviceOs: this.state.deviceOs
                     })
@@ -95,21 +107,27 @@ export default class FeedbackScreen extends Component {
 
     render() {
         var appText = this.state.appName;
+        const imageText = <Icon style={styles.imageIcon} name="paperclip" size={25}/>
+        const noImageText = <Text></Text>;
         return (
                     <View style={styles.container}>
                         <View>
                             <Text style={styles.modalHeader}>Give us your thoughts about {appText}!</Text>
 
-                            <TextInput style={styles.txtInput}
-                                       numberOfLines = {4}
-                                       multiline={true} onChangeText={(text) => this.setState({text})}
-                                       value={this.state.text} blurOnSubmit={true}/>
+                            <View style={styles.searchSection}>
+                                <TextInput style={styles.txtInput}
+                                           numberOfLines = {4}
+                                           multiline={true} onChangeText={(text) => this.setState({text})}
+                                           value={this.state.text} blurOnSubmit={true}
+                                />
+                                {this.state.image ? imageText : noImageText}
+                            </View>
+
                             <TouchableHighlight style={[styles.button, {backgroundColor: 'orange'}]}
                                                 onPress={this.imagePickerHandler}
                                                 underlayColor="#74b9ff">
                                 <Text style={styles.btnText}>Choose Photo</Text>
                             </TouchableHighlight>
-                            <Image source={this.state.image} style={styles.image}/>
                             <Smile50  onNewSmiley={this.newSmiley}/>
                             <TouchableHighlight style={[styles.button, {backgroundColor: '#0984e3'}]}
                                                 onPress={this.submit}
@@ -139,14 +157,9 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     txtInput: {
-        borderColor: 'gray',
-        borderWidth: 1,
-        alignSelf: 'center',
-        borderRadius: 10,
         padding: 5,
         margin: 5,
         width: Dimensions.get('window').width - 50,
-        height: 70
     },
     button: {
         marginBottom: 20,
@@ -165,6 +178,24 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: 70,
         height: 70
-    }
+    },
+    imageIcon: {
+        padding: 10,
+        alignSelf: 'flex-start',
+        color   : 'gray'
+    },
+    searchSection: {
+        flex: 0.5,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        borderColor: 'gray',
+        borderWidth: 1,
+        borderRadius: 10,
+        backgroundColor: '#fff',
+        padding: 5,
+        margin: 20,
+        height: 40
+
+    },
 })
 
