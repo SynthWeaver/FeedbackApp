@@ -61,7 +61,7 @@ export default class FeedbackScreen extends Component {
                         app: this.state.appName,
                         feedback: this.state.text,
                         smiley: this.state.smile,
-                        image: createFormData(this.state.image),
+                        image: this.state.image,
                         device: this.state.deviceInfo,
                         deviceOs: this.state.deviceOs
                     })
@@ -108,7 +108,7 @@ export default class FeedbackScreen extends Component {
     render() {
         var appText = this.state.appName;
         const imageText = <Icon style={styles.imageIcon} name="paperclip" size={25}/>
-        const noImageText = <Text>No image</Text>;
+        const noImageText = <Text></Text>;
         return (
                     <View style={styles.container}>
                         <View>
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
         padding: 5,
         margin: 5,
         width: Dimensions.get('window').width - 50,
-        height: 1020
+        height: 110
     },
     button: {
         marginBottom: 20,
