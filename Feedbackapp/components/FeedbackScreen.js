@@ -58,11 +58,11 @@ export default class FeedbackScreen extends Component {
                 fetch('https://feedbackapp-40461.firebaseio.com/feedback.json', {
                     method: 'POST',
                     body: JSON.stringify({
-                        appName: this.state.appName,
+                        app: this.state.appName,
                         feedback: this.state.text,
                         smiley: this.state.smile,
                         image: createFormData(this.state.image),
-                        deviceInfo: this.state.deviceInfo,
+                        device: this.state.deviceInfo,
                         deviceOs: this.state.deviceOs
                     })
                 })
@@ -108,11 +108,11 @@ export default class FeedbackScreen extends Component {
     render() {
         var appText = this.state.appName;
         const imageText = <Icon style={styles.imageIcon} name="paperclip" size={25}/>
-        const noImageText = <Text></Text>;
+        const noImageText = <Text>No image</Text>;
         return (
                     <View style={styles.container}>
                         <View>
-                            <Text style={styles.modalHeader}>Give us your thoughts about {appText}!</Text>
+                            <Text style={styles.modalHeader}>Give us your thoughts about {"\n"} {appText}!</Text>
 
                             <View style={styles.searchSection}>
                                 <TextInput style={styles.txtInput}
@@ -143,6 +143,7 @@ export default class FeedbackScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#ecf0f1',
         flexDirection: 'row',
         justifyContent: 'center',
     },
@@ -152,15 +153,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     modalHeader: {
-        fontSize: 30,
-        marginBottom: 20,
+        fontSize: 27,
+        marginBottom: 10,
         textAlign: 'center'
     },
     txtInput: {
         padding: 5,
         margin: 5,
         width: Dimensions.get('window').width - 50,
-        height: 100
+        height: 1020
     },
     button: {
         marginBottom: 20,

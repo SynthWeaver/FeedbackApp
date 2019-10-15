@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { View, Text, Button, StyleSheet, TouchableHighlight, Image, Dimensions, FlatList, TouchableOpacity, TextInput } from 'react-native';
+import { SearchBar } from 'react-native-elements'
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import _ from 'lodash';
@@ -107,9 +108,8 @@ class HomeScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <View style={styles.search}>
-                    <TextInput
-                        ref="searchBar"
-                        placeholder="Search for apps..."
+                    <SearchBar
+                        placeholder="Search for app..."
                         value={this.state.text}
                         onChangeText={text => this.SearchFilterFunction(text)}
 
