@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Text, TouchableHighlight, View, Alert, TextInput, StyleSheet, Dimensions, Image, Platform} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'
+import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons'
 import ImagePicker from 'react-native-image-picker';
 import DeviceInfo from 'react-native-device-info';
 
@@ -106,12 +106,14 @@ export default class FeedbackScreen extends Component {
     }
 
     render() {
+        
         var appText = this.state.appName;
-        const imageText = <Icon style={styles.imageIcon} name="paperclip" size={25}/>
-        const noImageText = <Text></Text>;
+        const imageText = <SimpleIcon style={styles.imageIcon} name='check' type='entypo'/>
+        const noImageText = <Text>j</Text>;
+        
         return (
                     <View style={styles.container}>
-                        <View >
+                        <View>
                             <Text style={styles.modalHeader}>Give us your thoughts about {appText}!</Text>
 
                             <View style={styles.searchSection}>
@@ -120,7 +122,7 @@ export default class FeedbackScreen extends Component {
                                            multiline={true} onChangeText={(text) => this.setState({text})}
                                            value={this.state.text} blurOnSubmit={true}
                                 />
-                                {this.state.image ? imageText : noImageText}
+                                {imageText}
                             </View>
 
                             <TouchableHighlight style={[styles.button, {backgroundColor: 'orange'}]}
@@ -186,7 +188,7 @@ const styles = StyleSheet.create({
         color   : 'gray'
     },
     searchSection: {
-        flex: 0.3,
+        flex: 0.5,
         flexDirection: 'column',
         justifyContent: 'space-between',
         borderColor: 'gray',
