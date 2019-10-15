@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Platform, Text, TouchableHighlight, View, Alert, TextInput, StyleSheet, Dimensions, Image, Platform } from 'react-native';
+import { Platform, Text, TouchableHighlight, View, Alert, TextInput, StyleSheet, Dimensions, Image } from 'react-native';
 import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons'
 import ImagePicker from 'react-native-image-picker';
 import DeviceInfo from 'react-native-device-info';
 
-
-import Smile50 from './smileform/SmileyForm'
+import SmilePopup from './smileform/SmilePopup'
 
 export default class FeedbackScreen extends Component {
     static navigationOptions = {
@@ -150,7 +149,7 @@ export default class FeedbackScreen extends Component {
                         underlayColor="#74b9ff">
                         <Text style={styles.btnText}>Choose Photo</Text>
                     </TouchableHighlight>
-                    <Smile50 onNewSmiley={this.newSmiley} />
+                    <SmilePopup style={styles.smilePopup}></SmilePopup>
                     <TouchableHighlight style={[styles.button, { backgroundColor: '#0984e3' }]}
                         onPress={this.submit}
                         underlayColor="#74b9ff">
@@ -219,6 +218,8 @@ const styles = StyleSheet.create({
         
         
 
+    },smilePopup: {
+        
     },
 })
 
