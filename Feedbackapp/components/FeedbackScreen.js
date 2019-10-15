@@ -40,6 +40,7 @@ export default class FeedbackScreen extends Component {
 
     submit() {
         const createFormData = (photo) => {
+            if (!photo) return ''
             const data = new FormData();
 
             data.append("photo", {
@@ -57,7 +58,7 @@ export default class FeedbackScreen extends Component {
                      deviceInfo: deviceName,
                      deviceOs: Platform.OS
                 });
-                fetch('https://feedbackapp-40461.firebaseio.com/feedback.json', {
+                fetch('http://9e9aada3.ngrok.io/post', {
                     method: 'POST',
                     body: JSON.stringify({
                         app: this.state.appName,
