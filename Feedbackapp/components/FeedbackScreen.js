@@ -1,8 +1,9 @@
-import React, {Component} from 'react';
-import {Text, TouchableHighlight, View, Alert, TextInput, StyleSheet, Dimensions, Image, Platform} from 'react-native';
+import React, { Component } from 'react';
+import { Platform, Text, TouchableHighlight, View, Alert, TextInput, StyleSheet, Dimensions, Image, Platform } from 'react-native';
 import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons'
 import ImagePicker from 'react-native-image-picker';
 import DeviceInfo from 'react-native-device-info';
+
 
 import Smile50 from './smileform/SmileyForm'
 
@@ -29,7 +30,7 @@ export default class FeedbackScreen extends Component {
     }
 
     componentDidMount() {
-        const {navigation} = this.props;
+        const { navigation } = this.props;
         const appName = navigation.getParam('app', 'default-value');
         this.setState({ appName: appName })
     }
@@ -52,23 +53,35 @@ export default class FeedbackScreen extends Component {
         if (this.state.text) {
             DeviceInfo.getDeviceName().then(deviceName => {
                 this.setState({
-                     deviceInfo: deviceName,
-                     deviceOs: Platform.OS
+                    deviceInfo: deviceName,
+                    deviceOs: Platform.OS
                 });
-                fetch('https://feedbackapp-40461.firebaseio.com/feedback.json', {
+                // fetch('https://feedbackapp-40461.firebaseio.com/feedback.json', {
+                //     method: 'POST',
+                //     body: JSON.stringify({
+                //         appName: this.state.appName,
+                //         feedback: this.state.text,
+                //         smiley: this.state.smile,
+                //         image: createFormData(this.state.image),
+                //         deviceInfo: this.state.deviceInfo,
+                //         deviceOs: this.state.deviceOs
+
+                fetch('http://9e9aada3.ngrok.io/post', {
                     method: 'POST',
                     body: JSON.stringify({
-                        appName: this.state.appName,
                         feedback: this.state.text,
-                        smiley: this.state.smile,
+                        app: this.state.appName,
                         image: createFormData(this.state.image),
-                        deviceInfo: this.state.deviceInfo,
-                        deviceOs: this.state.deviceOs
+                        smiley: this.state.smile,
+                        device: this.state.deviceInfo,
+                        os: this.state.deviceOs,
+                        category: "positivefeedback",
+
                     })
                 })
                     .then(res => console.log(res))
                     .catch(err => console.log(err));
-                this.setState({text: ''});
+                this.setState({ text: '' });
                 this.props.navigation.navigate('Home')
             })
         } else {
@@ -92,7 +105,7 @@ export default class FeedbackScreen extends Component {
             } else if (response.error) {
                 console.log('ImagePicker Error: ', response.error);
             } else {
-                const source = {uri: response.uri};
+                const source = { uri: response.uri };
 
                 this.setState({
                     image: source
@@ -102,42 +115,49 @@ export default class FeedbackScreen extends Component {
     }
 
     newSmiley(value) {
-        this.setState({smile: value})
+        this.setState({ smile: value })
     }
 
     render() {
-        
+
         var appText = this.state.appName;
-        const imageText = <SimpleIcon style={styles.imageIcon} name='check' type='entypo'/>
-        const noImageText = <Text>j</Text>;
-        
+        const imageText = <SimpleIcon style={styles.imageIcon} name='check' type='entypo' />
+
+
         return (
-                    <View style={styles.container}>
-                        <View>
-                            <Text style={styles.modalHeader}>Give us your thoughts about {appText}!</Text>
+            <View style={styles.container}>
+                <View>
 
-                            <View style={styles.searchSection}>
-                                <TextInput style={styles.txtInput}
-                                           numberOfLines = {4}
-                                           multiline={true} onChangeText={(text) => this.setState({text})}
-                                           value={this.state.text} blurOnSubmit={true}
-                                />
-                                {imageText}
-                            </View>
+                    <Text style={styles.modalHeader}>Give us your thoughts about {appText}!</Text>
 
-                            <TouchableHighlight style={[styles.button, {backgroundColor: 'orange'}]}
-                                                onPress={this.imagePickerHandler}
-                                                underlayColor="#74b9ff">
-                                <Text style={styles.btnText}>Choose Photo</Text>
-                            </TouchableHighlight>
-                            <Smile50  onNewSmiley={this.newSmiley}/>
-                            <TouchableHighlight style={[styles.button, {backgroundColor: '#0984e3'}]}
-                                                onPress={this.submit}
-                                                underlayColor="#74b9ff">
-                                <Text style={styles.btnText}>Submit!</Text>
-                            </TouchableHighlight>
-                        </View >
+                    <View style={styles.searchSection}>
+
+                        <TextInput style={styles.txtInput}
+                            numberOfLines={4}
+                            multiline={true} onChangeText={(text) => this.setState({ text })}
+                            value={this.state.text} blurOnSubmit={true}
+                        />
+                      
+                        <View style = {{paddingTop: 110}}>
+                            {imageText}
+                        </View>
+
+
                     </View>
+
+                    <TouchableHighlight style={[styles.button, { backgroundColor: 'orange' }]}
+                        onPress={this.imagePickerHandler}
+                        underlayColor="#74b9ff">
+                        <Text style={styles.btnText}>Choose Photo</Text>
+                    </TouchableHighlight>
+                    <Smile50 onNewSmiley={this.newSmiley} />
+                    <TouchableHighlight style={[styles.button, { backgroundColor: '#0984e3' }]}
+                        onPress={this.submit}
+                        underlayColor="#74b9ff">
+                        <Text style={styles.btnText}>Submit!</Text>
+                    </TouchableHighlight>
+                </View >
+            </View>
         );
     }
 }
@@ -183,21 +203,21 @@ const styles = StyleSheet.create({
         height: 70
     },
     imageIcon: {
-        padding: 10,
-        alignSelf: 'flex-start',
-        color   : 'gray'
+        color: 'gray'
     },
     searchSection: {
+
         flex: 0.5,
-        flexDirection: 'column',
+        flexDirection: 'row',
         justifyContent: 'space-between',
         borderColor: 'gray',
         borderWidth: 1,
         borderRadius: 10,
         backgroundColor: '#fff',
         padding: 5,
-        margin: 20,
-        height: 40
+        margin: 10,
+        
+        
 
     },
 })
