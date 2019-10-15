@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {Text, TouchableHighlight, View, Alert, TextInput, StyleSheet, Dimensions, Image, Platform} from 'react-native';
+import {Text, TouchableHighlight, View, Alert, TextInput, StyleSheet, Dimensions, Image, Platform, Picker} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import ImagePicker from 'react-native-image-picker';
 import DeviceInfo from 'react-native-device-info';
+import RNPickerSelect from 'react-native-picker-select';
 
 import Smile50 from './smileform/SmileyForm'
 
@@ -20,7 +21,8 @@ export default class FeedbackScreen extends Component {
             image: '',
             deviceInfo: '',
             deviceOs: '',
-            appName: ''
+            appName: '',
+            feedbackType: 'Feedback'
         };
         this.submit = this.submit.bind(this);
         this.newSmiley = this.newSmiley.bind(this);
@@ -61,9 +63,10 @@ export default class FeedbackScreen extends Component {
                         app: this.state.appName,
                         feedback: this.state.text,
                         smiley: this.state.smile,
-                        image: this.state.image,
+                        image: createFormData(this.state.image),
                         device: this.state.deviceInfo,
-                        deviceOs: this.state.deviceOs
+                        os: this.state.deviceOs,
+                        category: this.state.feedbackType
                     })
                 })
                     .then(res => console.log(res))
@@ -106,6 +109,11 @@ export default class FeedbackScreen extends Component {
     }
 
     render() {
+        const placeholder = {
+            label: 'Select the type of feedback...',
+            value: null,
+            color: '#9EA0A4',
+        };
         var appText = this.state.appName;
         const imageText = <Icon style={styles.imageIcon} name="paperclip" size={25}/>
         const noImageText = <Text></Text>;
@@ -113,9 +121,23 @@ export default class FeedbackScreen extends Component {
                     <View style={styles.container}>
                         <View>
                             <Text style={styles.modalHeader}>Give us your thoughts about {"\n"} {appText}!</Text>
-
+                            <TouchableHighlight style={[styles.picker, {backgroundColor: 'white'}]}>
+                                <RNPickerSelect
+                                    placeholder={placeholder}
+                                    onValueChange={(value) => this.setState({feedbackType: value})}
+                                    items={[
+                                        { label: 'Feedback', value: 'Feedback' },
+                                        { label: 'Bug report', value: 'Bug report' },
+                                        { label: 'Form', value: 'Form' },
+                                    ]}
+                                    Icon={() => {
+                                        return <Icon name="arrow-down" size={17} color="gray"/>
+                                    }}
+                                />
+                            </TouchableHighlight>
                             <View style={styles.searchSection}>
                                 <TextInput style={styles.txtInput}
+                                           placeholder="Your thoughts..."
                                            numberOfLines = {4}
                                            multiline={true} onChangeText={(text) => this.setState({text})}
                                            value={this.state.text} blurOnSubmit={true}
@@ -199,5 +221,13 @@ const styles = StyleSheet.create({
         height: 40
 
     },
+    picker: {
+        padding: 10,
+        marginLeft: 20,
+        marginRight: 20,
+        borderWidth: 1,
+        borderRadius: 10,
+        borderColor: 'gray'
+    }
 })
 
