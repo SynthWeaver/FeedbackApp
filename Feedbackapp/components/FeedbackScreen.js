@@ -125,21 +125,30 @@ export default class FeedbackScreen extends Component {
 
 
         return (
-            <View style={styles.container}>
-                <View>
+                    <View style={styles.container}>
+                        <View>
+                            <Text style={styles.modalHeader}>Give us your thoughts about {"\n"} {appText}!</Text>
 
-                    <Text style={styles.modalHeader}>Give us your thoughts about {appText}!</Text>
+                            <View style={styles.searchSection}>
+                                <TextInput style={styles.txtInput}
+                                           numberOfLines = {4}
+                                           multiline={true} onChangeText={(text) => this.setState({text})}
+                                           value={this.state.text} blurOnSubmit={true}
+                                />
+                                {this.state.image ? imageText : noImageText}
+                            </View>
 
-                    <View style={styles.searchSection}>
-
-                        <TextInput style={styles.txtInput}
-                            numberOfLines={4}
-                            multiline={true} onChangeText={(text) => this.setState({ text })}
-                            value={this.state.text} blurOnSubmit={true}
-                        />
-                      
-                        <View style = {{paddingTop: 110}}>
-                            {imageText}
+                            <TouchableHighlight style={[styles.button, {backgroundColor: 'orange'}]}
+                                                onPress={this.imagePickerHandler}
+                                                underlayColor="#74b9ff">
+                                <Text style={styles.btnText}>Choose Photo</Text>
+                            </TouchableHighlight>
+                            <Smile50  onNewSmiley={this.newSmiley}/>
+                            <TouchableHighlight style={[styles.button, {backgroundColor: '#0984e3'}]}
+                                                onPress={this.submit}
+                                                underlayColor="#74b9ff">
+                                <Text style={styles.btnText}>Submit!</Text>
+                            </TouchableHighlight>
                         </View>
 
 
@@ -165,6 +174,7 @@ export default class FeedbackScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#ecf0f1',
         flexDirection: 'row',
         justifyContent: 'center',
     },
@@ -174,15 +184,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     modalHeader: {
-        fontSize: 30,
-        marginBottom: 20,
+        fontSize: 27,
+        marginBottom: 10,
         textAlign: 'center'
     },
     txtInput: {
         padding: 5,
         margin: 5,
         width: Dimensions.get('window').width - 50,
-        height: 100
+        height: 110
     },
     button: {
         marginBottom: 20,
@@ -206,9 +216,8 @@ const styles = StyleSheet.create({
         color: 'gray'
     },
     searchSection: {
-
         flex: 0.5,
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'space-between',
         borderColor: 'gray',
         borderWidth: 1,
@@ -216,9 +225,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         padding: 5,
         margin: 10,
-        
-        
+
+
 
     },
 })
-
