@@ -110,6 +110,7 @@ class HomeScreen extends React.Component {
             <View style={styles.container}>
                 <View style={styles.search}>
                     <SearchBar
+                        lightTheme={true}
                         placeholder="Search for app..."
                         value={this.state.text}
                         onChangeText={text => this.SearchFilterFunction(text)}
