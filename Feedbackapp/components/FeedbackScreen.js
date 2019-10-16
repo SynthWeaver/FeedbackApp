@@ -53,9 +53,9 @@ export default class FeedbackScreen extends Component {
             return data;
         };
         if (this.state.text) {
-            DeviceInfo.getDeviceName().then(deviceName => {
+            DeviceInfo.getModel().then(deviceModel => {
                 this.setState({
-                     deviceInfo: deviceName,
+                     deviceInfo: deviceModel,
                      deviceOs: Platform.OS
                 });
                 fetch('http://9e9aada3.ngrok.io/post', {
