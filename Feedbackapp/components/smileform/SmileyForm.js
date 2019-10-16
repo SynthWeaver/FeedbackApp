@@ -11,6 +11,8 @@ import Svg,{
     Path
 } from 'react-native-svg';
 import PropTypes from 'prop-types';
+import Smiley from './Smiley';
+
 const size = 75;
 const size75 = size*100/185;
 const size50 = size*75/125;
@@ -50,31 +52,13 @@ export default class Smile50 extends Component {
         this.props.onNewSmiley(value)
     }
     render() {
-        const val = this.state.smile;
-        const dVal = "M6 10 Q19 "+val+" 32 10";
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>
                     How do you feel about the App?
                 </Text>
 
-                <ImageBackground
-                    style={{width: size, height: size}}
-                    source={require('../../facenomouth.png')}
-                >
-                    <Svg
-                        height={size75}
-                        width={size75}
-                        style={{alignSelf: "center", marginTop: size50}}
-                    >
-                        <Path
-                            d={dVal}
-                            fill="none"
-                            stroke="red"
-                            strokeWidth="3"
-                        />
-                    </Svg>
-                </ImageBackground>
+                <Smiley userInput={this.state.smile}></Smiley>
                 <Text style={styles.rating}>
                     { parseInt(multiLine(this.state.val)) }
                 </Text>
