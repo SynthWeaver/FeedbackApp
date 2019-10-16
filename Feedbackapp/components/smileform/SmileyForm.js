@@ -13,9 +13,6 @@ import Svg,{
 import PropTypes from 'prop-types';
 import Smiley from './Smiley';
 
-const size = 75;
-const size75 = size*100/185;
-const size50 = size*75/125;
 import * as scale from 'd3-scale';
 const d3 = {
     scale
