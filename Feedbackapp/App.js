@@ -1,17 +1,95 @@
 import * as React from 'react';
-import { View, StyleSheet, Image, Dimensions, FlatList, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, Image, Dimensions, FlatList, TouchableOpacity } from 'react-native';
 import { SearchBar } from 'react-native-elements'
+import { AnimatedBackgroundColorView } from 'react-native-animated-background-color-view';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import _ from 'lodash';
 
-
+import Login from './components/Login'
 import FeedbackScreen from './components/FeedbackScreen'
 
+let randomHex = () => {
+    let letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+class DefaultPage extends React.Component {
+    state = {
+        backgroundColor: '#00aced'
+    }
+    static navigationOptions = {
+        title: 'Home',
+    };
+
+
+    render() {
+        setTimeout(() => {
+            this.setState({
+                backgroundColor: randomHex()
+            })
+        }, 5000)
+        return (
+            <AnimatedBackgroundColorView color={this.state.backgroundColor}
+                                         style={defaultStyles.container}
+                                         duration={5000} delay={500}>
+                <View style={defaultStyles.btnContainer}>
+                    <Text style={defaultStyles.header}>Are you a guest or an admin?</Text>
+                    <TouchableOpacity style={[defaultStyles.button, {backgroundColor: '#74b9ff'}]} onPress={() => this.props.navigation.navigate('Home')}>
+                        <Text style={defaultStyles.btnText}>Guest</Text>
+                    </TouchableOpacity><TouchableOpacity style={[defaultStyles.button, {backgroundColor: '#74b9ff'}]} onPress={() => this.props.navigation.navigate('Login')}>
+                        <Text style={defaultStyles.btnText}>Admin</Text>
+                    </TouchableOpacity>
+                </View>
+            </AnimatedBackgroundColorView>
+        )
+    }
+}
+
+const defaultStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+    },
+    btnContainer: {
+        flex: 0.3,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        margin: 15,
+        borderRadius: 15,
+        backgroundColor: '#636e72'
+    },
+    button: {
+        padding: 10,
+        margin: 5,
+        alignSelf: 'center',
+        width: Dimensions.get('window').width - 50,
+        height: 65,
+        borderRadius: 10,
+    },
+    btnText: {
+        padding: 5,
+        textAlign: 'center',
+        alignSelf: 'center',
+        fontSize: 25,
+        color: 'white'
+    },
+    header: {
+        fontSize: 25,
+        color: 'white',
+        margin: 10,
+        alignSelf: 'center'
+    }
+})
 
 class HomeScreen extends React.Component {
     static navigationOptions = {
-        title: 'Home',
+        title: 'Apps',
     };
     state = {
         text: '',
@@ -139,11 +217,13 @@ class HomeScreen extends React.Component {
 
 const AppNavigator = createStackNavigator(
     {
+        Launch: DefaultPage,
         Home: HomeScreen,
+        Login: Login,
         Details: FeedbackScreen,
     },
     {
-        initialRouteName: 'Home',
+        initialRouteName: 'Launch',
     }
 );
 
