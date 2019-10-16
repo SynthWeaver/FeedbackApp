@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, Button, StyleSheet, TouchableHighlight, Image, Dimensions, FlatList, TouchableOpacity, TextInput } from 'react-native';
+import { View, StyleSheet, Image, Dimensions, FlatList, TouchableOpacity } from 'react-native';
 import { SearchBar } from 'react-native-elements'
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -7,6 +7,7 @@ import _ from 'lodash';
 
 
 import FeedbackScreen from './components/FeedbackScreen'
+
 
 class HomeScreen extends React.Component {
     static navigationOptions = {
