@@ -54,11 +54,7 @@ export default class Smile50 extends Component {
                 <Text style={styles.title}>
                     How do you feel about the App?
                 </Text>
-
                 <Smiley userInput={this.state.smile}></Smiley>
-                <Text style={styles.rating}>
-                    { parseInt(multiLine(this.state.val)) }
-                </Text>
                 <Slider
                     style={{ width: 200, transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] }}
                     step={1}
