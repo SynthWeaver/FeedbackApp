@@ -71,8 +71,23 @@ class HomeScreen extends React.Component {
             },
             {
                 id: 7,
-                name: '',
-                url: '',
+                name: 'Blim ',
+                url: 'https://vignette.wikia.nocookie.net/logopedia/images/1/1a/Blim_logo.jpg/revision/latest?cb=20161106231057',
+            },
+            {
+                id: 8,
+                name: 'Globo Play',
+                url: 'https://www.tvaddons.co/wp-content/uploads/2019/09/plugin.video_.brplay-fanart.jpg',
+            },
+            {
+                id: 9,
+                name: 'Kijk',
+                url: 'https://www.shownieuws.nl/wp-content/uploads/sites/2/2015/04/kijk-1000x562.png',
+            },
+            {
+                id: 10,
+                name: 'Nubeox',
+                url: 'https://www.antena3.com/clipping/2012/04/26/00069/30.jpg',
             }
         ]
         this.setState(
@@ -115,7 +130,7 @@ class HomeScreen extends React.Component {
 
                     />
                 </View>
-
+             
                 <View style={{flex: 3}}>
                     <FlatList
                         numColumns={2}
@@ -126,6 +141,7 @@ class HomeScreen extends React.Component {
 
                         style={{ backgroundColor: '#ecf0f1' }} />
                 </View>
+                <Text></Text>
 
 
             </View>
@@ -192,7 +208,7 @@ const styles = StyleSheet.create({
         height: Dimensions.get('window').width / 3.2,
         width: Dimensions.get('window').width / 2.4,
         borderRadius: 15,
-
+      
     },
     shadow: {
         shadowColor: '#000000',

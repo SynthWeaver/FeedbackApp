@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Platform, Text, TouchableHighlight, View, Alert, TextInput, StyleSheet, Dimensions, Image, Platform } from 'react-native';
+import { Platform, Text, TouchableHighlight, View, Alert, TextInput, StyleSheet, Dimensions, Image } from 'react-native';
 import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons'
 import ImagePicker from 'react-native-image-picker';
 import DeviceInfo from 'react-native-device-info';
-
+import { ToastAndroid } from "react-native"
 
 import Smile50 from './smileform/SmileyForm'
 
@@ -35,7 +35,16 @@ export default class FeedbackScreen extends Component {
         this.setState({ appName: appName })
     }
 
-
+    showToast = () => {
+        ToastAndroid.showWithGravityAndOffset(
+          "Your feedback has been sent!",
+          ToastAndroid.LONG,
+          ToastAndroid.BOTTOM,
+          25,
+          50
+        );
+      };
+    
 
     submit() {
         const createFormData = (photo) => {
@@ -75,7 +84,7 @@ export default class FeedbackScreen extends Component {
                         smiley: this.state.smile,
                         device: this.state.deviceInfo,
                         os: this.state.deviceOs,
-                        category: "positivefeedback",
+                        category: 'Feedback'
 
                     })
                 })
@@ -83,6 +92,7 @@ export default class FeedbackScreen extends Component {
                     .catch(err => console.log(err));
                 this.setState({ text: '' });
                 this.props.navigation.navigate('Home')
+                this.showToast()
             })
         } else {
             Alert.alert("Please fill in the textfield")
@@ -122,20 +132,22 @@ export default class FeedbackScreen extends Component {
 
         var appText = this.state.appName;
         const imageText = <SimpleIcon style={styles.imageIcon} name='check' type='entypo' />
-
+        const noImageText = <Text></Text>;
 
         return (
                     <View style={styles.container}>
                         <View>
                             <Text style={styles.modalHeader}>Give us your thoughts about {"\n"} {appText}!</Text>
-
+                               
                             <View style={styles.searchSection}>
+                                {this.state.image ? imageText : noImageText}
                                 <TextInput style={styles.txtInput}
+                                        textAlignVertical = 'top'
                                            numberOfLines = {4}
                                            multiline={true} onChangeText={(text) => this.setState({text})}
-                                           value={this.state.text} blurOnSubmit={true}
+                                           value={this.state.text} blurOnSubmit={true} 
                                 />
-                                {this.state.image ? imageText : noImageText}
+                                 
                             </View>
 
                             <TouchableHighlight style={[styles.button, {backgroundColor: 'orange'}]}
@@ -149,22 +161,6 @@ export default class FeedbackScreen extends Component {
                                                 underlayColor="#74b9ff">
                                 <Text style={styles.btnText}>Submit!</Text>
                             </TouchableHighlight>
-                        </View>
-
-
-                    </View>
-
-                    <TouchableHighlight style={[styles.button, { backgroundColor: 'orange' }]}
-                        onPress={this.imagePickerHandler}
-                        underlayColor="#74b9ff">
-                        <Text style={styles.btnText}>Choose Photo</Text>
-                    </TouchableHighlight>
-                    <Smile50 onNewSmiley={this.newSmiley} />
-                    <TouchableHighlight style={[styles.button, { backgroundColor: '#0984e3' }]}
-                        onPress={this.submit}
-                        underlayColor="#74b9ff">
-                        <Text style={styles.btnText}>Submit!</Text>
-                    </TouchableHighlight>
                 </View >
             </View>
         );
@@ -213,6 +209,7 @@ const styles = StyleSheet.create({
         height: 70
     },
     imageIcon: {
+        marginLeft: 315,
         color: 'gray'
     },
     searchSection: {
