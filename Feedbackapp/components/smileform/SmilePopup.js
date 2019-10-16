@@ -12,22 +12,33 @@ import {
 import Smiley from './Smiley'
 
 export default class SmilePopup extends Component {
-    render() {
+    constructor() {
+        super()
+        this.pressSmiley = this.pressSmiley.bind(this);
+    }
 
-        var output = [];
-        var index = 0;
-        for (let i = 0; i < 10; i += 2) {
-            //output[i] = ++i;
-            output[i] = 
-                <View style={styles.child}>
-                    <Smiley userInput={++index * 4}></Smiley>
-                    <Text>{index}</Text>
-                </View>
+    pressSmiley(userInput) {
+        //send userInput to SmileyForm
+        this.props.setSmiley(userInput);
+
+        //hide me
+        this.props.swapSmiley();
+    }
+    
+    render() {
+        var userInput = [1, 10, 15, 20];
+        var component = []
+
+        for (let i = 0; i < userInput.length; i++) {
+            component[i] = 
+                <TouchableOpacity style={styles.child} onPress={() => this.pressSmiley(userInput[i])}>
+                    <Smiley userInput={userInput[i]}></Smiley>
+                </TouchableOpacity>;
         }
 
         return (
             <View style={styles.container}>
-                {output}
+                {component}
             </View>
         );
     }
@@ -35,7 +46,7 @@ export default class SmilePopup extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 2,
+        flex: 1,
         flexDirection: 'row',
     },
     child: {

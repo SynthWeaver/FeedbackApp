@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import {
     StyleSheet,
-    Text,
     View,
-    Slider,
-    Image,
-    ImageBackground,
     TouchableOpacity
 } from 'react-native';
 
@@ -16,15 +12,20 @@ export default class SmileSwitcher extends Component {
     constructor() {
         super()
         this.state = {
-            smileyVisable: true
+            smileyVisible: true
         }
-        this.pressed = this.pressed.bind(this)
+        this.setSmiley = this.setSmiley.bind(this);
+        this.swapSmiley = this.swapSmiley.bind(this);
         this.newSmiley = this.newSmiley.bind(this);
     }
 
-    pressed() {
+    setSmiley(userInput){
+        
+    }
+
+    swapSmiley() {
         this.setState({
-            smileyVisable : !this.state.smileyVisable
+            smileyVisible : !this.state.smileyVisible
         });
     }
 
@@ -33,17 +34,22 @@ export default class SmileSwitcher extends Component {
     }
 
     render() {
-        if(this.state.smileyVisable){
+        if(this.state.smileyVisible){
             return(
-                <TouchableOpacity style={{flex: 1}} onPress={this.pressed}>
+                <TouchableOpacity style={{flex: 1}} onPress={this.swapSmiley}>
                     <Smile50 onNewSmiley={this.newSmiley} />
                 </TouchableOpacity>
             );
         }else{
             return (
-                <TouchableOpacity style={{flex: 1}} onPress={this.pressed}>
-                    <SmilePopup></SmilePopup>
-                </TouchableOpacity>
+                <View style={{flex: 1}}>
+                    <SmilePopup 
+                        smileyVisible={this.state.smileyVisible} 
+                        swapSmiley={this.swapSmiley}
+                        setSmiley={this.setSmiley}
+                    >
+                    </SmilePopup>
+                </View>
             );
         }
     }
