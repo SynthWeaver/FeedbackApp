@@ -32,7 +32,7 @@ class DefaultPage extends React.Component {
             this.setState({
                 backgroundColor: randomHex()
             })
-        }, 5000)
+        }, 5000);
         return (
             <AnimatedBackgroundColorView color={this.state.backgroundColor}
                                          style={defaultStyles.container}
@@ -185,9 +185,10 @@ class HomeScreen extends React.Component {
     render() {
 
         return (
-            <View style={styles.container}>
+                <View style={styles.container}>
                 <View style={styles.search}>
                     <SearchBar
+                        lightTheme={true}
                         placeholder="Search for app..."
                         value={this.state.text}
                         onChangeText={text => this.SearchFilterFunction(text)}
