@@ -17,25 +17,30 @@ export default class SmilePopup extends Component {
         this.state = {
             smileyVisable: true
         }
-        this._pressed = this._pressed.bind(this)
+        this.pressed = this.pressed.bind(this)
+        this.newSmiley = this.newSmiley.bind(this);
     }
 
-    _pressed() {
+    pressed() {
         this.setState({
             smileyVisable : !this.state.smileyVisable
         });
     }
 
+    newSmiley(value) {
+        this.setState({ smile: value })
+    }
+
     render() {
         if(this.state.smileyVisable){
             return(
-                <TouchableOpacity style={{flex: 1}} onPress={this._pressed}>
+                <TouchableOpacity style={{flex: 1}} onPress={this.pressed}>
                     <Smile50 onNewSmiley={this.newSmiley} />
                 </TouchableOpacity>
             );
         }else{
             return (
-                <TouchableOpacity style={{flex: 1, backgroundColor: 'powderblue'}} onPress={this._pressed}>
+                <TouchableOpacity style={{flex: 1, backgroundColor: 'powderblue'}} onPress={this.pressed}>
                     <Text>works</Text>
                 </TouchableOpacity>
             );

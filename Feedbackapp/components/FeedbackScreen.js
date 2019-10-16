@@ -23,7 +23,6 @@ export default class FeedbackScreen extends Component {
             appName: ''
         };
         this.submit = this.submit.bind(this);
-        this.newSmiley = this.newSmiley.bind(this);
         this.imagePickerHandler = this.imagePickerHandler.bind(this);
 
     }
@@ -111,10 +110,6 @@ export default class FeedbackScreen extends Component {
                 });
             }
         });
-    }
-
-    newSmiley(value) {
-        this.setState({ smile: value })
     }
 
     render() {
