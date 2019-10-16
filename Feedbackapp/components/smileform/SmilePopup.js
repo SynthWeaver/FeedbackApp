@@ -9,12 +9,36 @@ import {
     TouchableOpacity
 } from 'react-native';
 
-import Smile50 from './SmileyForm'
+import Smiley from './Smiley'
 
 export default class SmilePopup extends Component {
     render() {
+
+        var output = [];
+        var index = 0;
+        for (let i = 0; i < 10; i += 2) {
+            //output[i] = ++i;
+            output[i] = 
+                <View style={styles.child}>
+                    <Smiley userInput={++index * 4}></Smiley>
+                    <Text>{index}</Text>
+                </View>
+        }
+
         return (
-            <Text>works</Text>
+            <View style={styles.container}>
+                {output}
+            </View>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 2,
+        flexDirection: 'row',
+    },
+    child: {
+        flex: 1,
+    },
+});
