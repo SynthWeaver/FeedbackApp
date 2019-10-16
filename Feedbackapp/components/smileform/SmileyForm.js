@@ -36,6 +36,7 @@ export default class Smile50 extends Component {
             val: 1,
             smile: 1
         }
+
         this.getVal = this.getVal.bind(this)
     }
 
@@ -54,13 +55,13 @@ export default class Smile50 extends Component {
                 <Text style={styles.title}>
                     How do you feel about the App?
                 </Text>
-                <Smiley userInput={this.state.smile}></Smiley>
+                <Smiley userInput={this.props.smile}></Smiley>
                 <Slider
                     style={{ width: 200, transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] }}
                     step={1}
                     minimumValue={1}
                     maximumValue={25}
-                    value={this.state.val}
+                    value={this.props.smile}
                     onValueChange={val => this.slidingChange(val)}
                     onSlidingComplete={ smile => this.getVal(smile)}
                 />

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import {
     StyleSheet,
     View,
@@ -12,7 +12,8 @@ export default class SmileSwitcher extends Component {
     constructor() {
         super()
         this.state = {
-            smileyVisible: true
+            smileyVisible: true,
+            smile: 1,
         }
         this.setSmiley = this.setSmiley.bind(this);
         this.swapSmiley = this.swapSmiley.bind(this);
@@ -20,7 +21,9 @@ export default class SmileSwitcher extends Component {
     }
 
     setSmiley(userInput){
-        
+        this.setState({
+            smile: userInput
+        });
     }
 
     swapSmiley() {
@@ -37,7 +40,10 @@ export default class SmileSwitcher extends Component {
         if(this.state.smileyVisible){
             return(
                 <TouchableOpacity style={{flex: 1}} onPress={this.swapSmiley}>
-                    <Smile50 onNewSmiley={this.newSmiley} />
+                    <Smile50 
+                        onNewSmiley={this.newSmiley} 
+                        smile={this.state.smile}
+                    />
                 </TouchableOpacity>
             );
         }else{
