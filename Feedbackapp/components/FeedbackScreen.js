@@ -60,7 +60,7 @@ export default class FeedbackScreen extends Component {
             return data;
         };
         if (this.state.text) {
-            DeviceInfo.getDeviceName().then(deviceName => {
+            DeviceInfo.getModel().then(deviceName => {
                 this.setState({
                     deviceInfo: deviceName,
                     deviceOs: Platform.OS
