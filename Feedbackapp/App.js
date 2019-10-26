@@ -4,8 +4,8 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import _ from 'lodash';
 import { SearchBar } from 'react-native-elements';
-
-import FeedbackScreen from './components/FeedbackScreen'
+import Applications from './components/Applications';
+import FeedbackScreen from './components/FeedbackScreen';
 
 const ANIMATION_DURATION = 1000;
 const ROW_HEIGHT = Dimensions.get('window').width / 2.4;
@@ -197,8 +197,19 @@ class HomeScreen extends React.Component {
 
 const AppNavigator = createStackNavigator(
     {
-        Home: HomeScreen,
-        Details: FeedbackScreen,
+        Home: {
+            screen: HomeScreen,
+            path: 'home'
+        },
+        Details: {
+            screen: FeedbackScreen,
+            path: 'app/:id'
+        }, 
+        Anyname:{
+            screen: Applications,
+            path: 'applications/:id'
+        },
+        
     },
     {
         initialRouteName: 'Home',
