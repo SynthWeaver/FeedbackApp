@@ -36,7 +36,6 @@ export default class FeedbackScreen extends Component {
 
 
     submit() {
-        {alert(this.state.smile)}
         const createFormData = (photo) => {
             const data = new FormData();
 
@@ -65,13 +64,13 @@ export default class FeedbackScreen extends Component {
                 //         deviceInfo: this.state.deviceInfo,
                 //         deviceOs: this.state.deviceOs
 
-                fetch('http://9e9aada3.ngrok.io/post', {
+                fetch('http://a39de6a7.ngrok.io/post', {
                     method: 'POST',
                     body: JSON.stringify({
                         feedback: this.state.text,
                         app: this.state.appName,
                         image: createFormData(this.state.image),
-                        smiley: this.state.smile,
+                        smiley: Math.round((this.state.smile / 2)),
                         device: this.state.deviceInfo,
                         os: this.state.deviceOs,
                         category: "positivefeedback",
