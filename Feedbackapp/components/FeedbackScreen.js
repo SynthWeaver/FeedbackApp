@@ -16,7 +16,7 @@ export default class FeedbackScreen extends Component {
         this.state = {
             modalVisible: false,
             text: '',
-            smile: 1,
+            smile: 11,
             image: '',
             deviceInfo: '',
             deviceOs: '',
@@ -24,7 +24,7 @@ export default class FeedbackScreen extends Component {
         };
         this.submit = this.submit.bind(this);
         this.imagePickerHandler = this.imagePickerHandler.bind(this);
-
+        this.setSmiley = this.setSmiley.bind(this);
     }
 
     componentDidMount() {
@@ -36,6 +36,7 @@ export default class FeedbackScreen extends Component {
 
 
     submit() {
+        {alert(this.state.smile)}
         const createFormData = (photo) => {
             const data = new FormData();
 
@@ -112,6 +113,12 @@ export default class FeedbackScreen extends Component {
         });
     }
 
+    setSmiley(userInput){
+        this.setState({
+            smile: userInput
+        });
+    }
+
     render() {
 
         var appText = this.state.appName;
@@ -144,7 +151,11 @@ export default class FeedbackScreen extends Component {
                         underlayColor="#74b9ff">
                         <Text style={styles.btnText}>Choose Photo</Text>
                     </TouchableHighlight>
-                    <SmileSwitcher></SmileSwitcher>
+                    <SmileSwitcher 
+                        smile={this.state.smile}
+                        setSmiley={this.setSmiley}
+                    >
+                    </SmileSwitcher>
                     <TouchableHighlight style={[styles.button, { backgroundColor: '#0984e3' }]}
                         onPress={this.submit}
                         underlayColor="#74b9ff">

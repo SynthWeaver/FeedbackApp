@@ -26,8 +26,8 @@ export default class SmilePopup extends Component {
     }
     
     render() {
-        var userInput = [1, 10, 15, 20];
-        var component = []
+        var userInput = [1, 11, 15, 20];
+        var component = [];
 
         for (let i = 0; i < userInput.length; i++) {
             component[i] = 

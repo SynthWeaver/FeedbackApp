@@ -32,22 +32,11 @@ var multiLine = d3.scale.scaleLinear()
 export default class Smile50 extends Component {
     constructor() {
         super();
-        this.state = {
-            val: 1,
-            smile: 1
-        }
-
         this.getVal = this.getVal.bind(this)
     }
 
-    slidingChange(val) {
-        this.setState({ val })
-    }
     getVal(val){
-        this.setState({ val })
-        this.setState({ smile: val })
-        var value = parseInt(multiLine(this.state.val));
-        this.props.onNewSmiley(value)
+        this.props.setSmiley(val)
     }
     render() {
         return (

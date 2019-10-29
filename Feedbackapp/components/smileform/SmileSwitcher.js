@@ -12,18 +12,10 @@ export default class SmileSwitcher extends Component {
     constructor() {
         super()
         this.state = {
-            smileyVisible: true,
-            smile: 1,
+            smileyVisible: true
         }
-        this.setSmiley = this.setSmiley.bind(this);
         this.swapSmiley = this.swapSmiley.bind(this);
-        this.newSmiley = this.newSmiley.bind(this);
-    }
-
-    setSmiley(userInput){
-        this.setState({
-            smile: userInput
-        });
+        //this.setSmiley = this.setSmiley.bind(this);
     }
 
     swapSmiley() {
@@ -32,17 +24,13 @@ export default class SmileSwitcher extends Component {
         });
     }
 
-    newSmiley(value) {
-        this.setState({ smile: value })
-    }
-
     render() {
         if(this.state.smileyVisible){
             return(
                 <TouchableOpacity style={{flex: 1}} onPress={this.swapSmiley}>
                     <Smile50 
-                        onNewSmiley={this.newSmiley} 
-                        smile={this.state.smile}
+                        smile={this.props.smile}
+                        setSmiley={this.props.setSmiley} 
                     />
                 </TouchableOpacity>
             );
@@ -52,7 +40,7 @@ export default class SmileSwitcher extends Component {
                     <SmilePopup 
                         smileyVisible={this.state.smileyVisible} 
                         swapSmiley={this.swapSmiley}
-                        setSmiley={this.setSmiley}
+                        setSmiley={this.props.setSmiley}
                     >
                     </SmilePopup>
                 </View>
