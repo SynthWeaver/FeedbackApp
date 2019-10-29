@@ -87,7 +87,7 @@ class HomeScreen extends React.Component {
         //passing the inserted text in textinput
         const newData = this.arrayholder.filter(function (item) {
             //applying filter for the inserted text in search bar
-            const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
+            const itemData = item.appName ? item.appName.toUpperCase() : ''.toUpperCase();
             const textData = text.toUpperCase();
             return itemData.indexOf(textData) > -1;
         });
@@ -101,7 +101,7 @@ class HomeScreen extends React.Component {
     }
 
     componentDidMount() {
-        // change db password to your own password
+        // change password to your local db password
         fetch('http://localhost:8085/get/apps')
             .then((response) => response.json())
             .then((responseJson) => {
@@ -127,7 +127,7 @@ class HomeScreen extends React.Component {
                 <TouchableOpacity style={styles.shadow} activeOpacity={.7}
                                   onPress={() => this.props.navigation.navigate('Details', {
                                       app: item.appName
-                                  })}>`
+                                  })}>
                     <Image style={styles.logoicons} source={{uri: item.logoURL}}/>
                 </TouchableOpacity>
             </View>
