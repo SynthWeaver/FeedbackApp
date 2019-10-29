@@ -49,7 +49,7 @@ export default class Smile50 extends Component {
                     style={{ width: 200, transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] }}
                     step={1}
                     minimumValue={1}
-                    maximumValue={25}
+                    maximumValue={20}
                     value={this.props.smile}
                     onSlidingComplete={ smile => this.getVal(smile)}
                 />
