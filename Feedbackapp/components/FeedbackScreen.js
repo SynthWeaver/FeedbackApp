@@ -112,6 +112,7 @@ export default class FeedbackScreen extends Component {
         });
     }
 
+    //update smiley var from components
     setSmiley(userInput){
         this.setState({
             smile: userInput

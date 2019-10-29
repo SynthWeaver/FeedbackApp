@@ -18,6 +18,7 @@ export default class SmileSwitcher extends Component {
         //this.setSmiley = this.setSmiley.bind(this);
     }
 
+    //swaps between the smiley screens
     swapSmiley() {
         this.setState({
             smileyVisible : !this.state.smileyVisible

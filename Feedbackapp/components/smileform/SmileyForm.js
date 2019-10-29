@@ -35,9 +35,11 @@ export default class Smile50 extends Component {
         this.getVal = this.getVal.bind(this)
     }
 
+    //on slide change
     getVal(val){
         this.props.setSmiley(val)
     }
+
     render() {
         return (
             <View style={styles.container}>

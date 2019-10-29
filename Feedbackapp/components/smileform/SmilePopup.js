@@ -17,6 +17,7 @@ export default class SmilePopup extends Component {
         this.pressSmiley = this.pressSmiley.bind(this);
     }
 
+    //on smily clicked
     pressSmiley(userInput) {
         //send userInput to SmileyForm
         this.props.setSmiley(userInput);
