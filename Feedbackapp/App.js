@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, Button, StyleSheet, KeyboardAvoidingView , Image, Dimensions, FlatList, TouchableOpacity, TextInput, Animated } from 'react-native';
+import { View, Text, Button, StyleSheet, KeyboardAvoidingView, Image, Dimensions, FlatList, TouchableOpacity, TextInput, Animated } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import _ from 'lodash';
@@ -8,23 +8,21 @@ import Applications from './components/Applications';
 import FeedbackScreen from './components/FeedbackScreen';
 
 const ANIMATION_DURATION = 1000;
-const ROW_HEIGHT = Dimensions.get('window').width / 2.4;
+const ROW_HEIGHT = Dimensions.get('window').width / 2.8;
 
 
 class HomeScreen extends React.Component {
     _animated = new Animated.Value(0);
     constructor(props) {
         super(props);
-    
-        
-      }
+
+    }
 
     static navigationOptions = {
         title: 'Home',
     };
     state = {
         text: '',
-
 
     };
     arrayholder = [];
@@ -101,7 +99,7 @@ class HomeScreen extends React.Component {
                 url: 'https://www.antena3.com/clipping/2012/04/26/00069/30.jpg',
             }
         ]
-        
+
         this.setState(
             {
                 dataSource: data
@@ -110,72 +108,66 @@ class HomeScreen extends React.Component {
                 this.arrayholder = data
             }
         )
-
-
     }
     renderItem = ({ item }) => {
         return (
 
-            <Animated.View style = {[
-                
+            <Animated.View style={[
+
                 styles.row,
                 {
-                    
-                  height: this._animated.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, ROW_HEIGHT],
-                    extrapolate: 'clamp',
-                  }),
+                    height: this._animated.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [0, ROW_HEIGHT],
+                        extrapolate: 'clamp',
+                    }),
                 },
                 { opacity: this._animated },
                 {
-                  transform: [
-                    { scale: this._animated },
-                    {
-                      rotate: this._animated.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: ['35deg', '0deg'],
-                        extrapolate: 'clamp',
-                      })
-                    }
-                  ],
+                    transform: [
+                        { scale: this._animated },
+                        {
+                            rotate: this._animated.interpolate({
+                                inputRange: [0, 1],
+                                outputRange: ['35deg', '0deg'],
+                                extrapolate: 'clamp',
+                            })
+                        }
+                    ],
                 },
-              ]}>
+            ]}>
                 <TouchableOpacity style={styles.shadow} activeOpacity={.7}
-                                  onPress={() => this.props.navigation.navigate('Details', {
-                                      app: item.name
-                                  })}>
-                    <Image style={styles.logoicons} source={{uri: item.url}}/>
+                    onPress={() => this.props.navigation.navigate('Details', {
+                        app: item.name
+                    })}>
+                    <Image style={styles.logoicons} source={{ uri: item.url }} />
                 </TouchableOpacity>
             </Animated.View>
-
         );
     }
-    
+
 
 
     render() {
-        
-            Animated.timing(this._animated, {
-                toValue: 1,
-                duration: ANIMATION_DURATION,
-                delay: 150
-                }).start();
-            
+
+        Animated.timing(this._animated, {
+            toValue: 1,
+            duration: ANIMATION_DURATION,
+            delay: 150
+        }).start();
+
         return (
-            
+
             <View style={styles.container}>
                 <View style={styles.search}>
                     <SearchBar
                         placeholder="Search for app..."
                         value={this.state.text}
                         onChangeText={text => this.SearchFilterFunction(text)}
-
-
                     />
                 </View>
-             
-                <View style={{flex: 3}}>
+
+                <View style={{ flex: 3 }}>
                     <FlatList
                         numColumns={2}
                         horizontal={false}
@@ -193,8 +185,6 @@ class HomeScreen extends React.Component {
     }
 }
 
-
-
 const AppNavigator = createStackNavigator(
     {
         Home: {
@@ -204,12 +194,12 @@ const AppNavigator = createStackNavigator(
         Details: {
             screen: FeedbackScreen,
             path: 'app/:id'
-        }, 
-        Anyname:{
+        },
+        Anyname: {
             screen: Applications,
             path: 'applications/:id'
         },
-        
+
     },
     {
         initialRouteName: 'Home',
@@ -222,7 +212,6 @@ const AppContainer = createAppContainer(AppNavigator);
 export default class App extends React.Component {
     _animated = new Animated.Value(0);
     render() {
-        
         return <AppContainer />;
     }
 }
@@ -265,9 +254,9 @@ const styles = StyleSheet.create({
         height: Dimensions.get('window').width / 3.2,
         width: Dimensions.get('window').width / 2.4,
         borderRadius: 15,
-      
+
     },
-   
+
 
     shadow: {
         shadowColor: 'black',
