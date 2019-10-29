@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { View, StyleSheet, Text, Image, Dimensions, FlatList, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, StyleSheet, Text, Image, Dimensions, FlatList, TouchableOpacity } from 'react-native';
 import { SearchBar } from 'react-native-elements'
-import { AnimatedBackgroundColorView } from 'react-native-animated-background-color-view';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import _ from 'lodash';
@@ -76,7 +75,7 @@ class HomeScreen extends React.Component {
         title: 'Apps',
     };
     state = {
-        text: '',
+        text: ''
 
 
     };
@@ -102,51 +101,22 @@ class HomeScreen extends React.Component {
     }
 
     componentDidMount() {
-        const data = [
-            {
-                id: 1,
-                name: 'Videoland',
-                url: 'https://lh3.googleusercontent.com/9rwyG6MORZddxe07mVddszcTt0vRnV0Rxijk1mQtNdN7pY2LUJhDIXJroDpROn76c7kN',
-            },
-            {
-                id: 2,
-                name: 'NPO Start',
-                url: 'https://is4-ssl.mzstatic.com/image/thumb/Purple123/v4/da/9b/e6/da9be644-0138-9889-6502-e8379641fbe0/AppIcon-0-1x_U007emarketing-0-0-85-220-0-7.png/246x0w.jpg',
-            },
-            {
-                id: 3,
-                name: 'Pathe Thuis',
-                url: 'https://images-eds-ssl.xboxlive.com/image?url=8Oaj9Ryq1G1_p3lLnXlsaZgGzAie6Mnu24_PawYuDYIoH77pJ.X5Z.MqQPibUVTcT9CDoAI0Al.KRGh5tQle3A_QQ2kWJswmpQuhPwsf6BkwTt0e09NugN3mRxDo2zh3xr3K3qJTjbQagcNCPTMSSK7IOrggfQP7Nit_Qckd06Mir_vFNr8hgIi_2e_GeqWt1cSgIMQniKOPgnRgJCcupdJOHM84pFVSBxc_r65j2p4-&h=1080&w=1920&format=jpg',
-            },
-            {
-                id: 4,
-                name: 'Fox Sports',
-                url: 'https://storage.pubble.nl/350eaab2/content/2019/9/f6a8a8bf-a65a-4a9b-972d-ae70f0de327f_thumb840.jpg',
-            },
-            {
-                id: 5,
-                name: 'NLZiet',
-                url: 'https://www.nlziet.nl/nl/wp-content/uploads/2017/09/NLZIET_Op_Wit.png',
-            },
-            {
-                id: 6,
-                name: 'RTL XL',
-                url: 'https://vpndiensten.nl/wp-content/uploads/2016/03/rtl-xl-in-buitenland.png',
-            },
-            {
-                id: 7,
-                name: '',
-                url: '',
-            }
-        ]
-        this.setState(
-            {
-                dataSource: data
-            },
-            function () {
-                this.arrayholder = data
-            }
-        )
+        // change db password to your own password
+        fetch('http://localhost:8085/get/apps')
+            .then((response) => response.json())
+            .then((responseJson) => {
+
+                this.setState(
+                    {
+                        dataSource: responseJson
+                    },
+                    function () {
+                        this.arrayholder = responseJson
+                    }
+                )
+            }).catch((error) => {
+                console.error(error)
+        })
 
 
     }
@@ -156,9 +126,9 @@ class HomeScreen extends React.Component {
             <View>
                 <TouchableOpacity style={styles.shadow} activeOpacity={.7}
                                   onPress={() => this.props.navigation.navigate('Details', {
-                                      app: item.name
-                                  })}>
-                    <Image style={styles.logoicons} source={{uri: item.url}}/>
+                                      app: item.appName
+                                  })}>`
+                    <Image style={styles.logoicons} source={{uri: item.logoURL}}/>
                 </TouchableOpacity>
             </View>
            

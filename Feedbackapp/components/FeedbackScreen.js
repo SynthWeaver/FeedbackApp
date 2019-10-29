@@ -69,7 +69,7 @@ export default class FeedbackScreen extends Component {
                     deviceInfo: deviceModel,
                     deviceOs: Platform.OS
                 });
-                fetch('https://feedbackapp-40461.firebaseio.com/feedback.json', {
+                fetch('http://9e9aada3.ngrok.io/post', {
                     method: 'POST',
                     body: JSON.stringify({
                         app: this.state.appName,
@@ -128,7 +128,7 @@ export default class FeedbackScreen extends Component {
             color: '#9EA0A4',
         };
         var appText = this.state.appName;
-        const imageText = <Icon style={styles.imageIcon} name="paperclip" size={25}/>
+        const imageText = <Icon style={styles.imageIcon} name="paperclip" size={25}/>;
         const noImageText = <Text></Text>;
         return (
             <View style={styles.container}>
