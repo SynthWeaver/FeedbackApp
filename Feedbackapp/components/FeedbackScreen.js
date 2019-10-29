@@ -1,10 +1,19 @@
-import React, { Component } from 'react';
-import { Platform, Text, TouchableHighlight, View, Alert, TextInput, StyleSheet, Dimensions, Image } from 'react-native';
-import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons';
+import React, {Component} from 'react';
+import {
+    Text,
+    TouchableHighlight,
+    View,
+    Alert,
+    TextInput,
+    StyleSheet,
+    Dimensions,
+    Platform
+} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import ImagePicker from 'react-native-image-picker';
 import DeviceInfo from 'react-native-device-info';
+import RNPickerSelect from 'react-native-picker-select';
 import SmileSwitcher from './smileform/SmileSwitcher';
-import { ToastAndroid } from "react-native";
 
 
 export default class FeedbackScreen extends Component {
@@ -12,6 +21,7 @@ export default class FeedbackScreen extends Component {
         title: 'Feedback',
 
     };
+
     constructor() {
         super();
         this.state = {
@@ -21,7 +31,8 @@ export default class FeedbackScreen extends Component {
             image: '',
             deviceInfo: '',
             deviceOs: '',
-            appName: ''
+            appName: '',
+            feedbackType: 'Feedback'
         };
         this.submit = this.submit.bind(this);
         this.imagePickerHandler = this.imagePickerHandler.bind(this);
@@ -29,9 +40,10 @@ export default class FeedbackScreen extends Component {
     }
 
     componentDidMount() {
-        const { navigation } = this.props;
+        const {navigation} = this.props;
+        // get the name of the selected app and set it in state
         const appName = navigation.getParam('app', 'default-value');
-        this.setState({ appName: appName })
+        this.setState({appName: appName})
     }
 
     showToast = () => {
@@ -46,7 +58,9 @@ export default class FeedbackScreen extends Component {
     
 
     submit() {
+        // create form data for screenshot
         const createFormData = (photo) => {
+            if (!photo) return '';
             const data = new FormData();
 
             data.append("photo", {
@@ -58,23 +72,16 @@ export default class FeedbackScreen extends Component {
 
             return data;
         };
+        // textfield cannot be empty
         if (this.state.text) {
-            DeviceInfo.getDeviceName().then(deviceName => {
+            DeviceInfo.getModel().then(deviceModel => {
+                // set the device info and os in state
                 this.setState({
-                    deviceInfo: deviceName,
+                    deviceInfo: deviceModel,
                     deviceOs: Platform.OS
                 });
-                // fetch('https://feedbackapp-40461.firebaseio.com/feedback.json', {
-                //     method: 'POST',
-                //     body: JSON.stringify({
-                //         appName: this.state.appName,
-                //         feedback: this.state.text,
-                //         smiley: this.state.smile,
-                //         image: createFormData(this.state.image),
-                //         deviceInfo: this.state.deviceInfo,
-                //         deviceOs: this.state.deviceOs
-
-                fetch('http://a39de6a7.ngrok.io/post', {
+                // post the user feedback to the api
+                fetch('http://9e9aada3.ngrok.io/post', {
                     method: 'POST',
                     body: JSON.stringify({
                         feedback: this.state.text,
@@ -83,7 +90,7 @@ export default class FeedbackScreen extends Component {
                         smiley: Math.round((this.state.smile / 2)),
                         device: this.state.deviceInfo,
                         os: this.state.deviceOs,
-                        category: 'Feedback'
+                        category: this.state.feedbackType
 
                     })
                 })
@@ -96,6 +103,7 @@ export default class FeedbackScreen extends Component {
         } else {
             Alert.alert("Please fill in the textfield")
         }
+
 
     }
 
@@ -131,9 +139,13 @@ export default class FeedbackScreen extends Component {
     }
 
     render() {
-
+        const placeholder = {
+            label: 'Select the type of feedback...',
+            value: null,
+            color: '#9EA0A4',
+        };
         var appText = this.state.appName;
-        const imageText = <SimpleIcon style={styles.imageIcon} name='check' type='entypo' />
+        const imageText = <Icon style={styles.imageIcon} name="paperclip" size={25}/>;
         const noImageText = <Text></Text>;
 
         return (
@@ -141,7 +153,20 @@ export default class FeedbackScreen extends Component {
                 <View>
 
                     <Text style={styles.modalHeader}>Give us your thoughts about {appText}!</Text>
-
+                    <TouchableHighlight style={[styles.picker, {backgroundColor: 'white'}]}>
+                        <RNPickerSelect
+                            placeholder={placeholder}
+                            onValueChange={(value) => this.setState({feedbackType: value})}
+                            items={[
+                                {label: 'Feedback', value: 'Feedback'},
+                                {label: 'Bug report', value: 'Bug report'},
+                                {label: 'Suggestion', value: 'Suggestion'},
+                            ]}
+                            Icon={() => {
+                                return <Icon name="arrow-down" size={17} color="gray"/>
+                            }}
+                        />
+                    </TouchableHighlight>
                     <View style={styles.searchSection}>
 
                         <TextInput style={styles.txtInput}
@@ -220,7 +245,8 @@ const styles = StyleSheet.create({
         height: 70
     },
     imageIcon: {
-        marginLeft: 315,
+        padding: 10,
+        alignSelf: 'flex-start',
         color: 'gray'
     },
     searchSection: {
@@ -233,8 +259,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         padding: 5,
         margin: 10,
-
-
-
+    },
+    picker: {
+        padding: 10,
+        marginLeft: 20,
+        marginRight: 20,
+        borderWidth: 1,
+        borderRadius: 10,
+        borderColor: 'gray'
     }
 })
