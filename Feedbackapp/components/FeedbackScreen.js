@@ -1,6 +1,15 @@
 import React, {Component} from 'react';
-import {Text, TouchableHighlight, View, Alert, TextInput, StyleSheet, Dimensions, Image, Platform, Picker} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'
+import {
+    Text,
+    TouchableHighlight,
+    View,
+    Alert,
+    TextInput,
+    StyleSheet,
+    Dimensions,
+    Platform
+} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import ImagePicker from 'react-native-image-picker';
 import DeviceInfo from 'react-native-device-info';
 import RNPickerSelect from 'react-native-picker-select';
@@ -12,6 +21,7 @@ export default class FeedbackScreen extends Component {
         title: 'Feedback',
 
     };
+
     constructor() {
         super();
         this.state = {
@@ -32,15 +42,16 @@ export default class FeedbackScreen extends Component {
 
     componentDidMount() {
         const {navigation} = this.props;
+        // get the name of the selected app and set it in state
         const appName = navigation.getParam('app', 'default-value');
-        this.setState({ appName: appName })
+        this.setState({appName: appName})
     }
 
 
-
     submit() {
+        // create form data for screenshot
         const createFormData = (photo) => {
-            if (!photo) return ''
+            if (!photo) return '';
             const data = new FormData();
 
             data.append("photo", {
@@ -52,12 +63,15 @@ export default class FeedbackScreen extends Component {
 
             return data;
         };
+        // textfield cannot be empty
         if (this.state.text) {
             DeviceInfo.getModel().then(deviceModel => {
+                // set the device info and os in state
                 this.setState({
-                     deviceInfo: deviceModel,
-                     deviceOs: Platform.OS
+                    deviceInfo: deviceModel,
+                    deviceOs: Platform.OS
                 });
+                // post the user feedback to the api
                 fetch('http://9e9aada3.ngrok.io/post', {
                     method: 'POST',
                     body: JSON.stringify({
@@ -74,10 +88,11 @@ export default class FeedbackScreen extends Component {
                     .catch(err => console.log(err));
                 this.setState({text: ''});
                 this.props.navigation.navigate('Home')
-            })
+            });
         } else {
             Alert.alert("Please fill in the textfield")
         }
+
 
     }
 
@@ -116,49 +131,49 @@ export default class FeedbackScreen extends Component {
             color: '#9EA0A4',
         };
         var appText = this.state.appName;
-        const imageText = <Icon style={styles.imageIcon} name="paperclip" size={25}/>
+        const imageText = <Icon style={styles.imageIcon} name="paperclip" size={25}/>;
         const noImageText = <Text></Text>;
         return (
-                    <View style={styles.container}>
-                        <View>
-                            <Text style={styles.modalHeader}>Give us your thoughts about {"\n"} {appText}!</Text>
-                            <TouchableHighlight style={[styles.picker, {backgroundColor: 'white'}]}>
-                                <RNPickerSelect
-                                    placeholder={placeholder}
-                                    onValueChange={(value) => this.setState({feedbackType: value})}
-                                    items={[
-                                        { label: 'Feedback', value: 'Feedback' },
-                                        { label: 'Bug report', value: 'Bug report' },
-                                        { label: 'Form', value: 'Form' },
-                                    ]}
-                                    Icon={() => {
-                                        return <Icon name="arrow-down" size={17} color="gray"/>
-                                    }}
-                                />
-                            </TouchableHighlight>
-                            <View style={styles.searchSection}>
-                                <TextInput style={styles.txtInput}
-                                           placeholder="Your thoughts..."
-                                           numberOfLines = {4}
-                                           multiline={true} onChangeText={(text) => this.setState({text})}
-                                           value={this.state.text} blurOnSubmit={true}
-                                />
-                                {this.state.image ? imageText : noImageText}
-                            </View>
-
-                            <TouchableHighlight style={[styles.button, {backgroundColor: 'orange'}]}
-                                                onPress={this.imagePickerHandler}
-                                                underlayColor="#74b9ff">
-                                <Text style={styles.btnText}>Choose Photo</Text>
-                            </TouchableHighlight>
-                            <Smile50  onNewSmiley={this.newSmiley}/>
-                            <TouchableHighlight style={[styles.button, {backgroundColor: '#0984e3'}]}
-                                                onPress={this.submit}
-                                                underlayColor="#74b9ff">
-                                <Text style={styles.btnText}>Submit!</Text>
-                            </TouchableHighlight>
-                        </View>
+            <View style={styles.container}>
+                <View>
+                    <Text style={styles.modalHeader}>Give us your thoughts about {"\n"} {appText}!</Text>
+                    <TouchableHighlight style={[styles.picker, {backgroundColor: 'white'}]}>
+                        <RNPickerSelect
+                            placeholder={placeholder}
+                            onValueChange={(value) => this.setState({feedbackType: value})}
+                            items={[
+                                {label: 'Feedback', value: 'Feedback'},
+                                {label: 'Bug report', value: 'Bug report'},
+                                {label: 'Suggestion', value: 'Suggestion'},
+                            ]}
+                            Icon={() => {
+                                return <Icon name="arrow-down" size={17} color="gray"/>
+                            }}
+                        />
+                    </TouchableHighlight>
+                    <View style={styles.searchSection}>
+                        <TextInput style={styles.txtInput}
+                                   placeholder="Your thoughts..."
+                                   numberOfLines={4}
+                                   multiline={true} onChangeText={(text) => this.setState({text})}
+                                   value={this.state.text} blurOnSubmit={true}
+                        />
+                        {this.state.image ? imageText : noImageText}
                     </View>
+
+                    <TouchableHighlight style={[styles.button, {backgroundColor: 'orange'}]}
+                                        onPress={this.imagePickerHandler}
+                                        underlayColor="#74b9ff">
+                        <Text style={styles.btnText}>Choose Photo</Text>
+                    </TouchableHighlight>
+                    <Smile50 onNewSmiley={this.newSmiley}/>
+                    <TouchableHighlight style={[styles.button, {backgroundColor: '#0984e3'}]}
+                                        onPress={this.submit}
+                                        underlayColor="#74b9ff">
+                        <Text style={styles.btnText}>Submit!</Text>
+                    </TouchableHighlight>
+                </View>
+            </View>
         );
     }
 }
@@ -207,7 +222,7 @@ const styles = StyleSheet.create({
     imageIcon: {
         padding: 10,
         alignSelf: 'flex-start',
-        color   : 'gray'
+        color: 'gray'
     },
     searchSection: {
         flex: 0.5,
