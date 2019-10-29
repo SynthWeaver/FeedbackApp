@@ -7,11 +7,9 @@ import {
     TextInput,
     StyleSheet,
     Dimensions,
-    Image,
-    Platform,
-    Picker
+    Platform
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icon from 'react-native-vector-icons/FontAwesome';
 import ImagePicker from 'react-native-image-picker';
 import DeviceInfo from 'react-native-device-info';
 import RNPickerSelect from 'react-native-picker-select';
@@ -44,12 +42,14 @@ export default class FeedbackScreen extends Component {
 
     componentDidMount() {
         const {navigation} = this.props;
+        // get the name of the selected app and set it in state
         const appName = navigation.getParam('app', 'default-value');
         this.setState({appName: appName})
     }
 
 
     submit() {
+        // create form data for screenshot
         const createFormData = (photo) => {
             if (!photo) return '';
             const data = new FormData();
@@ -63,12 +63,15 @@ export default class FeedbackScreen extends Component {
 
             return data;
         };
+        // textfield cannot be empty
         if (this.state.text) {
             DeviceInfo.getModel().then(deviceModel => {
+                // set the device info and os in state
                 this.setState({
                     deviceInfo: deviceModel,
                     deviceOs: Platform.OS
                 });
+                // post the user feedback to the api
                 fetch('http://9e9aada3.ngrok.io/post', {
                     method: 'POST',
                     body: JSON.stringify({
@@ -141,7 +144,7 @@ export default class FeedbackScreen extends Component {
                             items={[
                                 {label: 'Feedback', value: 'Feedback'},
                                 {label: 'Bug report', value: 'Bug report'},
-                                {label: 'Form', value: 'Form'},
+                                {label: 'Suggestion', value: 'Suggestion'},
                             ]}
                             Icon={() => {
                                 return <Icon name="arrow-down" size={17} color="gray"/>
