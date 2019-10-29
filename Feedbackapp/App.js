@@ -5,8 +5,9 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import _ from 'lodash';
 
-import Login from './components/Login'
-import FeedbackScreen from './components/FeedbackScreen'
+import Login from './components/Login';
+import FeedbackScreen from './components/FeedbackScreen';
+import Applications from './components/Applications';
 
 const ANIMATION_DURATION = 1000;
 const ROW_HEIGHT = Dimensions.get('window').width / 2.8;
@@ -209,6 +210,10 @@ class HomeScreen extends React.Component {
 
 const AppNavigator = createStackNavigator(
     {
+        Launch: {
+            screen: DefaultPage,
+            path: 'launch'
+        },
         Home: {
             screen: HomeScreen,
             path: 'home'
@@ -224,7 +229,7 @@ const AppNavigator = createStackNavigator(
 
     },
     {
-        initialRouteName: 'Home',
+        initialRouteName: 'Launch',
     }
 );
 
