@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Platform, Text, TouchableHighlight, View, Alert, TextInput, StyleSheet, Dimensions, Image } from 'react-native';
-import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons'
+import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons';
 import ImagePicker from 'react-native-image-picker';
 import DeviceInfo from 'react-native-device-info';
+import SmileSwitcher from './smileform/SmileSwitcher';
+import { ToastAndroid } from "react-native";
 
-import SmileSwitcher from './smileform/SmileSwitcher'
 
 export default class FeedbackScreen extends Component {
     static navigationOptions = {
@@ -33,7 +34,16 @@ export default class FeedbackScreen extends Component {
         this.setState({ appName: appName })
     }
 
-
+    showToast = () => {
+        ToastAndroid.showWithGravityAndOffset(
+          "Your feedback has been sent!",
+          ToastAndroid.LONG,
+          ToastAndroid.BOTTOM,
+          25,
+          50
+        );
+      };
+    
 
     submit() {
         const createFormData = (photo) => {
@@ -73,7 +83,7 @@ export default class FeedbackScreen extends Component {
                         smiley: Math.round((this.state.smile / 2)),
                         device: this.state.deviceInfo,
                         os: this.state.deviceOs,
-                        category: "positivefeedback",
+                        category: 'Feedback'
 
                     })
                 })
@@ -81,6 +91,7 @@ export default class FeedbackScreen extends Component {
                     .catch(err => console.log(err));
                 this.setState({ text: '' });
                 this.props.navigation.navigate('Home')
+                this.showToast()
             })
         } else {
             Alert.alert("Please fill in the textfield")
@@ -123,7 +134,7 @@ export default class FeedbackScreen extends Component {
 
         var appText = this.state.appName;
         const imageText = <SimpleIcon style={styles.imageIcon} name='check' type='entypo' />
-
+        const noImageText = <Text></Text>;
 
         return (
             <View style={styles.container}>
@@ -170,6 +181,7 @@ export default class FeedbackScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#ecf0f1',
         flexDirection: 'row',
         justifyContent: 'center',
     },
@@ -179,15 +191,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     modalHeader: {
-        fontSize: 30,
-        marginBottom: 20,
+        fontSize: 27,
+        marginBottom: 10,
         textAlign: 'center'
     },
     txtInput: {
         padding: 5,
         margin: 5,
         width: Dimensions.get('window').width - 50,
-        height: 100
+        height: 110
     },
     button: {
         marginBottom: 20,
@@ -208,12 +220,12 @@ const styles = StyleSheet.create({
         height: 70
     },
     imageIcon: {
+        marginLeft: 315,
         color: 'gray'
     },
     searchSection: {
-
         flex: 0.5,
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'space-between',
         borderColor: 'gray',
         borderWidth: 1,
@@ -221,9 +233,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         padding: 5,
         margin: 10,
-        
-        
+
+
 
     }
 })
-
