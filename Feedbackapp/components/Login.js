@@ -1,23 +1,22 @@
 import React, { Component } from 'react';
 import { Alert, Button, TextInput, View, StyleSheet, KeyboardAvoidingView,TouchableOpacity, Text } from 'react-native';
-import {createAppContainer} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
-import Register from './Register';
 
 export default class Login extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            username: '',
+            email: '',
             password: '',
         };
     }
 
     onLogin() {
-        const { username, password } = this.state;
+        //check email and password
+        const { email, password } = this.state;
+        Alert.alert('Credentials', `${email} + ${password}`);
 
-        Alert.alert('Credentials', `${username} + ${password}`);
+        //open admin page
     }
 
     render() {
@@ -27,9 +26,9 @@ export default class Login extends Component {
                 behavior="padding">
                 <View style={styles.container}>
                     <TextInput
-                        value={this.state.username}
-                        onChangeText={(username) => this.setState({ username })}
-                        placeholder={'Username'}
+                        value={this.state.email}
+                        onChangeText={(email) => this.setState({ email })}
+                        placeholder={'Email'}
                         style={styles.input}
                     />
                     <TextInput

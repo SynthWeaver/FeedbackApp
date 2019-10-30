@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Alert, Button, TextInput, View, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import ImagePickerButton from './ImagePickerButton';
 
 export default class Register extends Component {
     constructor(props) {
@@ -7,15 +8,25 @@ export default class Register extends Component {
 
         this.state = {
             email: '',
+            companyName: '',
             password: '',
             password2: '',
+            image: '',
         };
+
+        this.setImage = this.setImage.bind(this);
     }
 
-    onLogin() {
-        const { username, password, password2 } = this.state;
+    setImage(source){
+        this.setState({
+            image: source
+        });
+    }
 
-        Alert.alert('Credentials', `${username} + ${password} + ${passwor2}`);
+    onRegister() {
+        const { email, password, password2, companyName } = this.state;
+
+        Alert.alert('Credentials', `${email} + ${password} + ${password2} + ${companyName}`);
     }
 
     render() {
@@ -25,9 +36,15 @@ export default class Register extends Component {
                 behavior="padding">
                 <View style={styles.container}>
                     <TextInput
-                        value={this.state.username}
-                        onChangeText={(username) => this.setState({ username })}
-                        placeholder={'Username'}
+                        value={this.state.email}
+                        onChangeText={(email) => this.setState({ email })}
+                        placeholder={'Email'}
+                        style={styles.input}
+                    />
+                    <TextInput
+                        value={this.state.companyName}
+                        onChangeText={(companyName) => this.setState({ companyName })}
+                        placeholder={'Company Name'}
                         style={styles.input}
                     />
                     <TextInput
@@ -44,11 +61,11 @@ export default class Register extends Component {
                         secureTextEntry={true}
                         style={styles.input}
                     />
-
+                    <ImagePickerButton setImage={this.setImage}></ImagePickerButton>
                     <Button
                         title={'Register'}
                         style={styles.input}
-                        onPress={this.onLogin.bind(this)}
+                        onPress={this.onRegister.bind(this)}
                     />
                 </View>
             </KeyboardAvoidingView>
