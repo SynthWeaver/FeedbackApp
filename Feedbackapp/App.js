@@ -218,6 +218,10 @@ const AppNavigator = createStackNavigator(
             screen: HomeScreen,
             path: 'home'
         },
+        Login: {
+            screen: Login,
+            path: 'login'
+        },
         Details: {
             screen: FeedbackScreen,
             path: 'app/:id'
