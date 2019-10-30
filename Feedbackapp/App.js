@@ -15,7 +15,7 @@ const ROW_HEIGHT = Dimensions.get('window').width / 2.8;
 
 class DefaultPage extends React.Component {
     static navigationOptions = {
-    title: 'Apps',     
+    title: 'Apps',
     };
 
 
@@ -81,7 +81,7 @@ class HomeScreen extends React.Component {
     constructor(props) {
         super(props);
 
-    }    
+    }
     static navigationOptions = {
         title: 'Home',
     };
@@ -158,7 +158,7 @@ class HomeScreen extends React.Component {
             ]}>
                 <TouchableOpacity style={styles.shadow} activeOpacity={.7}
                     onPress={() => this.props.navigation.navigate('Details', {
-                        app: item.appName
+                        app: item.id
                     })}>
                     <Image style={styles.logoicons} source={{ uri: item.logoURL }} />
                 </TouchableOpacity>
@@ -187,7 +187,7 @@ class HomeScreen extends React.Component {
 
                     />
                 </View>
-             
+
                 <View style={{flex: 3}}>
                     <FlatList
                         numColumns={2}
@@ -223,7 +223,7 @@ const AppNavigator = createStackNavigator(
             path: 'app/:id'
         },
         Anyname: {
-            screen: Applications,
+            screen: FeedbackScreen,
             path: 'applications/:id'
         },
 
@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
         height: Dimensions.get('window').width / 3.2,
         width: Dimensions.get('window').width / 2.4,
         borderRadius: 15,
-      
+
     },
     shadow: {
         shadowColor: '#000000',

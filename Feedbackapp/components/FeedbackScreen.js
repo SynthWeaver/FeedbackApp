@@ -15,8 +15,15 @@ import DeviceInfo from 'react-native-device-info';
 import RNPickerSelect from 'react-native-picker-select';
 import SmileSwitcher from './smileform/SmileSwitcher';
 
-
-export default class FeedbackScreen extends Component {
+var apps = {};
+fetch('http://localhost:8085/get/apps')
+    .then((response) => response.json())
+    .then((responseJson) => {
+        apps = responseJson
+    }).catch((error) => {
+    console.error(error)
+})
+class FeedbackScreen extends Component {
     static navigationOptions = {
         title: 'Feedback',
 
@@ -40,10 +47,10 @@ export default class FeedbackScreen extends Component {
     }
 
     componentDidMount() {
-        const {navigation} = this.props;
-        // get the name of the selected app and set it in state
-        const appName = navigation.getParam('app', 'default-value');
-        this.setState({appName: appName})
+        // const {navigation} = this.props;
+        // // get the name of the selected app and set it in state
+        // const appName = navigation.getParam('app', 'default-value');
+        // this.setState({appName: appName})
     }
 
     showToast = () => {
@@ -55,7 +62,7 @@ export default class FeedbackScreen extends Component {
           50
         );
       };
-    
+
 
     submit() {
         // create form data for screenshot
@@ -139,21 +146,27 @@ export default class FeedbackScreen extends Component {
     }
 
     render() {
+        var appMap = {};
+        apps.forEach((app) => {
+            appMap[app.id] = app;
+        });
+        console.log(appMap)
+        const { id } = this.props.navigation.state.params;
+        const appId = id;
         const placeholder = {
             label: 'Select the type of feedback...',
             value: null,
             color: '#9EA0A4',
         };
-        var appText = this.state.appName;
+        var appText = (appId ? appMap[appId].appName : appMap[this.props.navigation.getParam('app', 'default-value')].appName);
         const imageText = <Icon style={styles.imageIcon} name="paperclip" size={25}/>;
         const noImageText = <Text></Text>;
 
         return (
             <View style={styles.container}>
                 <View>
-
-                    <Text style={styles.modalHeader}>Give us your thoughts about {appText}!</Text>
-                    <TouchableHighlight style={[styles.picker, {backgroundColor: 'white'}]}>
+                    <Text style={styles.modalHeader}>Give us your thoughts about {"\n"} {appText}!</Text>
+                    <TouchableHighlight style={[styles.picker, {backgroundColor: 'white'}]} >
                         <RNPickerSelect
                             placeholder={placeholder}
                             onValueChange={(value) => this.setState({feedbackType: value})}
@@ -174,7 +187,7 @@ export default class FeedbackScreen extends Component {
                             multiline={true} onChangeText={(text) => this.setState({ text })}
                             value={this.state.text} blurOnSubmit={true}
                         />
-                      
+
                         <View style = {{paddingTop: 110}}>
                             {imageText}
                         </View>
@@ -187,7 +200,7 @@ export default class FeedbackScreen extends Component {
                         underlayColor="#74b9ff">
                         <Text style={styles.btnText}>Choose Photo</Text>
                     </TouchableHighlight>
-                    <SmileSwitcher 
+                    <SmileSwitcher
                         smile={this.state.smile}
                         setSmiley={this.setSmiley}
                     >
@@ -269,3 +282,5 @@ const styles = StyleSheet.create({
         borderColor: 'gray'
     }
 })
+
+export default FeedbackScreen
