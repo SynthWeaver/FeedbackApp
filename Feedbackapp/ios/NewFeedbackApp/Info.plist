@@ -26,10 +26,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>NewFeedbackApp</string>
+			<string>com.newfeedbackapp.feedbackapp</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>NewFeedbackApp</string>
+				<string>feedbackapp</string>
 			</array>
 		</dict>
 	</array>

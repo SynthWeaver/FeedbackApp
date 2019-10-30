@@ -113,7 +113,7 @@ class HomeScreen extends React.Component {
 
     componentDidMount() {
         //change password to your local db password
-        fetch('http://a39de6a7.ngrok.io/get/apps')
+        fetch('http://localhost:8085/get/apps')
             .then((response) => response.json())
             .then((responseJson) => {
 
