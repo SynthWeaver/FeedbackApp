@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
-import { Alert, Button, TextInput, View, StyleSheet, KeyboardAvoidingView,TouchableOpacity, Text } from 'react-native';
-import {createAppContainer} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
-import Register from './Register';
+import { Alert, Button, TextInput, View, StyleSheet, KeyboardAvoidingView } from 'react-native';
 
-export default class Login extends Component {
+export default class Register extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            username: '',
+            email: '',
             password: '',
+            password2: '',
         };
     }
 
     onLogin() {
-        const { username, password } = this.state;
+        const { username, password, password2 } = this.state;
 
-        Alert.alert('Credentials', `${username} + ${password}`);
+        Alert.alert('Credentials', `${username} + ${password} + ${passwor2}`);
     }
 
     render() {
@@ -39,20 +37,19 @@ export default class Login extends Component {
                         secureTextEntry={true}
                         style={styles.input}
                     />
+                    <TextInput
+                        value={this.state.password2}
+                        onChangeText={(password2) => this.setState({ password2 })}
+                        placeholder={'Password2'}
+                        secureTextEntry={true}
+                        style={styles.input}
+                    />
 
-                    <View style={styles.row}>
-                        <Button
-                            title={'Login'}
-                            style={styles.input}
-                            onPress={this.onLogin.bind(this)}
-                        />
-
-                        <Button
-                            title={'Create Account'}
-                            style={styles.input}
-                            onPress={() => this.props.navigation.navigate("Register")}
-                        />
-                    </View>
+                    <Button
+                        title={'Register'}
+                        style={styles.input}
+                        onPress={this.onLogin.bind(this)}
+                    />
                 </View>
             </KeyboardAvoidingView>
         );
@@ -62,9 +59,6 @@ export default class Login extends Component {
 }
 
 const styles = StyleSheet.create({
-    row:{
-        flexDirection: 'row',
-    },
     container: {
         alignItems: 'center',
         justifyContent: 'center',
