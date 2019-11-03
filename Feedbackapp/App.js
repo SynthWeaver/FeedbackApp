@@ -159,7 +159,8 @@ class HomeScreen extends React.Component {
             ]}>
                 <TouchableOpacity style={styles.shadow} activeOpacity={.7}
                     onPress={() => this.props.navigation.navigate('Details', {
-                        app: item.id
+                        app: item.id,
+                        name: item.appName
                     })}>
                     <Image style={styles.logoicons} source={{ uri: item.logoURL }} />
                 </TouchableOpacity>

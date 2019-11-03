@@ -9,14 +9,18 @@ import {
     Dimensions,
     Platform
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import ImagePicker from 'react-native-image-picker';
-import DeviceInfo from 'react-native-device-info';
-import RNPickerSelect from 'react-native-picker-select';
-import SmileSwitcher from './smileform/SmileSwitcher';
+
+import Template1 from './Template1'
+import Template2 from './Template3'
+import Template3 from './Template3'
 
 
 class Templates extends Component {
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: navigation.getParam('name', 'Give Feedback'),
+        };
+    };
     constructor() {
         super();
     }
@@ -38,7 +42,7 @@ class Templates extends Component {
     }
 
     render() {
-        const { id } = this.props.navigation.state.params;
+        const {id} = this.props.navigation.state.params;
         const appId = id;
 
         if (!this.state.data) {
@@ -46,7 +50,8 @@ class Templates extends Component {
                 <Text>Loading...</Text>
             )
         }
-        var templateName = (appId ? this.state.data[appId - 1].template : this.state.data[this.props.navigation.getParam('app', 'default-value') - 1].template);
+        var usedId = (appId ? appId : this.props.navigation.getParam('app', 'default-value'));
+        var templateName = this.state.data[usedId - 1].template;
 
         switch (templateName) {
             case 'Template1' :
@@ -56,35 +61,6 @@ class Templates extends Component {
             case 'Template3' :
                 return <Template3/>;
         }
-    }
-}
-
-class Template1 extends Component {
-
-    render() {
-        return (
-            <View>
-                <Text>Template1</Text>
-            </View>
-        )
-    }
-}
-class Template2 extends Component {
-    render() {
-        return (
-            <View>
-                <Text>Template2</Text>
-            </View>
-        )
-    }
-}
-class Template3 extends Component {
-    render() {
-        return (
-            <View>
-                <Text>Template3</Text>
-            </View>
-        )
     }
 }
 
