@@ -7,6 +7,7 @@ import _ from 'lodash';
 
 import Login from './components/Login';
 import FeedbackScreen from './components/FeedbackScreen';
+import Templates from './components/Templates'
 import Applications from './components/Applications';
 
 const ANIMATION_DURATION = 1000;
@@ -223,11 +224,11 @@ const AppNavigator = createStackNavigator(
             path: 'login'
         },
         Details: {
-            screen: FeedbackScreen,
+            screen: Templates,
             path: 'app/:id'
         },
         Anyname: {
-            screen: FeedbackScreen,
+            screen: Templates,
             path: 'applications/:id'
         },
 
