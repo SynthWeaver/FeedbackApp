@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 import Template1 from './Template1'
-import Template2 from './Template3'
+import Template2 from './Template2'
 import Template3 from './Template3'
 
 
@@ -30,15 +30,22 @@ class Templates extends Component {
     }
 
     componentDidMount() {
-        return fetch('http://localhost:8085/get/apps')
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    data: responseJson
+        if (!this.props.navigation.getParam('name')) {
+            return fetch('http://localhost:8085/get/apps')
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    this.setState({
+                        data: responseJson
+                    })
+                }).catch((error) => {
+                    console.error(error)
                 })
-            }).catch((error) => {
-                console.error(error)
+        } else {
+            this.setState({
+                data: this.props.navigation.getParam('app')
             })
+        }
+
     }
 
     render() {
@@ -51,14 +58,20 @@ class Templates extends Component {
             )
         }
         var usedId = (appId ? appId : this.props.navigation.getParam('app', 'default-value'));
-        var templateName = this.state.data[usedId - 1].template;
+        var template;
+        if (this.state.data[0]) {
+            template = this.state.data[usedId - 1].template;
+        } else {
+            template = this.state.data.template
+        }
 
-        switch (templateName) {
-            case 'Template1' :
+
+        switch (template) {
+            case "Template1" :
                 return <Template1/>;
-            case 'Template2' :
+            case "Template2" :
                 return <Template2/>;
-            case 'Template3' :
+            case "Template3" :
                 return <Template3/>;
         }
     }
