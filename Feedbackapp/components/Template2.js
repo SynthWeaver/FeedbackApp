@@ -169,18 +169,11 @@ const styles = StyleSheet.create({
     circleButtonActive: {
         borderRadius: 100,
         margin: 3,
-        backgroundColor: 'orange',
-        width: 55,
-        height: 55,
+        backgroundColor: '#e67e22',
+        width: 53,
+        height: 53,
         justifyContent: 'center',
-        alignItems: 'center',
-        shadowColor: '#000000',
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowRadius: 5,
-        shadowOpacity: 1.0
+        alignItems: 'center'
     },
     button: {
         borderRadius: 10,
@@ -188,21 +181,8 @@ const styles = StyleSheet.create({
         margin: 10,
         justifyContent: 'center'
     },
-    buttonActive: {
-        borderRadius: 10,
-        padding: 20,
-        margin: 10,
-        justifyContent: 'center',
-        shadowColor: '#000000',
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowRadius: 5,
-        shadowOpacity: 1.0
-    },
     featureText: {
-        fontSize: 30,
+        fontSize: 25,
         alignSelf: 'center'
     },
     inputSection: {
@@ -219,7 +199,7 @@ const styles = StyleSheet.create({
         // paddingBottom: 50,
         backgroundColor: '#ffffff',
         justifyContent: 'space-around',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     btnText: {
         textAlign: 'center',

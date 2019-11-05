@@ -15,12 +15,14 @@ import ImagePicker from 'react-native-image-picker';
 import DeviceInfo from 'react-native-device-info';
 import RNPickerSelect from 'react-native-picker-select';
 import SmileSwitcher from './smileform/SmileSwitcher';
+import Constants from '../Constants'
 
 
 class Template1 extends Component {
     constructor() {
         super();
         this.state = {
+            url: Constants.url,
             modalVisible: false,
             text: '',
             smile: 11,
@@ -71,7 +73,7 @@ class Template1 extends Component {
                     deviceOs: Platform.OS
                 });
                 // post the user feedback to the api
-                fetch('http://9e9aada3.ngrok.io/post', {
+                fetch(this.state.url + 'post', {
                     method: 'POST',
                     body: JSON.stringify({
                         feedback: this.state.text,
@@ -88,7 +90,9 @@ class Template1 extends Component {
                     .catch(err => console.log(err));
                 this.setState({ text: '' });
                 this.props.navigation.navigate('Home');
-                this.showToast()
+                if (Platform.OS === "android") {
+                    this.showToast()
+                }
             })
         } else {
             Alert.alert("Please fill in the textfield")

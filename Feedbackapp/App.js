@@ -6,9 +6,8 @@ import { createStackNavigator } from 'react-navigation-stack';
 import _ from 'lodash';
 
 import Login from './components/Login';
-import FeedbackScreen from './components/FeedbackScreen';
 import Templates from './components/Templates'
-import Applications from './components/Applications';
+import Constants from './Constants'
 
 const ANIMATION_DURATION = 1000;
 const ROW_HEIGHT = Dimensions.get('window').width / 2.8;
@@ -87,7 +86,8 @@ class HomeScreen extends React.Component {
         title: 'Home',
     };
     state = {
-        text: ''
+        text: '',
+        url: Constants.url
 
 
     };
@@ -113,8 +113,9 @@ class HomeScreen extends React.Component {
     }
 
     componentDidMount() {
+        console.log(Constants.url);
         //change password to your local db password
-        fetch('http://localhost:8085/get/apps')
+        fetch(this.state.url + 'get/apps')
             .then((response) => response.json())
             .then((responseJson) => {
 
@@ -163,7 +164,7 @@ class HomeScreen extends React.Component {
                         name: item.appName,
                         app: item
                     })}>
-                    <Image style={styles.logoicons} source={{ uri: item.logoURL }} />
+                        <Image style={styles.logoicons} source={{ uri: item.logoURL }} />
                 </TouchableOpacity>
             </Animated.View>
         );

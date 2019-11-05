@@ -13,6 +13,7 @@ import {
 import Template1 from './Template1'
 import Template2 from './Template2'
 import Template3 from './Template3'
+import Constants from '../Constants'
 
 
 class Templates extends Component {
@@ -26,12 +27,12 @@ class Templates extends Component {
     }
 
     state = {
-
+        url: Constants.url
     }
 
     componentDidMount() {
         if (!this.props.navigation.getParam('name')) {
-            return fetch('http://localhost:8085/get/apps')
+            return fetch(this.state.url + 'get/apps')
                 .then((response) => response.json())
                 .then((responseJson) => {
                     this.setState({
