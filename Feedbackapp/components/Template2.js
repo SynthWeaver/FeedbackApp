@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {
     Text,
-    TouchableOpacity,
+    TouchableHighlight,
     View,
     Alert,
     TextInput,
@@ -14,66 +14,85 @@ import {
 const features = [
     {
         type: 'option',
-        value: 'Template Feature 1'
+        value: 'Template Feature 1',
+        active: false
     },
     {
         type: 'option',
-        value: 'Template Feature 1'
+        value: 'Template Feature 1',
+        active: false
     },
     {
         type: 'option',
-        value: 'Template Feature 1'
+        value: 'Template Feature 1',
+        active: false
     },
     {
         type: 'option',
-        value: 'Template Feature 1'
+        value: 'Template Feature 1',
+        active: false
     },
     {
         type: 'input',
-        value: 'Other...'
+        value: 'Other...',
+        active: false
     }
 ];
 class Template2 extends Component {
-    state = {
-        loadTextInput: false
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            loadTextInput: false
+        };
+    }
 
     componentDidMount() {
         var even = [];
         var uneven = [];
         for (var i = 0; i < 11; i++) {
             if (i % 2 === 0) {
-                even.push({key: i, val: i});
+                even.push({key: i, val: i, active: false});
             } else {
-                uneven.push({key: i, val: i});
+                uneven.push({key: i, val: i, active: false});
             }
         }
         var data = even.concat(uneven);
         this.setState({
-            data: data
+            data: data,
+            features: features
         })
     }
 
     renderItem = ({item}) => {
         return (
-            <TouchableOpacity style={styles.circleButton} onPress={() => {
+            <TouchableHighlight style={item.active ? styles.circleButtonActive : styles.circleButton} onPress={() => {
+                this.state.data.forEach((element) => {
+                    element.active = false;
+                });
+                item.active = !item.active;
                 if (item.val < 6) {
                     this.setState({
                         loadTextInput: true
                     })
+                } else {
+                    this.setState({
+                        loadTextInput: false
+                    })
                 }
+
             }}>
+
                 <Text style={{color: 'white', fontSize: 17, fontWeight: 'bold'}}>{item.val}</Text>
-            </TouchableOpacity>
+            </TouchableHighlight>
         )
     }
 
     renderButtonItem = ({item}) => {
         if (item.type === 'option') {
             return (
-                <TouchableOpacity style={[styles.button, {backgroundColor: 'white'}]}>
+                <TouchableHighlight style={[styles.button, {backgroundColor: 'white', borderWidth: 3, borderColor: 'gray'}]}>
                     <Text>{item.value}</Text>
-                </TouchableOpacity>
+                </TouchableHighlight>
             )
         } else {
             return (
@@ -101,6 +120,7 @@ class Template2 extends Component {
                     horizontal={false}
                     contentContainerStyle={styles.list}
                     data={this.state.data}
+                    extractData={this.state}
                     renderItem={this.renderItem}/>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                     <Text style={{margin: 10}}>Really Bad</Text>
@@ -111,12 +131,9 @@ class Template2 extends Component {
                     <FlatList numColumns={2}
                               horizontal={false}
                               contentContainerStyle={styles.btnList}
-                              data={features}
+                              data={this.state.features}
                               renderItem={this.renderButtonItem}/>
-                </View> : <View style={styles.btnContainer}></View>}
-                <TouchableOpacity style={[styles.button, {backgroundColor: '#0984e3'}]}>
-                    <Text style={styles.btnText}>Submit!</Text>
-                </TouchableOpacity>
+                </View> : <View style={styles.btnContainer}/>}
             </View>
         )
 
@@ -149,13 +166,40 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    circleButtonActive: {
+        borderRadius: 100,
+        margin: 3,
+        backgroundColor: 'orange',
+        width: 55,
+        height: 55,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#000000',
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowRadius: 5,
+        shadowOpacity: 1.0
+    },
     button: {
         borderRadius: 10,
-        borderWidth: 3,
         padding: 20,
         margin: 10,
-        borderColor: 'gray',
         justifyContent: 'center'
+    },
+    buttonActive: {
+        borderRadius: 10,
+        padding: 20,
+        margin: 10,
+        justifyContent: 'center',
+        shadowColor: '#000000',
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowRadius: 5,
+        shadowOpacity: 1.0
     },
     featureText: {
         fontSize: 30,
