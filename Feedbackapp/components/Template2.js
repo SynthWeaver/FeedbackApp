@@ -42,7 +42,8 @@ class Template2 extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loadTextInput: false
+            loadTextInput: false,
+            featureHeader: ''
         };
     }
 
@@ -70,15 +71,10 @@ class Template2 extends Component {
                     element.active = false;
                 });
                 item.active = !item.active;
-                if (item.val < 6) {
-                    this.setState({
-                        loadTextInput: true
-                    })
-                } else {
-                    this.setState({
-                        loadTextInput: false
-                    })
-                }
+                this.setState({
+                    loadTextInput: true,
+                    featureHeader: (item.val < 6 ? 'What feature did you not like?' : 'What feature did you like?')
+                })
 
             }}>
 
@@ -127,7 +123,7 @@ class Template2 extends Component {
                     <Text style={{margin: 10}}>Really Good</Text>
                 </View>
                 {this.state.loadTextInput ? <View style={styles.btnContainer}>
-                    <Text style={styles.featureText}>What feature did you not like?</Text>
+                    <Text style={styles.featureText}>{this.state.featureHeader}</Text>
                     <FlatList numColumns={2}
                               horizontal={false}
                               contentContainerStyle={styles.btnList}

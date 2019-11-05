@@ -22,17 +22,23 @@ class Templates extends Component {
             title: navigation.getParam('name', 'Give Feedback'),
         };
     };
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        const {id} = props.navigation.state.params;
+        this.state = {
+            url: Constants.url,
+            appId: id
+        }
     }
 
-    state = {
-        url: Constants.url
-    }
+    // state = {
+    //     url: Constants.url,
+    //     appId: id
+    // }
 
     componentDidMount() {
         if (!this.props.navigation.getParam('name')) {
-            return fetch(this.state.url + 'get/apps')
+            return fetch(this.state.url + 'get/apps/' + this.state.appId)
                 .then((response) => response.json())
                 .then((responseJson) => {
                     this.setState({
@@ -50,18 +56,17 @@ class Templates extends Component {
     }
 
     render() {
-        const {id} = this.props.navigation.state.params;
-        const appId = id;
+        const appId = this.state.appId;
 
         if (!this.state.data) {
             return (
                 <Text>Loading...</Text>
             )
         }
-        var usedId = (appId ? appId : this.props.navigation.getParam('app', 'default-value'));
+
         var template;
         if (this.state.data[0]) {
-            template = this.state.data[usedId - 1].template;
+            template = this.state.data[0].template;
         } else {
             template = this.state.data.template
         }
