@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Button, TextInput, View, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { Alert, Button, TextInput, View, StyleSheet, KeyboardAvoidingView, Dimensions, TouchableHighlight, Text } from 'react-native';
 import ImagePickerButton from './ImagePickerButton';
 
 export default class Register extends Component {
@@ -61,12 +61,15 @@ export default class Register extends Component {
                         secureTextEntry={true}
                         style={styles.input}
                     />
-                    <ImagePickerButton setImage={this.setImage}></ImagePickerButton>
-                    <Button
-                        title={'Register'}
-                        style={styles.input}
+                    <ImagePickerButton style={styles.button}
+                        setImage={this.setImage}
+                    >
+                    </ImagePickerButton>
+                    <TouchableHighlight style={styles.button}
                         onPress={this.onRegister.bind(this)}
-                    />
+                    >
+                        <Text style={styles.btnText}>Register</Text>
+                    </TouchableHighlight>
                 </View>
             </KeyboardAvoidingView>
         );
@@ -77,6 +80,7 @@ export default class Register extends Component {
 
 const styles = StyleSheet.create({
     container: {
+        flex:1,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#ecf0f1',
@@ -88,5 +92,20 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'black',
         marginBottom: 10,
+    },
+    button:{
+        width: 200,
+        height: 44,
+        padding: 10,
+        borderWidth: 1,
+        borderColor: 'black',
+        marginBottom: 10,
+        borderRadius: 10,
+        backgroundColor: 'blue',
+    },
+    btnText: {
+        textAlign: 'center',
+        fontSize: 17,
+        color: 'white'
     },
 });

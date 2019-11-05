@@ -16,7 +16,7 @@ export default class Login extends Component {
         const { email, password } = this.state;
         Alert.alert('Credentials', `${email} + ${password}`);
 
-        //open admin page
+        //let user know if login was succesfull
     }
 
     render() {
@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     container: {
+        flex:1,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#ecf0f1',

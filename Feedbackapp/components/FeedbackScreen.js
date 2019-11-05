@@ -164,13 +164,15 @@ export default class FeedbackScreen extends Component {
 
 
                     </View>
-                    <ImagePickerButton setImage={this.setImage}></ImagePickerButton>
+                    <ImagePickerButton style={[styles.button, { backgroundColor: 'orange' }]}
+                        setImage={this.setImage}
+                    ></ImagePickerButton>
                     <SmileSwitcher 
                         smile={this.state.smile}
                         setSmiley={this.setSmiley}
                     >
                     </SmileSwitcher>
-                    <TouchableHighlight style={[styles.button, { backgroundColor: '#0984e3' }]}
+                    <TouchableHighlight  style={[styles.button, { backgroundColor: '#0984e3' }]}
                         onPress={this.submit}
                         underlayColor="#74b9ff">
                         <Text style={styles.btnText}>Submit!</Text>
@@ -206,7 +208,7 @@ const styles = StyleSheet.create({
     },
     button: {
         marginBottom: 20,
-        padding: 10,
+        padding: 100,
         alignSelf: 'center',
         width: Dimensions.get('window').width - 50,
         borderRadius: 10,

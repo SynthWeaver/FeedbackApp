@@ -45,8 +45,9 @@ export default class ImagePickerButton extends Component {
     }
 
     render() {
+        const style = this.props.style
         return (
-            <TouchableHighlight style={[styles.button, { backgroundColor: 'orange' }]}
+            <TouchableHighlight style={[styles.button, style]}
                 onPress={this.imagePickerHandler}
                 underlayColor="#74b9ff">
                 <Text style={styles.btnText}>Choose Photo</Text>
@@ -60,8 +61,8 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         padding: 10,
         alignSelf: 'center',
-        width: Dimensions.get('window').width - 50,
         borderRadius: 10,
+        backgroundColor: "orange",
     },
     btnText: {
         textAlign: 'center',
