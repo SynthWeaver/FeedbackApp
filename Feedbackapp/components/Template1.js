@@ -183,7 +183,7 @@ class Template1 extends Component {
                         setSmiley={this.setSmiley}
                     >
                     </SmileSwitcher>
-                    <TouchableHighlight style={[styles.button, { backgroundColor: '#0984e3' }]}
+                    <TouchableHighlight style={[styles.button,  { backgroundColor: '#0984e3', marginTop : 20 }]}
                                         onPress={this.submit}
                                         underlayColor="#74b9ff">
                         <Text style={styles.btnText}>Submit!</Text>
