@@ -11,11 +11,11 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import ImagePicker from 'react-native-image-picker';
 import DeviceInfo from 'react-native-device-info';
 import RNPickerSelect from 'react-native-picker-select';
 import SmileSwitcher from './smileform/SmileSwitcher';
-import Constants from '../Constants'
+import Constants from '../Constants';
+import ImagePickerButton from './ImagePickerButton';
 
 
 class Template1 extends Component {
@@ -32,9 +32,10 @@ class Template1 extends Component {
             appName: '',
             feedbackType: 'Feedback'
         };
+        
         this.submit = this.submit.bind(this);
-        this.imagePickerHandler = this.imagePickerHandler.bind(this);
         this.setSmiley = this.setSmiley.bind(this);
+        this.setImage = this.setImage.bind(this);
     }
 
 
@@ -101,27 +102,9 @@ class Template1 extends Component {
 
     }
 
-    imagePickerHandler() {
-        const options = {
-            title: "Select Screenshot",
-            storageOptions: {
-                skipBackup: true,
-                path: 'images',
-            },
-        };
-        ImagePicker.showImagePicker(options, (response) => {
-
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            } else {
-                const source = { uri: response.uri };
-
-                this.setState({
-                    image: source
-                });
-            }
+    setImage(source){
+        this.setState({
+            image: source
         });
     }
 
@@ -171,20 +154,17 @@ class Template1 extends Component {
 
 
                     </View>
-
-                    <TouchableHighlight style={[styles.button, { backgroundColor: 'orange' }]}
-                                        onPress={this.imagePickerHandler}
-                                        underlayColor="#74b9ff">
-                        <Text style={styles.btnText}>Choose Photo</Text>
-                    </TouchableHighlight>
-                    <SmileSwitcher
+                    <ImagePickerButton style={[styles.button, { backgroundColor: 'orange' }]}
+                        setImage={this.setImage}
+                    ></ImagePickerButton>
+                    <SmileSwitcher 
                         smile={this.state.smile}
                         setSmiley={this.setSmiley}
                     >
                     </SmileSwitcher>
-                    <TouchableHighlight style={[styles.button, { backgroundColor: '#0984e3' }]}
-                                        onPress={this.submit}
-                                        underlayColor="#74b9ff">
+                    <TouchableHighlight  style={[styles.button, { backgroundColor: '#0984e3' }]}
+                        onPress={this.submit}
+                        underlayColor="#74b9ff">
                         <Text style={styles.btnText}>Submit!</Text>
                     </TouchableHighlight>
                 </View>
@@ -218,7 +198,7 @@ const styles = StyleSheet.create({
     },
     button: {
         marginBottom: 20,
-        padding: 10,
+        padding: 100,
         alignSelf: 'center',
         width: Dimensions.get('window').width - 50,
         borderRadius: 10,

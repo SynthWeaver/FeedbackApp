@@ -6,6 +6,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import _ from 'lodash';
 
 import Login from './components/Login';
+import Register from './components/Register';
 import Templates from './components/Templates'
 import Constants from './Constants'
 
@@ -29,7 +30,8 @@ class DefaultPage extends React.Component {
                     <TouchableOpacity style={[defaultStyles.button, {backgroundColor: '#74b9ff'}]}
                                       onPress={() => this.props.navigation.navigate('Home')}>
                         <Text style={defaultStyles.btnText}>Guest</Text>
-                    </TouchableOpacity><TouchableOpacity style={[defaultStyles.button, {backgroundColor: '#74b9ff'}]}
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[defaultStyles.button, {backgroundColor: '#74b9ff'}]}
                                                          onPress={() => this.props.navigation.navigate('Login')}>
                         <Text style={defaultStyles.btnText}>Admin</Text>
                     </TouchableOpacity>
@@ -222,9 +224,13 @@ const AppNavigator = createStackNavigator(
             screen: HomeScreen,
             path: 'home'
         },
-        Login: {
+        Login:{
             screen: Login,
-            path: 'login'
+            path: 'components/Login'
+        },
+        Register: {
+            screen: Register,
+            path: 'components/Register'
         },
         Details: {
             screen: Templates,
@@ -234,7 +240,6 @@ const AppNavigator = createStackNavigator(
             screen: Templates,
             path: 'applications/:id'
         },
-
     },
     {
         initialRouteName: 'Launch',

@@ -11,7 +11,6 @@ const size = 75;
 const size75 = size*100/185;
 const size50 = size*75/125;
 
-
 export default class Smiley extends Component {
     render() {
         const dVal = "M6 10 Q19 " + this.props.userInput + " 32 10";

@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
-import { Alert, Button, TextInput, View, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { Alert, Button, TextInput, View, StyleSheet, KeyboardAvoidingView,TouchableOpacity, Text } from 'react-native';
 
 export default class Login extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            username: '',
+            email: '',
             password: '',
         };
     }
 
     onLogin() {
-        const { username, password } = this.state;
+        //check email and password
+        const { email, password } = this.state;
+        Alert.alert('Credentials', `${email} + ${password}`);
 
-        Alert.alert('Credentials', `${username} + ${password}`);
+        //let user know if login was succesfull
     }
 
     render() {
@@ -24,9 +26,9 @@ export default class Login extends Component {
                 behavior="padding">
                 <View style={styles.container}>
                     <TextInput
-                        value={this.state.username}
-                        onChangeText={(username) => this.setState({ username })}
-                        placeholder={'Username'}
+                        value={this.state.email}
+                        onChangeText={(email) => this.setState({ email })}
+                        placeholder={'Email'}
                         style={styles.input}
                     />
                     <TextInput
@@ -37,11 +39,19 @@ export default class Login extends Component {
                         style={styles.input}
                     />
 
-                    <Button
-                        title={'Login'}
-                        style={styles.input}
-                        onPress={this.onLogin.bind(this)}
-                    />
+                    <View style={styles.row}>
+                        <Button
+                            title={'Login'}
+                            style={styles.input}
+                            onPress={this.onLogin.bind(this)}
+                        />
+
+                        <Button
+                            title={'Create Account'}
+                            style={styles.input}
+                            onPress={() => this.props.navigation.navigate("Register")}
+                        />
+                    </View>
                 </View>
             </KeyboardAvoidingView>
         );
@@ -51,8 +61,11 @@ export default class Login extends Component {
 }
 
 const styles = StyleSheet.create({
+    row:{
+        flexDirection: 'row',
+    },
     container: {
-        flex: 1,
+        flex:1,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#ecf0f1',
