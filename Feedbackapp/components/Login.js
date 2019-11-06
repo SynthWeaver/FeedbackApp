@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Button, TextInput, View, StyleSheet, KeyboardAvoidingView,TouchableOpacity, Text } from 'react-native';
+import { Alert, Button, TouchableHighlight, TextInput, View, StyleSheet, KeyboardAvoidingView,TouchableOpacity, Text } from 'react-native';
 
 export default class Login extends Component {
     constructor(props) {
@@ -40,17 +40,16 @@ export default class Login extends Component {
                     />
 
                     <View style={styles.row}>
-                        <Button
-                            title={'Login'}
-                            style={styles.input}
+                        <TouchableHighlight style={[styles.button, {padding: 12}]}
                             onPress={this.onLogin.bind(this)}
-                        />
-
-                        <Button
-                            title={'Create Account'}
-                            style={styles.input}
+                        >
+                            <Text style={styles.btnText}>Login</Text>
+                        </TouchableHighlight>
+                        <TouchableHighlight style={[styles.button, {padding: 2}]}
                             onPress={() => this.props.navigation.navigate("Register")}
-                        />
+                        >
+                            <Text style={styles.btnText}>Create Account</Text>
+                        </TouchableHighlight>
                     </View>
                 </View>
             </KeyboardAvoidingView>
@@ -61,14 +60,16 @@ export default class Login extends Component {
 }
 
 const styles = StyleSheet.create({
-    row:{
-        flexDirection: 'row',
-    },
     container: {
         flex:1,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#ecf0f1',
+    },
+    row:{
+        width: 200,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
     input: {
         width: 200,
@@ -77,5 +78,19 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'black',
         marginBottom: 10,
+    },
+    button:{
+        width: 97,
+        height: 52,
+        borderWidth: 1,
+        borderColor: 'black',
+        marginBottom: 10,
+        borderRadius: 10,
+        backgroundColor: '#409eff',
+    },
+    btnText: {
+        textAlign: 'center',
+        fontSize: 17,
+        color: 'white'
     },
 });
