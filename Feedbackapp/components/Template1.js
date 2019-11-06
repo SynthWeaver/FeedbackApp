@@ -9,22 +9,20 @@ import {
     Dimensions,
     Platform
 } from 'react-native';
+import PropTypes from 'prop-types'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ImagePicker from 'react-native-image-picker';
 import DeviceInfo from 'react-native-device-info';
 import RNPickerSelect from 'react-native-picker-select';
 import SmileSwitcher from './smileform/SmileSwitcher';
+import Constants from '../Constants'
 
 
-export default class FeedbackScreen extends Component {
-    static navigationOptions = {
-        title: 'Feedback',
-
-    };
-
+class Template1 extends Component {
     constructor() {
         super();
         this.state = {
+            url: Constants.url,
             modalVisible: false,
             text: '',
             smile: 11,
@@ -39,23 +37,17 @@ export default class FeedbackScreen extends Component {
         this.setSmiley = this.setSmiley.bind(this);
     }
 
-    componentDidMount() {
-        const {navigation} = this.props;
-        // get the name of the selected app and set it in state
-        const appName = navigation.getParam('app', 'default-value');
-        this.setState({appName: appName})
-    }
 
     showToast = () => {
         ToastAndroid.showWithGravityAndOffset(
-          "Your feedback has been sent!",
-          ToastAndroid.LONG,
-          ToastAndroid.BOTTOM,
-          25,
-          50
+            "Your feedback has been sent!",
+            ToastAndroid.LONG,
+            ToastAndroid.BOTTOM,
+            25,
+            50
         );
-      };
-    
+    };
+
 
     submit() {
         // create form data for screenshot
@@ -81,7 +73,7 @@ export default class FeedbackScreen extends Component {
                     deviceOs: Platform.OS
                 });
                 // post the user feedback to the api
-                fetch('http://9e9aada3.ngrok.io/post', {
+                fetch(this.state.url + 'post', {
                     method: 'POST',
                     body: JSON.stringify({
                         feedback: this.state.text,
@@ -97,8 +89,10 @@ export default class FeedbackScreen extends Component {
                     .then(res => console.log(res))
                     .catch(err => console.log(err));
                 this.setState({ text: '' });
-                this.props.navigation.navigate('Home')
-                this.showToast()
+                this.props.navigation.navigate('Home');
+                if (Platform.OS === "android") {
+                    this.showToast()
+                }
             })
         } else {
             Alert.alert("Please fill in the textfield")
@@ -137,32 +131,28 @@ export default class FeedbackScreen extends Component {
             smile: userInput
         });
     }
-
     render() {
         const placeholder = {
             label: 'Select the type of feedback...',
             value: null,
             color: '#9EA0A4',
         };
-        var appText = this.state.appName;
         const imageText = <Icon style={styles.imageIcon} name="paperclip" size={25}/>;
         const noImageText = <Text></Text>;
-
         return (
             <View style={styles.container}>
                 <View>
-
-                    <Text style={styles.modalHeader}>Give us your thoughts about {appText}!</Text>
-                    <TouchableHighlight style={[styles.picker, {backgroundColor: 'white'}]}>
+                    <Text style={styles.modalHeader}>Give us your thoughts!</Text>
+                    <TouchableHighlight style={[styles.picker, {backgroundColor: 'white'}]} >
                         <RNPickerSelect
                             style = {{height: 20}}
                             itemStyle={{height: 44}}
                             placeholder={placeholder}
                             onValueChange={(value) => this.setState({feedbackType: value})}
                             items={[
-                                {label: 'Feedback', value: 'Feedback'},
-                                {label: 'Bug report', value: 'Bug report'},
-                                {label: 'Suggestion', value: 'Suggestion'},
+                                {label: 'Feedback', value: 'feedback'},
+                                {label: 'Bug report', value: 'bugreport'},
+                                {label: 'Suggestion', value: 'suggestion'},
                             ]}
                             Icon={() => {
                                 return <Icon name="arrow-down" size={17} color="gray"/>
@@ -172,36 +162,36 @@ export default class FeedbackScreen extends Component {
                     <View style={styles.searchSection}>
 
                         <TextInput style={styles.txtInput}
-                            numberOfLines={4}
-                            multiline={true} onChangeText={(text) => this.setState({ text })}
-                            value={this.state.text} blurOnSubmit={true}
+                                   numberOfLines={4}
+                                   multiline={true} onChangeText={(text) => this.setState({ text })}
+                                   value={this.state.text} blurOnSubmit={true}
                         />
-                      
-                        <View style = {{paddingTop: 80}}>
-                            {imageText}
+
+                        <View style = {{paddingTop: 110}}>
+                            {(this.state.image ? imageText : noImageText)}
                         </View>
 
 
                     </View>
 
                     <TouchableHighlight style={[styles.button, { backgroundColor: 'orange' }]}
-                        onPress={this.imagePickerHandler}
-                        underlayColor="#74b9ff">
+                                        onPress={this.imagePickerHandler}
+                                        underlayColor="#74b9ff">
                         <Text style={styles.btnText}>Choose Photo</Text>
                     </TouchableHighlight>
-                    <SmileSwitcher 
+                    <SmileSwitcher
                         smile={this.state.smile}
                         setSmiley={this.setSmiley}
                     >
                     </SmileSwitcher>
                     <TouchableHighlight style={[styles.button, { backgroundColor: '#0984e3' }]}
-                        onPress={this.submit}
-                        underlayColor="#74b9ff">
+                                        onPress={this.submit}
+                                        underlayColor="#74b9ff">
                         <Text style={styles.btnText}>Submit!</Text>
                     </TouchableHighlight>
-                </View >
+                </View>
             </View>
-        );
+        )
     }
 }
 
@@ -271,3 +261,9 @@ const styles = StyleSheet.create({
         borderColor: 'gray'
     }
 })
+
+Template1.propTypes = {
+    name: PropTypes.string
+}
+
+export default Template1

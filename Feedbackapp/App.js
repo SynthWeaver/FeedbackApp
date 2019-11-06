@@ -6,8 +6,8 @@ import { createStackNavigator } from 'react-navigation-stack';
 import _ from 'lodash';
 
 import Login from './components/Login';
-import FeedbackScreen from './components/FeedbackScreen';
-import Applications from './components/Applications';
+import Templates from './components/Templates'
+import Constants from './Constants'
 
 const ANIMATION_DURATION = 1000;
 const ROW_HEIGHT = Dimensions.get('window').width / 2.8;
@@ -15,7 +15,7 @@ const ROW_HEIGHT = Dimensions.get('window').width / 2.8;
 
 class DefaultPage extends React.Component {
     static navigationOptions = {
-    title: 'Apps',     
+    title: 'Apps',
     };
 
 
@@ -81,12 +81,13 @@ class HomeScreen extends React.Component {
     constructor(props) {
         super(props);
 
-    }    
+    }
     static navigationOptions = {
         title: 'Home',
     };
     state = {
-        text: ''
+        text: '',
+        url: Constants.url
 
 
     };
@@ -112,8 +113,9 @@ class HomeScreen extends React.Component {
     }
 
     componentDidMount() {
+        console.log(Constants.url);
         //change password to your local db password
-        fetch('http://a39de6a7.ngrok.io/get/apps')
+        fetch(this.state.url + 'get/apps')
             .then((response) => response.json())
             .then((responseJson) => {
 
@@ -158,9 +160,11 @@ class HomeScreen extends React.Component {
             ]}>
                 <TouchableOpacity style={styles.shadow} activeOpacity={.7}
                     onPress={() => this.props.navigation.navigate('Details', {
-                        app: item.appName
+                        appId: item.id,
+                        name: item.appName,
+                        app: item
                     })}>
-                    <Image style={styles.logoicons} source={{ uri: item.logoURL }} />
+                        <Image style={styles.logoicons} source={{ uri: item.logoURL }} />
                 </TouchableOpacity>
             </Animated.View>
         );
@@ -187,7 +191,7 @@ class HomeScreen extends React.Component {
 
                     />
                 </View>
-             
+
                 <View style={{flex: 3}}>
                     <FlatList
                         numColumns={2}
@@ -218,12 +222,16 @@ const AppNavigator = createStackNavigator(
             screen: HomeScreen,
             path: 'home'
         },
+        Login: {
+            screen: Login,
+            path: 'login'
+        },
         Details: {
-            screen: FeedbackScreen,
+            screen: Templates,
             path: 'app/:id'
         },
         Anyname: {
-            screen: Applications,
+            screen: Templates,
             path: 'applications/:id'
         },
 
@@ -281,7 +289,7 @@ const styles = StyleSheet.create({
         height: Dimensions.get('window').width / 3.2,
         width: Dimensions.get('window').width / 2.4,
         borderRadius: 15,
-      
+
     },
     shadow: {
         shadowColor: '#000000',
