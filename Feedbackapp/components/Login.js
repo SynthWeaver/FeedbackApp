@@ -40,12 +40,12 @@ export default class Login extends Component {
                     />
 
                     <View style={styles.row}>
-                        <TouchableHighlight style={[styles.button, {padding: 12}]}
+                        <TouchableHighlight style={styles.button}
                             onPress={this.onLogin.bind(this)}
                         >
                             <Text style={styles.btnText}>Login</Text>
                         </TouchableHighlight>
-                        <TouchableHighlight style={[styles.button, {padding: 2}]}
+                        <TouchableHighlight style={[styles.button, {padding: 0}]}
                             onPress={() => this.props.navigation.navigate("Register")}
                         >
                             <Text style={styles.btnText}>Create Account</Text>
@@ -81,7 +81,8 @@ const styles = StyleSheet.create({
     },
     button:{
         width: 97,
-        height: 52,
+        height: 44,
+        padding: 10,
         borderWidth: 1,
         borderColor: 'black',
         marginBottom: 10,
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
     },
     btnText: {
         textAlign: 'center',
-        fontSize: 17,
+        fontSize: 16,
         color: 'white'
     },
 });
