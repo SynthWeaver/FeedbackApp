@@ -13,8 +13,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import ImagePicker from 'react-native-image-picker';
 import DeviceInfo from 'react-native-device-info';
 import RNPickerSelect from 'react-native-picker-select';
+import SmileSwitcher from './smileform/SmileSwitcher';
 
-import Smile50 from './smileform/SmileyForm'
 
 export default class FeedbackScreen extends Component {
     static navigationOptions = {
@@ -27,7 +27,7 @@ export default class FeedbackScreen extends Component {
         this.state = {
             modalVisible: false,
             text: '',
-            smile: 1,
+            smile: 11,
             image: '',
             deviceInfo: '',
             deviceOs: '',
@@ -35,9 +35,8 @@ export default class FeedbackScreen extends Component {
             feedbackType: 'Feedback'
         };
         this.submit = this.submit.bind(this);
-        this.newSmiley = this.newSmiley.bind(this);
         this.imagePickerHandler = this.imagePickerHandler.bind(this);
-
+        this.setSmiley = this.setSmiley.bind(this);
     }
 
     componentDidMount() {
@@ -47,6 +46,16 @@ export default class FeedbackScreen extends Component {
         this.setState({appName: appName})
     }
 
+    showToast = () => {
+        ToastAndroid.showWithGravityAndOffset(
+          "Your feedback has been sent!",
+          ToastAndroid.LONG,
+          ToastAndroid.BOTTOM,
+          25,
+          50
+        );
+      };
+    
 
     submit() {
         // create form data for screenshot
@@ -75,20 +84,22 @@ export default class FeedbackScreen extends Component {
                 fetch('http://9e9aada3.ngrok.io/post', {
                     method: 'POST',
                     body: JSON.stringify({
-                        app: this.state.appName,
                         feedback: this.state.text,
-                        smiley: this.state.smile,
+                        app: this.state.appName,
                         image: createFormData(this.state.image),
+                        smiley: Math.round((this.state.smile / 2)),
                         device: this.state.deviceInfo,
                         os: this.state.deviceOs,
                         category: this.state.feedbackType
+
                     })
                 })
                     .then(res => console.log(res))
                     .catch(err => console.log(err));
-                this.setState({text: ''});
+                this.setState({ text: '' });
                 this.props.navigation.navigate('Home')
-            });
+                this.showToast()
+            })
         } else {
             Alert.alert("Please fill in the textfield")
         }
@@ -111,7 +122,7 @@ export default class FeedbackScreen extends Component {
             } else if (response.error) {
                 console.log('ImagePicker Error: ', response.error);
             } else {
-                const source = {uri: response.uri};
+                const source = { uri: response.uri };
 
                 this.setState({
                     image: source
@@ -120,8 +131,11 @@ export default class FeedbackScreen extends Component {
         });
     }
 
-    newSmiley(value) {
-        this.setState({smile: value})
+    //update smiley var from components
+    setSmiley(userInput){
+        this.setState({
+            smile: userInput
+        });
     }
 
     render() {
@@ -133,10 +147,12 @@ export default class FeedbackScreen extends Component {
         var appText = this.state.appName;
         const imageText = <Icon style={styles.imageIcon} name="paperclip" size={25}/>;
         const noImageText = <Text></Text>;
+
         return (
             <View style={styles.container}>
                 <View>
-                    <Text style={styles.modalHeader}>Give us your thoughts about {"\n"} {appText}!</Text>
+
+                    <Text style={styles.modalHeader}>Give us your thoughts about {appText}!</Text>
                     <TouchableHighlight style={[styles.picker, {backgroundColor: 'white'}]}>
                         <RNPickerSelect
                             placeholder={placeholder}
@@ -152,27 +168,36 @@ export default class FeedbackScreen extends Component {
                         />
                     </TouchableHighlight>
                     <View style={styles.searchSection}>
+
                         <TextInput style={styles.txtInput}
-                                   placeholder="Your thoughts..."
-                                   numberOfLines={4}
-                                   multiline={true} onChangeText={(text) => this.setState({text})}
-                                   value={this.state.text} blurOnSubmit={true}
+                            numberOfLines={4}
+                            multiline={true} onChangeText={(text) => this.setState({ text })}
+                            value={this.state.text} blurOnSubmit={true}
                         />
-                        {this.state.image ? imageText : noImageText}
+                      
+                        <View style = {{paddingTop: 110}}>
+                            {imageText}
+                        </View>
+
+
                     </View>
 
-                    <TouchableHighlight style={[styles.button, {backgroundColor: 'orange'}]}
-                                        onPress={this.imagePickerHandler}
-                                        underlayColor="#74b9ff">
+                    <TouchableHighlight style={[styles.button, { backgroundColor: 'orange' }]}
+                        onPress={this.imagePickerHandler}
+                        underlayColor="#74b9ff">
                         <Text style={styles.btnText}>Choose Photo</Text>
                     </TouchableHighlight>
-                    <Smile50 onNewSmiley={this.newSmiley}/>
-                    <TouchableHighlight style={[styles.button, {backgroundColor: '#0984e3'}]}
-                                        onPress={this.submit}
-                                        underlayColor="#74b9ff">
+                    <SmileSwitcher 
+                        smile={this.state.smile}
+                        setSmiley={this.setSmiley}
+                    >
+                    </SmileSwitcher>
+                    <TouchableHighlight style={[styles.button, { backgroundColor: '#0984e3' }]}
+                        onPress={this.submit}
+                        underlayColor="#74b9ff">
                         <Text style={styles.btnText}>Submit!</Text>
                     </TouchableHighlight>
-                </View>
+                </View >
             </View>
         );
     }
@@ -233,9 +258,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: '#fff',
         padding: 5,
-        margin: 20,
-        height: 40
-
+        margin: 10,
     },
     picker: {
         padding: 10,
@@ -246,4 +269,3 @@ const styles = StyleSheet.create({
         borderColor: 'gray'
     }
 })
-

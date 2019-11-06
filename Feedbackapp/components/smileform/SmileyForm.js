@@ -11,9 +11,8 @@ import Svg,{
     Path
 } from 'react-native-svg';
 import PropTypes from 'prop-types';
-const size = 75;
-const size75 = size*100/185;
-const size50 = size*75/125;
+import Smiley from './Smiley';
+
 import * as scale from 'd3-scale';
 const d3 = {
     scale
@@ -33,58 +32,27 @@ var multiLine = d3.scale.scaleLinear()
 export default class Smile50 extends Component {
     constructor() {
         super();
-        this.state = {
-            val: 1,
-            smile: 1
-        }
         this.getVal = this.getVal.bind(this)
     }
 
-    slidingChange(val) {
-        this.setState({ val })
-    }
+    //on slide change
     getVal(val){
-        this.setState({ val })
-        this.setState({ smile: val })
-        var value = parseInt(multiLine(this.state.val));
-        this.props.onNewSmiley(value)
+        this.props.setSmiley(val)
     }
+
     render() {
-        const val = this.state.smile;
-        const dVal = "M6 10 Q19 "+val+" 32 10";
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>
                     How do you feel about the App?
                 </Text>
-
-                <ImageBackground
-                    style={{width: size, height: size}}
-                    source={require('../../facenomouth.png')}
-                >
-                    <Svg
-                        height={size75}
-                        width={size75}
-                        style={{alignSelf: "center", marginTop: size50}}
-                    >
-                        <Path
-                            d={dVal}
-                            fill="none"
-                            stroke="red"
-                            strokeWidth="3"
-                        />
-                    </Svg>
-                </ImageBackground>
-                <Text style={styles.rating}>
-                    { parseInt(multiLine(this.state.val)) }
-                </Text>
+                <Smiley userInput={this.props.smile}></Smiley>
                 <Slider
                     style={{ width: 200, transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] }}
                     step={1}
                     minimumValue={1}
-                    maximumValue={25}
-                    value={this.state.val}
-                    onValueChange={val => this.slidingChange(val)}
+                    maximumValue={20}
+                    value={this.props.smile}
                     onSlidingComplete={ smile => this.getVal(smile)}
                 />
             </View>
@@ -107,6 +75,7 @@ const styles = StyleSheet.create({
         fontSize: 27,
         textAlign: 'center',
         margin: 20,
+        marginTop: 0
     },
     rating: {
         textAlign: 'center',
