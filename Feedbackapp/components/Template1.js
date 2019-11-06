@@ -39,6 +39,7 @@ class Template1 extends Component {
 
 
     showToast = () => {
+        if(Platform.OS === 'android'){
         ToastAndroid.showWithGravityAndOffset(
             "Your feedback has been sent!",
             ToastAndroid.LONG,
@@ -46,6 +47,7 @@ class Template1 extends Component {
             25,
             50
         );
+        }
     };
 
 
@@ -138,7 +140,8 @@ class Template1 extends Component {
             color: '#9EA0A4',
         };
         const imageText = <Icon style={styles.imageIcon} name="paperclip" size={25}/>;
-        const noImageText = <Text></Text>;
+        const noImageText =<View style = {{height: 0, width: 0}}></View>;
+        const imageDropdown = <Icon name="arrow-down" size={17} color="gray"/>;
         return (
             <View style={styles.container}>
                 <View>
@@ -154,23 +157,19 @@ class Template1 extends Component {
                                 {label: 'Bug report', value: 'bugreport'},
                                 {label: 'Suggestion', value: 'suggestion'},
                             ]}
-                            Icon={() => {
-                                return <Icon name="arrow-down" size={17} color="gray"/>
-                            }}
+                            Icon={() => (Platform.OS === 'ios' ? imageDropdown : noImageText)}
                         />
                     </TouchableHighlight>
                     <View style={styles.searchSection}>
-
+                    {(this.state.image ? imageText : noImageText)}
                         <TextInput style={styles.txtInput}
                                    numberOfLines={4}
                                    multiline={true} onChangeText={(text) => this.setState({ text })}
-                                   value={this.state.text} blurOnSubmit={true}
+                                   value={this.state.text} blurOnSubmit={true} scrollEnable={true}
                         />
-
-                        <View style = {{paddingTop: 110}}>
-                            {(this.state.image ? imageText : noImageText)}
-                        </View>
-
+                       
+                            
+                      
 
                     </View>
 
@@ -213,10 +212,14 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     txtInput: {
+        zIndex : 0,
         padding: 5,
         margin: 5,
         width: Dimensions.get('window').width - 50,
-        height: 110
+        
+        minHeight: 110,
+        height: 110,
+        textAlignVertical: 'top',
     },
     button: {
         marginBottom: 20,
@@ -237,15 +240,20 @@ const styles = StyleSheet.create({
         height: 70
     },
     imageIcon: {
-        padding: 10,
-        alignSelf: 'flex-start',
-        color: 'gray'
+        alignSelf: 'flex-end',
+        color: 'gray',
+        zIndex : 99,
+        position: 'absolute',
+        padding: 5
+       
     },
     searchSection: {
+
         flex: 0.5,
         flexDirection: 'column',
         justifyContent: 'space-between',
         borderColor: 'gray',
+        
         borderWidth: 1,
         borderRadius: 10,
         backgroundColor: '#fff',
@@ -253,7 +261,7 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     picker: {
-        padding: 10,
+    
         marginLeft: 20,
         marginRight: 20,
         borderWidth: 1,

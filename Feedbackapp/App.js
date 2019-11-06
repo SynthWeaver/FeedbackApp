@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, Button, StyleSheet, KeyboardAvoidingView, Image, Dimensions, FlatList, TouchableOpacity, TextInput, Animated } from 'react-native';
+import { View, Text, Button, StyleSheet, KeyboardAvoidingView, Image, Dimensions, FlatList, TouchableOpacity, TextInput, Animated,Platform } from 'react-native';
 import { SearchBar } from 'react-native-elements'
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -44,9 +44,18 @@ const defaultStyles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'space-around',
+        
     },
     btnContainer: {
-        flex: 0.35,
+        ...Platform.select({
+            ios: {
+                flex: 0.35,     
+            },
+            android:{
+                flex: 0.45,
+            },
+        }),
+            
         flexDirection: 'column',
         justifyContent: 'center',
         margin: 10,
