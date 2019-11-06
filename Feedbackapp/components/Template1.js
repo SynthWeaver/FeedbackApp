@@ -80,7 +80,7 @@ class Template1 extends Component {
                         feedback: this.state.text,
                         app: this.state.appName,
                         image: createFormData(this.state.image),
-                        smiley: Math.round((this.state.smile / 2)),
+                        smiley: this.state.smile,
                         device: this.state.deviceInfo,
                         os: this.state.deviceOs,
                         category: this.state.feedbackType
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     },
     button: {
         marginBottom: 20,
-        padding: 100,
+        padding: 10,
         alignSelf: 'center',
         width: Dimensions.get('window').width - 50,
         borderRadius: 10,

@@ -2,12 +2,7 @@ import React, { Component } from 'react';
 import {
     Text,
     TouchableHighlight,
-    View,
-    Alert,
-    TextInput,
     StyleSheet,
-    Dimensions,
-    Platform
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 

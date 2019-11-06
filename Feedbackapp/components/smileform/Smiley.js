@@ -13,7 +13,7 @@ const size50 = size*75/125;
 
 export default class Smiley extends Component {
     render() {
-        const dVal = "M6 10 Q19 " + this.props.userInput + " 32 10";
+        const dVal = "M6 10 Q19 " + (this.props.userInput * 2) + " 32 10";
         return (
             <View style={styles.container}>
                 <ImageBackground

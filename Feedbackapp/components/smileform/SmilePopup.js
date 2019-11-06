@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import {
     StyleSheet,
-    Text,
     View,
-    Slider,
-    Image,
-    ImageBackground,
-    TouchableOpacity
+    TouchableOpacity,
 } from 'react-native';
 
 import Smiley from './Smiley'
@@ -27,7 +23,7 @@ export default class SmilePopup extends Component {
     }
     
     render() {
-        var userInput = [1, 11, 15, 20];
+        var userInput = [1, 6, 8, 10];
         var component = [];
 
         for (let i = 0; i < userInput.length; i++) {
