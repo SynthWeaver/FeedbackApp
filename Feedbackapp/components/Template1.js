@@ -19,8 +19,8 @@ import Constants from '../Constants'
 
 
 class Template1 extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             url: Constants.url,
             modalVisible: false,
@@ -29,7 +29,7 @@ class Template1 extends Component {
             image: '',
             deviceInfo: '',
             deviceOs: '',
-            appName: '',
+            appName: props.appName,
             feedbackType: 'Feedback'
         };
         this.submit = this.submit.bind(this);
