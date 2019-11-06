@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         marginBottom: 10,
         borderRadius: 10,
-        backgroundColor: 'blue',
+        backgroundColor: '#409eff',
     },
     btnText: {
         textAlign: 'center',
