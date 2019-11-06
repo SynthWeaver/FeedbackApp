@@ -38,15 +38,15 @@ class Template1 extends Component {
     }
 
 
-    showToast = () => {
-        ToastAndroid.showWithGravityAndOffset(
-            "Your feedback has been sent!",
-            ToastAndroid.LONG,
-            ToastAndroid.BOTTOM,
-            25,
-            50
-        );
-    };
+    // showToast = () => {
+    //     ToastAndroid.showWithGravityAndOffset(
+    //         "Your feedback has been sent!",
+    //         ToastAndroid.LONG,
+    //         ToastAndroid.BOTTOM,
+    //         25,
+    //         50
+    //     );
+    // };
 
 
     submit() {
@@ -90,9 +90,9 @@ class Template1 extends Component {
                     .catch(err => console.log(err));
                 this.setState({ text: '' });
                 this.props.navigation.navigate('Home');
-                if (Platform.OS === "android") {
-                    this.showToast()
-                }
+                // if (Platform.OS === "android") {
+                //     this.showToast()
+                // }
             })
         } else {
             Alert.alert("Please fill in the textfield")
