@@ -155,6 +155,8 @@ export default class FeedbackScreen extends Component {
                     <Text style={styles.modalHeader}>Give us your thoughts about {appText}!</Text>
                     <TouchableHighlight style={[styles.picker, {backgroundColor: 'white'}]}>
                         <RNPickerSelect
+                            style = {{height: 20}}
+                            itemStyle={{height: 44}}
                             placeholder={placeholder}
                             onValueChange={(value) => this.setState({feedbackType: value})}
                             items={[
@@ -175,7 +177,7 @@ export default class FeedbackScreen extends Component {
                             value={this.state.text} blurOnSubmit={true}
                         />
                       
-                        <View style = {{paddingTop: 110}}>
+                        <View style = {{paddingTop: 80}}>
                             {imageText}
                         </View>
 
