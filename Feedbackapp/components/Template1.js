@@ -92,9 +92,9 @@ class Template1 extends Component {
                     .catch(err => console.log(err));
                 this.setState({ text: '' });
                 this.props.navigation.navigate('Home');
-                if (Platform.OS === "android") {
-                    this.showToast()
-                }
+                // if (Platform.OS === "android") {
+                //     this.showToast()
+                // }
             })
         } else {
             Alert.alert("Please fill in the textfield")
@@ -167,9 +167,9 @@ class Template1 extends Component {
                                    multiline={true} onChangeText={(text) => this.setState({ text })}
                                    value={this.state.text} blurOnSubmit={true} scrollEnable={true}
                         />
-                       
-                            
-                      
+
+
+
 
                     </View>
 
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
         padding: 5,
         margin: 5,
         width: Dimensions.get('window').width - 50,
-        
+
         minHeight: 110,
         height: 110,
         textAlignVertical: 'top',
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
         zIndex : 99,
         position: 'absolute',
         padding: 5
-       
+
     },
     searchSection: {
 
@@ -253,7 +253,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-between',
         borderColor: 'gray',
-        
+
         borderWidth: 1,
         borderRadius: 10,
         backgroundColor: '#fff',
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     picker: {
-    
+
         marginLeft: 20,
         marginRight: 20,
         borderWidth: 1,

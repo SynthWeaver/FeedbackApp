@@ -61,11 +61,11 @@ class Templates extends Component {
         var app = (this.state.data[0] ? this.state.data[0] : this.state.data);
         switch (app.template) {
             case "Template1" :
-                return <Template1 appName={app.appName}/>;
+                return <Template1 appName={app.appName} navigation={this.props.navigation}/>;
             case "Template2" :
-                return <Template2 appName={app.appName}/>;
+                return <Template2 appName={app.appName} navigation={this.props.navigation}/>;
             case "Template3" :
-                return <Template3 appName={app.appName}/>;
+                return <Template3 appName={app.appName} navigation={this.props.navigation}/>;
         }
     }
 }
