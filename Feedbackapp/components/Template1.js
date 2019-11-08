@@ -37,7 +37,8 @@ class Template1 extends Component {
         this.setSmiley = this.setSmiley.bind(this);
     }
 
-
+    //Toast messages show up when the user has succesfully sent feedback for an app. 
+    //This method works with OS Android only
     showToast = () => {
         if(Platform.OS === 'android'){
         ToastAndroid.showWithGravityAndOffset(
