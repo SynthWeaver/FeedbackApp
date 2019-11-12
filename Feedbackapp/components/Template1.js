@@ -37,16 +37,19 @@ class Template1 extends Component {
         this.setSmiley = this.setSmiley.bind(this);
     }
 
-
-    // showToast = () => {
-    //     ToastAndroid.showWithGravityAndOffset(
-    //         "Your feedback has been sent!",
-    //         ToastAndroid.LONG,
-    //         ToastAndroid.BOTTOM,
-    //         25,
-    //         50
-    //     );
-    // };
+    //Toast messages show up when the user has succesfully sent feedback for an app. 
+    //This method works with OS Android only
+    showToast = () => {
+        if(Platform.OS === 'android'){
+        ToastAndroid.showWithGravityAndOffset(
+            "Your feedback has been sent!",
+            ToastAndroid.LONG,
+            ToastAndroid.BOTTOM,
+            25,
+            50
+        );
+        }
+    };
 
 
     submit() {
@@ -138,13 +141,16 @@ class Template1 extends Component {
             color: '#9EA0A4',
         };
         const imageText = <Icon style={styles.imageIcon} name="paperclip" size={25}/>;
-        const noImageText = <Text></Text>;
+        const noImageText =<View style = {{height: 0, width: 0}}></View>;
+        const imageDropdown = <Icon name="arrow-down" size={17} color="gray"/>;
         return (
             <View style={styles.container}>
                 <View>
                     <Text style={styles.modalHeader}>Give us your thoughts!</Text>
                     <TouchableHighlight style={[styles.picker, {backgroundColor: 'white'}]} >
                         <RNPickerSelect
+                            style = {{height: 20}}
+                            itemStyle={{height: 44}}
                             placeholder={placeholder}
                             onValueChange={(value) => this.setState({feedbackType: value})}
                             items={[
@@ -152,22 +158,18 @@ class Template1 extends Component {
                                 {label: 'Bug report', value: 'bugreport'},
                                 {label: 'Suggestion', value: 'suggestion'},
                             ]}
-                            Icon={() => {
-                                return <Icon name="arrow-down" size={17} color="gray"/>
-                            }}
+                            Icon={() => (Platform.OS === 'ios' ? imageDropdown : noImageText)}
                         />
                     </TouchableHighlight>
                     <View style={styles.searchSection}>
-
+                    {(this.state.image ? imageText : noImageText)}
                         <TextInput style={styles.txtInput}
                                    numberOfLines={4}
                                    multiline={true} onChangeText={(text) => this.setState({ text })}
-                                   value={this.state.text} blurOnSubmit={true}
+                                   value={this.state.text} blurOnSubmit={true} scrollEnable={true}
                         />
 
-                        <View style = {{paddingTop: 110}}>
-                            {(this.state.image ? imageText : noImageText)}
-                        </View>
+
 
 
                     </View>
@@ -182,7 +184,7 @@ class Template1 extends Component {
                         setSmiley={this.setSmiley}
                     >
                     </SmileSwitcher>
-                    <TouchableHighlight style={[styles.button, { backgroundColor: '#0984e3' }]}
+                    <TouchableHighlight style={[styles.button,  { backgroundColor: '#0984e3', marginTop : 20 }]}
                                         onPress={this.submit}
                                         underlayColor="#74b9ff">
                         <Text style={styles.btnText}>Submit!</Text>
@@ -211,10 +213,14 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     txtInput: {
+        zIndex : 0,
         padding: 5,
         margin: 5,
         width: Dimensions.get('window').width - 50,
-        height: 110
+
+        minHeight: 110,
+        height: 110,
+        textAlignVertical: 'top',
     },
     button: {
         marginBottom: 20,
@@ -235,15 +241,20 @@ const styles = StyleSheet.create({
         height: 70
     },
     imageIcon: {
-        padding: 10,
-        alignSelf: 'flex-start',
-        color: 'gray'
+        alignSelf: 'flex-end',
+        color: 'gray',
+        zIndex : 99,
+        position: 'absolute',
+        padding: 5
+
     },
     searchSection: {
+
         flex: 0.5,
         flexDirection: 'column',
         justifyContent: 'space-between',
         borderColor: 'gray',
+
         borderWidth: 1,
         borderRadius: 10,
         backgroundColor: '#fff',
@@ -251,7 +262,7 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     picker: {
-        padding: 10,
+
         marginLeft: 20,
         marginRight: 20,
         borderWidth: 1,
