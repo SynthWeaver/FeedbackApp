@@ -24,7 +24,6 @@ class Templates extends Component {
         super(props);
         var id = props.navigation.state.params;
         this.state = {
-            url: Constants.url,
             appId: id.id
         }
     }
@@ -33,7 +32,7 @@ class Templates extends Component {
     componentDidMount() {
         // If the user opens an app through the deep link don't fetch from api
         if (!this.props.navigation.getParam('name')) {
-            return fetch(this.state.url + 'get/apps/' + this.state.appId)
+            return fetch(Constants.url + 'get/apps/' + this.state.appId)
                 .then((response) => response.json())
                 .then((responseJson) => {
                     this.setState({

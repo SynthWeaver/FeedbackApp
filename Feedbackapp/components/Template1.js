@@ -22,7 +22,6 @@ class Template1 extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            url: Constants.url,
             modalVisible: false,
             text: '',
             smile: 11,
@@ -76,7 +75,7 @@ class Template1 extends Component {
                     deviceOs: Platform.OS
                 });
                 // post the user feedback to the api
-                fetch(this.state.url + 'post', {
+                fetch(Constants.url+ 'post', {
                     method: 'POST',
                     body: JSON.stringify({
                         feedback: this.state.text,
