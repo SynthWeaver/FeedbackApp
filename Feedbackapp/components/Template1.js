@@ -37,7 +37,7 @@ class Template1 extends Component {
         this.setSmiley = this.setSmiley.bind(this);
     }
 
-    //Toast messages show up when the user has succesfully sent feedback for an app. 
+    //Toast messages show up when the user has succesfully sent feedback for an app.
     //This method works with OS Android only
     showToast = () => {
         if(Platform.OS === 'android'){
@@ -262,12 +262,12 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     picker: {
-
         marginLeft: 20,
         marginRight: 20,
         borderWidth: 1,
         borderRadius: 10,
-        borderColor: 'gray'
+        borderColor: 'gray',
+        padding: 10
     }
 })
 
