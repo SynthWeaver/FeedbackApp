@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     },
     button: {
         borderRadius: 10,
-        padding: 20,
+        padding: 15 ,
         margin: 10,
         justifyContent: 'center'
     },
