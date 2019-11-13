@@ -2,31 +2,49 @@ import React, { Component } from 'react';
 import { Alert, Button, TextInput, View, StyleSheet, KeyboardAvoidingView, Dimensions, TouchableHighlight, Text } from 'react-native';
 import ImagePickerButton from './ImagePickerButton';
 
+import { Base64 } from 'js-base64';
+
 export default class Register extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            email: '',
-            companyName: '',
+            appName: '',
+            logoURL: '',
+            template: '',
             password: '',
             password2: '',
-            image: '',
         };
 
         this.setImage = this.setImage.bind(this);
+        this.encrypt = this.encrypt.bind(this);
     }
 
-    setImage(source){
+    setImage(url){
         this.setState({
-            image: source
+            logoURL: url
         });
     }
 
-    onRegister() {
-        const { email, password, password2, companyName } = this.state;
+    encrypt(stringToEncrypt){
+        return Base64.encode(stringToEncrypt);
+    }
 
-        Alert.alert('Credentials', `${email} + ${password} + ${password2} + ${companyName}`);
+    onRegister() {
+        //get all data
+        const { appName, logoURL, template, password, password2} = this.state;
+
+        //compare passwords
+        if(password !== password2){
+            alert("Passwords are not the same");
+            return;
+        }
+
+        //encrypt password
+        var encryptedPassword = this.encrypt(password);
+
+        //do a post to the rest server
+        alert(encryptedPassword);
     }
 
     render() {
@@ -36,15 +54,9 @@ export default class Register extends Component {
                 behavior="padding">
                 <View style={styles.container}>
                     <TextInput
-                        value={this.state.email}
-                        onChangeText={(email) => this.setState({ email })}
-                        placeholder={'Email'}
-                        style={styles.input}
-                    />
-                    <TextInput
-                        value={this.state.companyName}
-                        onChangeText={(companyName) => this.setState({ companyName })}
-                        placeholder={'Company Name'}
+                        value={this.state.appName}
+                        onChangeText={(appName) => this.setState({ appName })}
+                        placeholder={'Compamy Name'}
                         style={styles.input}
                     />
                     <TextInput
@@ -61,6 +73,13 @@ export default class Register extends Component {
                         secureTextEntry={true}
                         style={styles.input}
                     />
+                    <TextInput
+                        value={this.state.template}
+                        onChangeText={(template) => this.setState({ template })}
+                        placeholder={'template'}
+                        secureTextEntry={true}
+                        style={styles.input}
+                    />
                     <ImagePickerButton style={styles.button}
                         setImage={this.setImage}
                     >
@@ -74,8 +93,6 @@ export default class Register extends Component {
             </KeyboardAvoidingView>
         );
     }
-
-
 }
 
 const styles = StyleSheet.create({
