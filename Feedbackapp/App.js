@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, Button, StyleSheet, KeyboardAvoidingView, Image, Dimensions, FlatList, TouchableOpacity, TextInput, Animated } from 'react-native';
+import { View, Text, Button, StyleSheet, KeyboardAvoidingView, Image, Dimensions, FlatList, TouchableOpacity, TextInput, Animated,Platform } from 'react-native';
 import { SearchBar } from 'react-native-elements'
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -46,9 +46,18 @@ const defaultStyles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'space-around',
+        
     },
     btnContainer: {
-        flex: 0.35,
+        ...Platform.select({
+            ios: {
+                flex: 0.35,     
+            },
+            android:{
+                flex: 0.45,
+            },
+        }),
+            
         flexDirection: 'column',
         justifyContent: 'center',
         margin: 10,
@@ -79,6 +88,7 @@ const defaultStyles = StyleSheet.create({
 })
 
 class HomeScreen extends React.Component {
+    //Property _animated is needed for the animation inside the flatlist (renderItem function)
     _animated = new Animated.Value(0);
     constructor(props) {
         super(props);
@@ -96,7 +106,7 @@ class HomeScreen extends React.Component {
     arrayholder = [];
 
 
-
+    //The textinput in the homescreen makes use of the SearchFilterFunction matching the application name with the searchquery
     SearchFilterFunction(text) {
         //passing the inserted text in textinput
         const newData = this.arrayholder.filter(function (item) {
@@ -133,6 +143,9 @@ class HomeScreen extends React.Component {
                 console.error(error)
         })
     }
+
+    //renderItem makes sure that every icon in the flatlist on the homescreen gets rendered. In this method we use
+    //an Animated.View to make it appear with an animation. 
     renderItem = ({ item }) => {
         return (
 
@@ -164,7 +177,8 @@ class HomeScreen extends React.Component {
                     onPress={() => this.props.navigation.navigate('Details', {
                         appId: item.id,
                         name: item.appName,
-                        app: item
+                        app: item,
+                        logo: item.logoURL
                     })}>
                         <Image style={styles.logoicons} source={{ uri: item.logoURL }} />
                 </TouchableOpacity>
@@ -174,7 +188,6 @@ class HomeScreen extends React.Component {
 
 
     render() {
-
         Animated.timing(this._animated, {
             toValue: 1,
             duration: ANIMATION_DURATION,
@@ -213,7 +226,8 @@ class HomeScreen extends React.Component {
 }
 
 
-
+//Just a simple StackNavigator with the name of the screens, followed by the path. To enable screens for deep linking from outside
+//of the application, like web, or linking from other applications, AndroidManifest.xml should be edited.  
 const AppNavigator = createStackNavigator(
     {
         Launch: {
