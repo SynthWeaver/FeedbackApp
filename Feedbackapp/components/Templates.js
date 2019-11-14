@@ -15,7 +15,11 @@ import Constants from '../Constants'
 class Templates extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
-            title: navigation.getParam('name')
+            title: navigation.getParam('name'),
+            headerTintColor: 'white',
+            headerStyle: {
+                backgroundColor: '#474747',
+            },
         };
     };
 

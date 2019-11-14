@@ -17,6 +17,10 @@ export default class HomeScreen extends React.Component {
     }
     static navigationOptions = {
         title: 'Apps',
+        headerTintColor: 'white',
+        headerStyle: {
+            backgroundColor: '#474747',
+        },
     };
     state = {
         text: ''
@@ -118,7 +122,7 @@ export default class HomeScreen extends React.Component {
             <View style={styles.container}>
                 <View style={styles.search}>
                     <SearchBar
-                        lightTheme={true}
+                        lightTheme={false}
                         placeholder="Search for app..."
                         value={this.state.text}
                         onChangeText={text => this.SearchFilterFunction(text)}

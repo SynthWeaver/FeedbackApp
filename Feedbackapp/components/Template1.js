@@ -197,7 +197,7 @@ class Template1 extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ecf0f1',
+        backgroundColor: '#313131',
         flexDirection: 'row',
         justifyContent: 'center',
     },
@@ -209,6 +209,7 @@ const styles = StyleSheet.create({
     modalHeader: {
         fontSize: 27,
         marginBottom: 10,
+        color: 'white',
         textAlign: 'center'
     },
     txtInput: {

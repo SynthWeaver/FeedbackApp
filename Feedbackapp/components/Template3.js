@@ -67,11 +67,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 5,
         padding: 10,
-        backgroundColor: '#ecf0f1'
+        backgroundColor: '#313131'
     },
     header: {
         fontSize: 20,
         margin: 10,
+        color: 'white',
         fontWeight: 'bold'
     },
     questionSection: {
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
     },
     list: {
         // paddingBottom: 50,
-        backgroundColor: '#ecf0f1',
+        backgroundColor: '#313131',
         justifyContent: 'space-around',
     },
 })

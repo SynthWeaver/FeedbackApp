@@ -14,33 +14,7 @@ import {
 import DeviceInfo from "react-native-device-info";
 import Constants from "../Constants";
 
-const features = [
-    {
-        type: 'option',
-        value: 'Gestures',
-        active: false
-    },
-    {
-        type: 'option',
-        value: 'Layout',
-        active: false
-    },
-    {
-        type: 'option',
-        value: 'Overall Flow',
-        active: false
-    },
-    {
-        type: 'option',
-        value: 'Performance',
-        active: false
-    },
-    {
-        type: 'input',
-        value: 'Other...',
-        active: false
-    }
-];
+
 class Template2 extends Component {
     constructor(props) {
         super(props);
@@ -48,7 +22,8 @@ class Template2 extends Component {
             loadTextInput: false,
             appName: props.appName,
             configData: props.config,
-            featureHeader: ''
+            featureHeader: '',
+            loadInputSection: false
         };
         this.sendFeedback = this.sendFeedback.bind(this);
     }
@@ -65,8 +40,7 @@ class Template2 extends Component {
         }
         var data = even.concat(uneven);
         this.setState({
-            data: data,
-            features: features
+            data: data
         })
     }
 
@@ -99,9 +73,6 @@ class Template2 extends Component {
                 .then(res => console.log(res))
                 .catch(err => console.log(err));
             this.props.navigation.navigate('Home');
-            // if (Platform.OS === "android") {
-            //     this.showToast()
-            // }
         })
     }
 
@@ -125,26 +96,51 @@ class Template2 extends Component {
         )
     }
 
+
     renderButtonItem = ({item}) => {
-        if (item.featureConfig !== 'Other...') {
-            return (
-                <TouchableHighlight style={[styles.button, {backgroundColor: 'white', borderWidth: 3, borderColor: 'gray'}]} onPress={() => {
+        return (
+            <TouchableHighlight style={item.active ? [styles.button, {
+                backgroundColor: '#e67e22'
+            }] : [styles.button, {backgroundColor: 'orange'}]} onPress={() => {
+                this.state.configData.forEach((element) => {
+                    element.active = false;
+                })
+                item.active = !item.active;
+                if (item.featureConfig !== 'Other...') {
                     this.setState({
-                        featurePick: item.featureConfig
+                        featurePick: item.featureConfig,
+                        loadInputSection: false
                     })
-                }}>
-                    <Text>{item.featureConfig}</Text>
-                </TouchableHighlight>
-            )
-        } else {
-            return (
-                <View style={styles.inputSection}>
-                    <TextInput placeholder={item.featureConfig}/>
-                </View>
-            )
-        }
+                } else {
+                    this.setState({
+                        loadInputSection: true
+                    })
+                }
+
+            }}>
+                <Text style={{color: 'white', fontWeight: 'bold'}}>{item.featureConfig}</Text>
+            </TouchableHighlight>
+        )
 
     }
+
+
+    renderListHeader() {
+        return (
+            <Text style={styles.listHeader}>Rate Our App</Text>
+        )
+    }
+
+    renderListFooter() {
+        return (
+            <View
+                style={{flexDirection: 'row', justifyContent: 'space-between', width: Dimensions.get('window').width}}>
+                <Text style={{margin: 10, color: 'white'}}>Really Bad</Text>
+                <Text style={{margin: 10, color: 'white'}}>Really Good</Text>
+            </View>
+        )
+    }
+
 
     render() {
         if (!this.state.data) {
@@ -163,20 +159,27 @@ class Template2 extends Component {
                     contentContainerStyle={styles.list}
                     data={this.state.data}
                     extractData={this.state}
+                    ListHeaderComponent={this.renderListHeader}
+                    ListFooterComponent={this.renderListFooter}
                     renderItem={this.renderItem}/>
-                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                    <Text style={{margin: 10}}>Really Bad</Text>
-                    <Text style={{margin: 10}}>Really Good</Text>
-                </View>
                 {this.state.loadTextInput ? <View style={styles.btnContainer}>
-                    <Text style={styles.featureText}>{this.state.featureHeader}</Text>
+                    <Text style={styles.listHeader}>{this.state.featureHeader}</Text>
                     <FlatList numColumns={2}
                               horizontal={false}
                               contentContainerStyle={styles.btnList}
                               data={this.state.configData}
+                              extractData={this.state}
                               renderItem={this.renderButtonItem}/>
+                    {this.state.loadInputSection ? <View style={styles.inputSection}>
+                        <TextInput style={{color: 'white'}}
+                                   placeholder="Type your feature..."
+                                   placeholderTextColor="#C3C3C3"
+                                   onChangeText={(text) => this.setState({featurePick: text})} />
+                    </View> : <View/>}
                 </View> : <View style={styles.btnContainer}/>}
-                <Button title="Submit" onPress={this.sendFeedback}/>
+                <View style={{flex: 1, justifyContent: 'center'}}>
+                    <Button title="Submit" onPress={this.sendFeedback}/>
+                </View>
             </View>
         )
 
@@ -184,14 +187,20 @@ class Template2 extends Component {
 }
 
 const styles = StyleSheet.create({
+    listHeader: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 17,
+        margin: 10
+    },
     container: {
         flex: 6,
-        backgroundColor: '#ecf0f1',
+        backgroundColor: '#313131',
         flexDirection: 'column',
         justifyContent: 'center',
     },
     btnContainer: {
-        flex: 3,
+        flex: 1.7,
         marginTop: 20,
         alignItems: 'center',
         justifyContent: 'center'
@@ -225,23 +234,18 @@ const styles = StyleSheet.create({
         margin: 10,
         justifyContent: 'center'
     },
-    featureText: {
-        fontSize: 25,
-        alignSelf: 'center'
-    },
     inputSection: {
-        borderColor: 'gray',
-        borderWidth: 3,
-        borderRadius: 10,
-        backgroundColor: '#fff',
-        padding: 20,
+        borderBottomColor: 'gray',
+        borderBottomWidth: 3,
+        padding: 10,
         margin: 10,
-        width: Dimensions.get('window').width - 55
+        justifyContent: 'flex-start',
+        alignSelf: 'stretch'
     },
     list: {
         flex: 1,
         // paddingBottom: 50,
-        backgroundColor: '#ffffff',
+        backgroundColor: '#5f5f5f',
         justifyContent: 'space-around',
         alignItems: 'center',
     },
@@ -251,5 +255,6 @@ const styles = StyleSheet.create({
         color: 'white'
     },
 })
+
 
 export default Template2
