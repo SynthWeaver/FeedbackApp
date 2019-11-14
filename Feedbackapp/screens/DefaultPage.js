@@ -3,7 +3,7 @@ import {Dimensions, Image, Platform, StyleSheet, Text, TouchableOpacity, View} f
 
 export default class DefaultPage extends React.Component {
     static navigationOptions = {
-        title: 'Apps',
+        title: 'Home',
     };
 
 

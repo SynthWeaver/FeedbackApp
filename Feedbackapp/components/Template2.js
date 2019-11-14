@@ -8,28 +8,31 @@ import {
     StyleSheet,
     Dimensions,
     Platform,
-    FlatList
+    FlatList,
+    Button
 } from 'react-native';
+import DeviceInfo from "react-native-device-info";
+import Constants from "../Constants";
 
 const features = [
     {
         type: 'option',
-        value: 'Template Feature 1',
+        value: 'Gestures',
         active: false
     },
     {
         type: 'option',
-        value: 'Template Feature 1',
+        value: 'Layout',
         active: false
     },
     {
         type: 'option',
-        value: 'Template Feature 1',
+        value: 'Overall Flow',
         active: false
     },
     {
         type: 'option',
-        value: 'Template Feature 1',
+        value: 'Performance',
         active: false
     },
     {
@@ -43,8 +46,11 @@ class Template2 extends Component {
         super(props);
         this.state = {
             loadTextInput: false,
+            appName: props.appName,
+            configData: props.config,
             featureHeader: ''
         };
+        this.sendFeedback = this.sendFeedback.bind(this);
     }
 
     componentDidMount() {
@@ -64,6 +70,41 @@ class Template2 extends Component {
         })
     }
 
+    sendFeedback() {
+        DeviceInfo.getModel().then(deviceModel => {
+            // set the device info and os in state
+            this.setState({
+                deviceInfo: deviceModel,
+                deviceOs: Platform.OS
+            });
+            // post the user feedback to the api
+            fetch(Constants.url + 'post', {
+                method: 'POST',
+                body: JSON.stringify({
+                    feedback: "",
+                    app: this.state.appName,
+                    image: "",
+                    smiley: "",
+                    device: this.state.deviceInfo,
+                    os: this.state.deviceOs,
+                    category: "feedback",
+                    stars: "",
+                    rating: this.state.rating,
+                    feature: this.state.featurePick,
+                    starQuestion: ""
+
+
+                })
+            })
+                .then(res => console.log(res))
+                .catch(err => console.log(err));
+            this.props.navigation.navigate('Home');
+            // if (Platform.OS === "android") {
+            //     this.showToast()
+            // }
+        })
+    }
+
     renderItem = ({item}) => {
         return (
             <TouchableHighlight style={item.active ? styles.circleButtonActive : styles.circleButton} onPress={() => {
@@ -73,7 +114,8 @@ class Template2 extends Component {
                 item.active = !item.active;
                 this.setState({
                     loadTextInput: true,
-                    featureHeader: (item.val < 6 ? 'What feature did you not like?' : 'What feature did you like?')
+                    featureHeader: (item.val < 6 ? 'What did you dislike?' : 'What did you like?'),
+                    rating: item.val
                 })
 
             }}>
@@ -84,16 +126,20 @@ class Template2 extends Component {
     }
 
     renderButtonItem = ({item}) => {
-        if (item.type === 'option') {
+        if (item.featureConfig !== 'Other...') {
             return (
-                <TouchableHighlight style={[styles.button, {backgroundColor: 'white', borderWidth: 3, borderColor: 'gray'}]}>
-                    <Text>{item.value}</Text>
+                <TouchableHighlight style={[styles.button, {backgroundColor: 'white', borderWidth: 3, borderColor: 'gray'}]} onPress={() => {
+                    this.setState({
+                        featurePick: item.featureConfig
+                    })
+                }}>
+                    <Text>{item.featureConfig}</Text>
                 </TouchableHighlight>
             )
         } else {
             return (
                 <View style={styles.inputSection}>
-                    <TextInput placeholder={item.value}/>
+                    <TextInput placeholder={item.featureConfig}/>
                 </View>
             )
         }
@@ -127,9 +173,10 @@ class Template2 extends Component {
                     <FlatList numColumns={2}
                               horizontal={false}
                               contentContainerStyle={styles.btnList}
-                              data={this.state.features}
+                              data={this.state.configData}
                               renderItem={this.renderButtonItem}/>
                 </View> : <View style={styles.btnContainer}/>}
+                <Button title="Submit" onPress={this.sendFeedback}/>
             </View>
         )
 
@@ -173,7 +220,8 @@ const styles = StyleSheet.create({
     },
     button: {
         borderRadius: 10,
-        padding: 15 ,
+        width: 150,
+        padding: 15,
         margin: 10,
         justifyContent: 'center'
     },

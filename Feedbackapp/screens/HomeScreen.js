@@ -16,7 +16,7 @@ export default class HomeScreen extends React.Component {
 
     }
     static navigationOptions = {
-        title: 'Home',
+        title: 'Apps',
     };
     state = {
         text: ''
@@ -135,7 +135,7 @@ export default class HomeScreen extends React.Component {
                         data={this.state.dataSource}
                         renderItem={this.renderItem}
 
-                        style={{ backgroundColor: '#ecf0f1' }} />
+                        style={{ backgroundColor: '#313131' }} />
                 </View>
                 <Text></Text>
 
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'space-around',
-        backgroundColor: '#ecf0f1'
+        backgroundColor: '#313131'
     },
     button: {
         margin: 10,
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     },
     list: {
         flexDirection: 'column',
-        backgroundColor: '#ecf0f1',
+        backgroundColor: '#313131',
         justifyContent: 'space-between',
         alignItems: 'center'
     },
