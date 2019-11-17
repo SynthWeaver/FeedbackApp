@@ -8,7 +8,8 @@ import {
     Dimensions,
     Platform,
     FlatList,
-    Button
+    Button,
+    KeyboardAvoidingView
 } from 'react-native';
 import DeviceInfo from "react-native-device-info";
 import Constants from "../Constants";
@@ -151,7 +152,7 @@ class Template2 extends Component {
         }
 
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView style={styles.container} behavior="padding">
                 <FlatList
                     numColumns={6}
                     horizontal={false}
@@ -179,7 +180,7 @@ class Template2 extends Component {
                 <View style={{flex: 1, justifyContent: 'center'}}>
                     <Button title="Submit" onPress={this.sendFeedback}/>
                 </View>
-            </View>
+            </KeyboardAvoidingView>
         )
 
     }

@@ -4,7 +4,7 @@ import Constants from "../Constants";
 import {SearchBar} from "react-native-elements";
 
 // what is 2.8?
-const ROW_HEIGHT = Dimensions.get('window').width / 2.8;
+const ROW_HEIGHT = Dimensions.get('window').width / 2.5;
 // what is 1000?
 const ANIMATION_DURATION = 1000;
 
@@ -106,6 +106,7 @@ export default class HomeScreen extends React.Component {
                                   })}>
                     <Image style={styles.logoicons} source={{ uri: item.logoURL }} />
                 </TouchableOpacity>
+                <Text style={{marginBottom: 5, alignSelf: 'center', color: 'white'}}>{item.appName}</Text>
             </Animated.View>
         );
     }
@@ -142,8 +143,6 @@ export default class HomeScreen extends React.Component {
                         style={{ backgroundColor: '#313131' }} />
                 </View>
                 <Text></Text>
-
-
             </View>
         );
     }

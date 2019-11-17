@@ -5,7 +5,7 @@ import {
     StyleSheet,
     FlatList,
     Button,
-    Platform
+    Platform,
 } from 'react-native';
 import StarRating from 'react-native-star-rating';
 import DeviceInfo from "react-native-device-info";
@@ -63,12 +63,11 @@ class Template3 extends Component {
                             feature: "",
                             starQuestion: starValues[key].question
 
-
                         })
                 })
                     .then(res => console.log(res))
                     .catch(err => console.log(err));
-            })
+            });
             this.props.navigation.navigate('Home');
         })
 
@@ -105,6 +104,8 @@ class Template3 extends Component {
         )
     }
 }
+
+
 
 const styles = StyleSheet.create({
     container: {
