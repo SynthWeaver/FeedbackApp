@@ -9,9 +9,11 @@ import {
     Platform,
     FlatList,
     Button,
+    ScrollView,
     KeyboardAvoidingView
 } from 'react-native';
 import DeviceInfo from "react-native-device-info";
+import FeedbackPicker from "./FeedbackPicker"
 import Constants from "../Constants";
 
 
@@ -20,6 +22,8 @@ class Template2 extends Component {
         super(props);
         this.state = {
             loadTextInput: false,
+            loadBugInput: false,
+            feedbackType: "",
             appName: props.appName,
             configData: props.config,
             featureHeader: '',
@@ -61,7 +65,7 @@ class Template2 extends Component {
                     smiley: "",
                     device: this.state.deviceInfo,
                     os: this.state.deviceOs,
-                    category: "feedback",
+                    category: this.state.feedbackType,
                     stars: "",
                     rating: this.state.rating,
                     feature: this.state.featurePick,
@@ -97,6 +101,7 @@ class Template2 extends Component {
     }
 
 
+
     renderButtonItem = ({item}) => {
         return (
             <TouchableHighlight style={item.active ? [styles.button, {
@@ -125,13 +130,13 @@ class Template2 extends Component {
     }
 
 
-    renderListHeader() {
+    renderListHeader = () => {
         return (
             <Text style={styles.listHeader}>Rate Our App</Text>
         )
     }
 
-    renderListFooter() {
+    renderListFooter = () => {
         return (
             <View
                 style={{flexDirection: 'row', justifyContent: 'space-between', width: Dimensions.get('window').width}}>
@@ -143,6 +148,12 @@ class Template2 extends Component {
 
 
     render() {
+        const placeholder = {
+            label: 'Select the type of feedback...',
+            value: null,
+            color: '#9EA0A4',
+        };
+
         if (!this.state.data) {
             return (
                 <View>
@@ -153,6 +164,7 @@ class Template2 extends Component {
 
         return (
             <KeyboardAvoidingView style={styles.container} behavior="padding">
+
                 <FlatList
                     numColumns={6}
                     horizontal={false}
@@ -244,10 +256,17 @@ const styles = StyleSheet.create({
     },
     list: {
         flex: 1,
+        marginBottom: 5,
         // paddingBottom: 50,
         backgroundColor: '#5f5f5f',
         justifyContent: 'space-around',
         alignItems: 'center',
+    },
+    picker: {
+        marginLeft: 20,
+        marginRight: 20,
+        borderRadius: 10,
+        padding: 10
     },
     btnText: {
         textAlign: 'center',
