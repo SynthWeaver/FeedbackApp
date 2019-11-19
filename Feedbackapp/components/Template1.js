@@ -11,12 +11,12 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import ImagePicker from 'react-native-image-picker';
 import DeviceInfo from 'react-native-device-info';
 import RNPickerSelect from 'react-native-picker-select';
 import FeedbackPicker from './FeedbackPicker'
 import SmileSwitcher from './smileform/SmileSwitcher';
-import Constants from '../Constants'
+import Constants from '../Constants';
+import ImagePickerButton from './ImagePickerButton';
 
 
 class Template1 extends Component {
@@ -32,9 +32,10 @@ class Template1 extends Component {
             appName: props.appName,
             feedbackType: 'Feedback'
         };
+        
         this.submit = this.submit.bind(this);
-        this.imagePickerHandler = this.imagePickerHandler.bind(this);
         this.setSmiley = this.setSmiley.bind(this);
+        this.setImage = this.setImage.bind(this);
     }
 
     //Toast messages show up when the user has succesfully sent feedback for an app.
@@ -82,7 +83,7 @@ class Template1 extends Component {
                         feedback: this.state.text,
                         app: this.state.appName,
                         image: createFormData(this.state.image),
-                        smiley: Math.round((this.state.smile / 2)),
+                        smiley: this.state.smile,
                         device: this.state.deviceInfo,
                         os: this.state.deviceOs,
                         category: this.state.feedbackType
@@ -104,27 +105,9 @@ class Template1 extends Component {
 
     }
 
-    imagePickerHandler() {
-        const options = {
-            title: "Select Screenshot",
-            storageOptions: {
-                skipBackup: true,
-                path: 'images',
-            },
-        };
-        ImagePicker.showImagePicker(options, (response) => {
-
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            } else {
-                const source = { uri: response.uri };
-
-                this.setState({
-                    image: source
-                });
-            }
+    setImage(source){
+        this.setState({
+            image: source
         });
     }
 
@@ -154,13 +137,10 @@ class Template1 extends Component {
 
 
                     </View>
-
-                    <TouchableHighlight style={[styles.button, { backgroundColor: 'orange' }]}
-                                        onPress={this.imagePickerHandler}
-                                        underlayColor="#74b9ff">
-                        <Text style={styles.btnText}>Choose Photo</Text>
-                    </TouchableHighlight>
-                    <SmileSwitcher
+                    <ImagePickerButton style={[styles.button, { backgroundColor: 'orange' }]}
+                        setImage={this.setImage}
+                    ></ImagePickerButton>
+                    <SmileSwitcher 
                         smile={this.state.smile}
                         setSmiley={this.setSmiley}
                     >

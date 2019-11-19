@@ -1,6 +1,5 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component } from 'react';
 import {
-    StyleSheet,
     View,
     TouchableOpacity
 } from 'react-native';
@@ -49,7 +48,3 @@ export default class SmileSwitcher extends Component {
         }
     }
 }
-
-const styles = StyleSheet.create({
-
-});

@@ -5,6 +5,7 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import _ from 'lodash';
 
+import Register from './screens/Register';
 import Login from './screens/Login';
 import Templates from './components/Templates'
 import HomeScreen from './screens/HomeScreen'
@@ -24,9 +25,13 @@ const AppNavigator = createStackNavigator(
             screen: HomeScreen,
             path: 'home'
         },
-        Login: {
+        Login:{
             screen: Login,
-            path: 'login'
+            path: 'screens/Login'
+        },
+        Register: {
+            screen: Register,
+            path: 'screens/Register'
         },
         Details: {
             screen: Templates,
@@ -36,7 +41,6 @@ const AppNavigator = createStackNavigator(
             screen: Templates,
             path: 'applications/:id'
         },
-
     },
     {
         initialRouteName: 'Launch',
