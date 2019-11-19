@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Alert, Button, TextInput, View, StyleSheet, KeyboardAvoidingView, Dimensions, TouchableHighlight, Text } from 'react-native';
-import ImagePickerButton from './ImagePickerButton';
+import ImagePickerButton from '../components/ImagePickerButton';
 
 import { Base64 } from 'js-base64';
 
