@@ -81,10 +81,13 @@ class Template1 extends Component {
                         feedback: this.state.text,
                         app: this.state.appName,
                         image: createFormData(this.state.image),
-                        smiley: Math.round((this.state.smile / 2)),
                         device: this.state.deviceInfo,
                         os: this.state.deviceOs,
-                        category: this.state.feedbackType
+                        category: this.state.feedbackType,
+                        stars: "",
+                        rating: Math.round((this.state.smile / 2)),
+                        feature: "",
+                        starQuestion: ""
 
                     })
                 })
