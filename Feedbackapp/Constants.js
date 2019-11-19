@@ -1,3 +1,3 @@
 export default class Constants {
-    static url = 'http://41040824.ngrok.io/'
+    static url = 'http://7cf324aa.ngrok.io/'
 }
