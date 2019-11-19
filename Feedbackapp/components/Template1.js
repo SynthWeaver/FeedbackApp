@@ -13,7 +13,6 @@ import PropTypes from 'prop-types'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ImagePicker from 'react-native-image-picker';
 import DeviceInfo from 'react-native-device-info';
-import RNPickerSelect from 'react-native-picker-select';
 import FeedbackPicker from './FeedbackPicker'
 import SmileSwitcher from './smileform/SmileSwitcher';
 import Constants from '../Constants'
