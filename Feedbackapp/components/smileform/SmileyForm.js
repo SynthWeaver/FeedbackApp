@@ -4,12 +4,7 @@ import {
     Text,
     View,
     Slider,
-    Image,
-    ImageBackground
 } from 'react-native';
-import Svg,{
-    Path
-} from 'react-native-svg';
 import PropTypes from 'prop-types';
 import Smiley from './Smiley';
 
@@ -51,7 +46,7 @@ export default class Smile50 extends Component {
                     style={{ width: 200, transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] }}
                     step={1}
                     minimumValue={1}
-                    maximumValue={20}
+                    maximumValue={10}
                     value={this.props.smile}
                     onSlidingComplete={ smile => this.getVal(smile)}
                 />

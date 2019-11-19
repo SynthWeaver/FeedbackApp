@@ -6,9 +6,10 @@ import { createStackNavigator } from 'react-navigation-stack';
 import _ from 'lodash';
 
 import Login from './screens/Login';
-import Templates from './components/Templates'
-import HomeScreen from './screens/HomeScreen'
-import DefaultPage from './screens/DefaultPage'
+import HomeScreen from './screens/HomeScreen';
+import DefaultPage from './screens/DefaultPage';
+import Register from './components/Register';
+import Templates from './components/Templates';
 
 
 
@@ -24,9 +25,13 @@ const AppNavigator = createStackNavigator(
             screen: HomeScreen,
             path: 'home'
         },
-        Login: {
+        Login:{
             screen: Login,
-            path: 'login'
+            path: 'components/Login'
+        },
+        Register: {
+            screen: Register,
+            path: 'components/Register'
         },
         Details: {
             screen: Templates,
@@ -36,7 +41,6 @@ const AppNavigator = createStackNavigator(
             screen: Templates,
             path: 'applications/:id'
         },
-
     },
     {
         initialRouteName: 'Launch',
