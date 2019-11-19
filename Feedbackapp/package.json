@@ -42,6 +42,7 @@
     "react-native-search-bar": "^3.5.0",
     "react-native-shadow": "^1.2.2",
     "react-native-simple-survey": "^1.2.0",
+    "react-native-star-rating": "^1.1.0",
     "react-native-svg": "^9.11.1",
     "react-native-tcp": "^3.2.1",
     "react-native-udp": "^2.1.0",

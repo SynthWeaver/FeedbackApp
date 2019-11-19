@@ -41,6 +41,7 @@ export default class Smiley extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#313131',
         justifyContent: 'center',
         alignItems: 'center',
     },

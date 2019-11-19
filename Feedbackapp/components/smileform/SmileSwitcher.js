@@ -7,7 +7,7 @@ import {
 import SmilePopup from './SmilePopup'
 import Smile50 from './SmileyForm'
 
-export default class SmileSwitcher extends Component {    
+export default class SmileSwitcher extends Component {
     constructor() {
         super()
         this.state = {
@@ -28,17 +28,17 @@ export default class SmileSwitcher extends Component {
         if(this.state.smileyVisible){
             return(
                 <TouchableOpacity style={{flex: 1}} onPress={this.swapSmiley}>
-                    <Smile50 
+                    <Smile50
                         smile={this.props.smile}
-                        setSmiley={this.props.setSmiley} 
+                        setSmiley={this.props.setSmiley}
                     />
                 </TouchableOpacity>
             );
         }else{
             return (
                 <View style={{flex: 1}}>
-                    <SmilePopup 
-                        smileyVisible={this.state.smileyVisible} 
+                    <SmilePopup
+                        smileyVisible={this.state.smileyVisible}
                         swapSmiley={this.swapSmiley}
                         setSmiley={this.props.setSmiley}
                     >

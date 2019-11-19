@@ -13,6 +13,7 @@ import PropTypes from 'prop-types'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DeviceInfo from 'react-native-device-info';
 import RNPickerSelect from 'react-native-picker-select';
+import FeedbackPicker from './FeedbackPicker'
 import SmileSwitcher from './smileform/SmileSwitcher';
 import Constants from '../Constants';
 import ImagePickerButton from './ImagePickerButton';
@@ -22,7 +23,6 @@ class Template1 extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            url: Constants.url,
             modalVisible: false,
             text: '',
             smile: 11,
@@ -77,7 +77,7 @@ class Template1 extends Component {
                     deviceOs: Platform.OS
                 });
                 // post the user feedback to the api
-                fetch(this.state.url + 'post', {
+                fetch(Constants.url+ 'post', {
                     method: 'POST',
                     body: JSON.stringify({
                         feedback: this.state.text,
@@ -118,32 +118,13 @@ class Template1 extends Component {
         });
     }
     render() {
-        const placeholder = {
-            label: 'Select the type of feedback...',
-            value: null,
-            color: '#9EA0A4',
-        };
         const imageText = <Icon style={styles.imageIcon} name="paperclip" size={25}/>;
         const noImageText =<View style = {{height: 0, width: 0}}></View>;
-        const imageDropdown = <Icon name="arrow-down" size={17} color="gray"/>;
         return (
             <View style={styles.container}>
                 <View>
                     <Text style={styles.modalHeader}>Give us your thoughts!</Text>
-                    <TouchableHighlight style={[styles.picker, {backgroundColor: 'white'}]} >
-                        <RNPickerSelect
-                            style = {{height: 20}}
-                            itemStyle={{height: 44}}
-                            placeholder={placeholder}
-                            onValueChange={(value) => this.setState({feedbackType: value})}
-                            items={[
-                                {label: 'Feedback', value: 'feedback'},
-                                {label: 'Bug report', value: 'bugreport'},
-                                {label: 'Suggestion', value: 'suggestion'},
-                            ]}
-                            Icon={() => (Platform.OS === 'ios' ? imageDropdown : noImageText)}
-                        />
-                    </TouchableHighlight>
+                    <FeedbackPicker feedbackTypeChange={(text) => this.setState({feedbackType: text})}/>
                     <View style={styles.searchSection}>
                     {(this.state.image ? imageText : noImageText)}
                         <TextInput style={styles.txtInput}
@@ -178,7 +159,7 @@ class Template1 extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ecf0f1',
+        backgroundColor: '#313131',
         flexDirection: 'row',
         justifyContent: 'center',
     },
@@ -190,6 +171,7 @@ const styles = StyleSheet.create({
     modalHeader: {
         fontSize: 27,
         marginBottom: 10,
+        color: 'white',
         textAlign: 'center'
     },
     txtInput: {

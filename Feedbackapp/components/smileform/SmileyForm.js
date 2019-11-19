@@ -62,13 +62,14 @@ Smile50.propTypes = {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ecf0f1',
+        backgroundColor: '#313131',
         justifyContent: 'center',
         alignItems: 'center',
     },
     title: {
         fontSize: 27,
         textAlign: 'center',
+        color: 'white',
         margin: 20,
         marginTop: 0
     },

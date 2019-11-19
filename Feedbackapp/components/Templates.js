@@ -15,39 +15,35 @@ import Constants from '../Constants'
 class Templates extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
-            headerTitle: () => <AppHeader appName={(navigation.getParam('appName') ? navigation.getParam('appName', 'Loading...') : navigation.getParam('name'))}
-                                          appLogo={(navigation.getParam('appLogo') ? navigation.getParam('appLogo') : navigation.getParam('logo'))}/>
+            title: navigation.getParam('name'),
+            headerTintColor: 'white',
+            headerStyle: {
+                backgroundColor: '#474747',
+            },
         };
     };
 
     constructor(props) {
         super(props);
-        var id = props.navigation.state.params;
+        var id = (props.navigation.getParam('appId') ? props.navigation.getParam('appId') : props.navigation.state.params);
+        console.log(id);
         this.state = {
-            url: Constants.url,
-            appId: id.id
+            appId: (id.id ? id.id : id)
         }
     }
 
 
     componentDidMount() {
-        // If the user opens an app through the deep link don't fetch from api
-        if (!this.props.navigation.getParam('name')) {
-            return fetch(this.state.url + 'get/apps/' + this.state.appId)
-                .then((response) => response.json())
+        return fetch(Constants.url + 'get/templates/' + this.state.appId)
+            .then((response) => response.json())
                 .then((responseJson) => {
                     this.setState({
                         data: responseJson
                     })
-                    this.props.navigation.setParams({ appName: this.state.data[0].appName, appLogo: this.state.data[0].logoURL })
+                    this.props.navigation.setParams({ app: this.state.data[0].app })
                 }).catch((error) => {
                 console.error(error)
             })
-        } else {
-            this.setState({
-                data: this.props.navigation.getParam('app')
-            });
-        }
 
     }
 
@@ -59,32 +55,16 @@ class Templates extends Component {
             )
         }
 
-        var app = (this.state.data[0] ? this.state.data[0] : this.state.data);
+        var appConfig = this.state.data;
         // load the right template based on the template property from the app
-        switch (app.template) {
+        switch (appConfig[0].template) {
             case "Template1" :
-                return <Template1 appName={app.appName} navigation={this.props.navigation}/>;
+                return <Template1 config={appConfig} appName={appConfig[0].appName} navigation={this.props.navigation}/>;
             case "Template2" :
-                return <Template2 appName={app.appName} navigation={this.props.navigation}/>;
+                return <Template2 config={appConfig} appName={appConfig[0].appName} navigation={this.props.navigation}/>;
             case "Template3" :
-                return <Template3 appName={app.appName} navigation={this.props.navigation}/>;
+                return <Template3 config={appConfig} appName={appConfig[0].appName} navigation={this.props.navigation}/>;
         }
-    }
-}
-
-class AppHeader extends Component {
-
-    render() {
-        return (
-            <View style={{flex: 3, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-                <View style={{flex: 2, alignItems: 'flex-end'}}>
-                    <Text style={{fontWeight: 'bold', fontSize: 17}}>{this.props.appName}</Text>
-                </View>
-                <View style={{flex: 1, alignItems: 'center'}}>
-                    <Image source={{uri: this.props.appLogo}} style={{width: 30, height: 30, borderRadius: 100}}/>
-                </View>
-            </View>
-        )
     }
 }
 
