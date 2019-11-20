@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Alert, Button, TextInput, View, StyleSheet, KeyboardAvoidingView, Dimensions, TouchableHighlight, Text } from 'react-native';
-import ImagePickerButton from '../components/ImagePickerButton';
+import ImagePickerButton from './ImagePickerButton';
+import Constants from '../Constants';
 
 import { Base64 } from 'js-base64';
 
@@ -44,7 +45,18 @@ export default class Register extends Component {
         var encryptedPassword = this.encrypt(password);
 
         //do a post to the rest server
-        alert(encryptedPassword);
+        //const { appName, logoURL, template, password,}
+        fetch(Constants.url+ 'addAccount', {
+            method: 'POST',
+            body: JSON.stringify({
+                'appName': appName,
+                'logoURL': logoURL,
+                'template': template,
+                'password': encryptedPassword,
+            })
+        })
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
     }
 
     render() {

@@ -1,22 +1,52 @@
 import React, { Component } from 'react';
 import { Alert, Button, TouchableHighlight, TextInput, View, StyleSheet, KeyboardAvoidingView,TouchableOpacity, Text } from 'react-native';
+import Constants from '../Constants';
+
+import { Base64 } from 'js-base64';
 
 export default class Login extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            email: '',
+            name: '',
             password: '',
         };
+        
+        this.encrypt = this.encrypt.bind(this);
+        this.loginSuccessful = this.loginSuccessful.bind(this);
+    }
+
+    encrypt(stringToEncrypt){
+        return Base64.encode(stringToEncrypt);
     }
 
     onLogin() {
-        //check email and password
-        const { email, password } = this.state;
-        Alert.alert('Credentials', `${email} + ${password}`);
+        //check name and password
+        const { name, password } = this.state;
 
-        //let user know if login was succesfull
+        //encrypt password
+        const encryptedPassword = this.encrypt(password);
+
+        fetch(Constants.url+ 'get/appByName/' + name)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                
+                //check if passwords are the same
+                if(responseJson.password == encryptedPassword){
+                    this.loginSuccessful();
+                }else{
+                    alert('login failed');
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    //todo: go to next screen.
+    loginSuccessful(){
+        alert('login successful');
     }
 
     render() {
@@ -26,9 +56,9 @@ export default class Login extends Component {
                 behavior="padding">
                 <View style={styles.container}>
                     <TextInput
-                        value={this.state.email}
-                        onChangeText={(email) => this.setState({ email })}
-                        placeholder={'Email'}
+                        value={this.state.name}
+                        onChangeText={(name) => this.setState({ name })}
+                        placeholder={'Name'}
                         style={styles.input}
                     />
                     <TextInput

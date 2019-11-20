@@ -32,7 +32,7 @@ class Template1 extends Component {
             appName: props.appName,
             feedbackType: 'Feedback'
         };
-        
+
         this.submit = this.submit.bind(this);
         this.setSmiley = this.setSmiley.bind(this);
         this.setImage = this.setImage.bind(this);
@@ -140,14 +140,14 @@ class Template1 extends Component {
                     <ImagePickerButton style={[styles.button, { backgroundColor: 'orange' }]}
                         setImage={this.setImage}
                     ></ImagePickerButton>
-                    <SmileSwitcher 
+                    <SmileSwitcher
                         smile={this.state.smile}
                         setSmiley={this.setSmiley}
                     >
                     </SmileSwitcher>
-                    <TouchableHighlight style={[styles.button,  { backgroundColor: '#0984e3', marginTop : 20 }]}
-                                        onPress={this.submit}
-                                        underlayColor="#74b9ff">
+                    <TouchableHighlight  style={[styles.button, { backgroundColor: '#0984e3' }]}
+                        onPress={this.submit}
+                        underlayColor="#74b9ff">
                         <Text style={styles.btnText}>Submit!</Text>
                     </TouchableHighlight>
                 </View>
