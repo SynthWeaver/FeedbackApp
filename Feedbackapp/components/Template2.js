@@ -13,7 +13,7 @@ import {
     KeyboardAvoidingView
 } from 'react-native';
 import DeviceInfo from "react-native-device-info";
-import FeedbackPicker from "./FeedbackPicker"
+import BugReportCheckBox from "./BugReportCheckBox"
 import Constants from "../Constants";
 
 
@@ -24,12 +24,14 @@ class Template2 extends Component {
             loadTextInput: false,
             loadBugInput: false,
             feedbackType: "",
+            feedback: "",
             appName: props.appName,
             configData: props.config,
             featureHeader: '',
             loadInputSection: false
         };
         this.sendFeedback = this.sendFeedback.bind(this);
+        this.addBugReportText = this.addBugReportText.bind(this);
     }
 
     componentDidMount() {
@@ -48,7 +50,14 @@ class Template2 extends Component {
         })
     }
 
+    addBugReportText(text) {
+        this.setState({ feedback: text})
+    }
+
     sendFeedback() {
+        if (this.state.feedback !== "") {
+            this.setState({feedbackType: "bugreport"})
+        }
         DeviceInfo.getModel().then(deviceModel => {
             // set the device info and os in state
             this.setState({
@@ -59,7 +68,7 @@ class Template2 extends Component {
             fetch(Constants.url + 'post', {
                 method: 'POST',
                 body: JSON.stringify({
-                    feedback: "",
+                    feedback: this.state.feedback,
                     app: this.state.appName,
                     image: "",
                     smiley: "",
@@ -148,11 +157,6 @@ class Template2 extends Component {
 
 
     render() {
-        const placeholder = {
-            label: 'Select the type of feedback...',
-            value: null,
-            color: '#9EA0A4',
-        };
 
         if (!this.state.data) {
             return (
@@ -164,34 +168,36 @@ class Template2 extends Component {
 
         return (
             <KeyboardAvoidingView style={styles.container} behavior="padding">
-
-                <FlatList
-                    numColumns={6}
-                    horizontal={false}
-                    contentContainerStyle={styles.list}
-                    data={this.state.data}
-                    extractData={this.state}
-                    ListHeaderComponent={this.renderListHeader}
-                    ListFooterComponent={this.renderListFooter}
-                    renderItem={this.renderItem}/>
-                {this.state.loadTextInput ? <View style={styles.btnContainer}>
-                    <Text style={styles.listHeader}>{this.state.featureHeader}</Text>
-                    <FlatList numColumns={2}
-                              horizontal={false}
-                              contentContainerStyle={styles.btnList}
-                              data={this.state.configData}
-                              extractData={this.state}
-                              renderItem={this.renderButtonItem}/>
-                    {this.state.loadInputSection ? <View style={styles.inputSection}>
-                        <TextInput style={{color: 'white'}}
-                                   placeholder="Type your feature..."
-                                   placeholderTextColor="#C3C3C3"
-                                   onChangeText={(text) => this.setState({featurePick: text})} />
-                    </View> : <View/>}
-                </View> : <View style={styles.btnContainer}/>}
-                <View style={{flex: 1, justifyContent: 'center'}}>
-                    <Button title="Submit" onPress={this.sendFeedback}/>
-                </View>
+                <ScrollView>
+                    <FlatList
+                        numColumns={6}
+                        horizontal={false}
+                        contentContainerStyle={styles.list}
+                        data={this.state.data}
+                        extractData={this.state}
+                        ListHeaderComponent={this.renderListHeader}
+                        ListFooterComponent={this.renderListFooter}
+                        renderItem={this.renderItem}/>
+                    {this.state.loadTextInput ? <View style={styles.btnContainer}>
+                        <Text style={styles.listHeader}>{this.state.featureHeader}</Text>
+                        <FlatList numColumns={2}
+                                  horizontal={false}
+                                  contentContainerStyle={styles.btnList}
+                                  data={this.state.configData}
+                                  extractData={this.state}
+                                  renderItem={this.renderButtonItem}/>
+                        {this.state.loadInputSection ? <View style={styles.inputSection}>
+                            <TextInput style={{color: 'white'}}
+                                       placeholder="Type your feature..."
+                                       placeholderTextColor="#C3C3C3"
+                                       onChangeText={(text) => this.setState({featurePick: text})} />
+                        </View> : <View/>}
+                    </View> : <View style={styles.btnContainer}/>}
+                    <BugReportCheckBox textChange={(text) => this.addBugReportText(text)}/>
+                    <View style={{flex: 1, justifyContent: 'center'}}>
+                        <Button title="Submit" onPress={this.sendFeedback}/>
+                    </View>
+                </ScrollView>
             </KeyboardAvoidingView>
         )
 
