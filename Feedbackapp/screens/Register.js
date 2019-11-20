@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Alert, Button, TextInput, View, StyleSheet, KeyboardAvoidingView, Dimensions, TouchableHighlight, Text } from 'react-native';
-import ImagePickerButton from './ImagePickerButton';
+//import ImagePickerButton from './ImagePickerButton';
 import Constants from '../Constants';
 
 import { Base64 } from 'js-base64';
@@ -54,7 +54,7 @@ export default class Register extends Component {
                 'template': template,
                 'password': encryptedPassword,
             })
-        }) 
+        })
         .then(res => console.log(res))
         .catch(err => console.log(err));
     }
@@ -92,10 +92,7 @@ export default class Register extends Component {
                         secureTextEntry={true}
                         style={styles.input}
                     />
-                    <ImagePickerButton style={styles.button}
-                        setImage={this.setImage}
-                    >
-                    </ImagePickerButton>
+                  
                     <TouchableHighlight style={styles.button}
                         onPress={this.onRegister.bind(this)}
                     >

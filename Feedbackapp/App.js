@@ -5,11 +5,11 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import _ from 'lodash';
 
+import Register from './screens/Register';
 import Login from './screens/Login';
-import HomeScreen from './screens/HomeScreen';
-import DefaultPage from './screens/DefaultPage';
-import Register from './components/Register';
-import Templates from './components/Templates';
+import Templates from './components/Templates'
+import HomeScreen from './screens/HomeScreen'
+import DefaultPage from './screens/DefaultPage'
 
 
 
@@ -27,11 +27,11 @@ const AppNavigator = createStackNavigator(
         },
         Login:{
             screen: Login,
-            path: 'components/Login'
+            path: 'screens/Login'
         },
         Register: {
             screen: Register,
-            path: 'components/Register'
+            path: 'screens/Register'
         },
         Details: {
             screen: Templates,
@@ -56,4 +56,3 @@ export default class App extends React.Component {
         return <AppContainer />;
     }
 }
-
