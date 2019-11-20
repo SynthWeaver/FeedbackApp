@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import {
     View,
-    TouchableOpacity
+    TouchableOpacity,
+    Text,
+    Dimensions
 } from 'react-native';
 
 import SmilePopup from './SmilePopup'
@@ -27,11 +29,17 @@ export default class SmileSwitcher extends Component {
     render() {
         if(this.state.smileyVisible){
             return(
+               
                 <TouchableOpacity style={{flex: 1}} onPress={this.swapSmiley}>
                     <Smile50
                         smile={this.props.smile}
                         setSmiley={this.props.setSmiley}
                     />
+                    <View style = {{flexDirection: 'row', justifyContent: 'space-between', marginLeft:20 , marginRight: 20}}>
+                        
+                        <Text style = {{color: 'white'}}>Bad</Text>
+                        <Text style = {{color: 'white'}}>Good</Text>
+                    </View>
                 </TouchableOpacity>
             );
         }else{
