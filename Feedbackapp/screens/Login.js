@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
         flex:1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#ecf0f1',
+        backgroundColor: '#313131',
     },
     row:{
         width: 200,
@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'black',
         marginBottom: 10,
+        backgroundColor: '#FFFFFF',
     },
     button:{
         width: 97,
