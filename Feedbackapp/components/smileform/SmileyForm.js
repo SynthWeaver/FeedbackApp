@@ -48,7 +48,7 @@ export default class Smile50 extends Component {
                     minimumValue={1}
                     maximumValue={10}
                     value={this.props.smile}
-                    onSlidingComplete={ smile => this.getVal(smile)}
+                    onValueChange={ smile => this.getVal(smile)}
                 />
             </View>
         );
