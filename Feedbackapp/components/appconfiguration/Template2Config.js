@@ -13,14 +13,18 @@ import {
     KeyboardAvoidingView
 } from 'react-native';
 import DeviceInfo from "react-native-device-info";
-import BugReportCheckBox from "./BugReportCheckBox"
-import Constants from "../Constants";
+import PropTypes from "prop-types"
+import BugReportCheckBox from "../BugReportCheckBox"
+import Constants from "../../Constants";
 
 
-class Template2Config extends Component {
+var featureMap = {};
+
+export default class Template2Config extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            featureConfig: {},
             loadTextInput: false,
             loadBugInput: false,
             feedbackType: "",
@@ -28,11 +32,13 @@ class Template2Config extends Component {
             featureHeader: '',
             loadInputSection: false
         };
-        // this.sendFeedback = this.sendFeedback.bind(this);
+        this.inputChangeHandler = this.inputChangeHandler.bind(this);
+        this.confirm = this.confirm.bind(this);
         this.addBugReportText = this.addBugReportText.bind(this);
     }
 
     componentDidMount() {
+        featureMap = {};
         var even = [];
         var uneven = [];
         for (var i = 0; i < 11; i++) {
@@ -52,40 +58,40 @@ class Template2Config extends Component {
         this.setState({ feedback: text})
     }
 
-    // sendFeedback() {
-    //     if (this.state.feedback !== "") {
-    //         this.setState({feedbackType: "bugreport"})
-    //     }
-    //     DeviceInfo.getModel().then(deviceModel => {
-    //         // set the device info and os in state
-    //         this.setState({
-    //             deviceInfo: deviceModel,
-    //             deviceOs: Platform.OS
-    //         });
-    //         // post the user feedback to the api
-    //         fetch(Constants.url + 'post', {
-    //             method: 'POST',
-    //             body: JSON.stringify({
-    //                 feedback: this.state.feedback,
-    //                 app: this.state.appName,
-    //                 image: "",
-    //                 smiley: "",
-    //                 device: this.state.deviceInfo,
-    //                 os: this.state.deviceOs,
-    //                 category: this.state.feedbackType,
-    //                 stars: "",
-    //                 rating: this.state.rating,
-    //                 feature: this.state.featurePick,
-    //                 starQuestion: ""
-    //
-    //
-    //             })
-    //         })
-    //             .then(res => console.log(res))
-    //             .catch(err => console.log(err));
-    //         this.props.navigation.navigate('Home');
-    //     })
-    // }
+    inputChangeHandler(text, index) {
+        featureMap[index] = text;
+        this.setState({
+            featureConfig: featureMap
+        })
+    }
+
+    confirm() {
+        var appName = this.props.name;
+        var logo = this.props.logo;
+        var password = this.props.password;
+        var featureConfig = this.state.featureConfig;
+
+        Object.keys(featureConfig).map(function (key) {
+            fetch(Constants.url + 'addAccount', {
+                method: 'POST',
+                body: JSON.stringify({
+                    appName: appName,
+                    template: 'Template2',
+                    logoURL: logo,
+                    password: password,
+                    featureConfig: featureConfig[key],
+                    starQuestion: ""
+                })
+            })
+                .then(res => console.log(res))
+                .catch(err => console.log(err))
+        })
+
+        this.props.navigation.navigate('Launch')
+
+
+
+    }
 
     renderItem = ({item}) => {
         return (
@@ -107,10 +113,10 @@ class Template2Config extends Component {
 
 
 
-    renderButtonItem = ({item}) => {
+    renderButtonItem = ({item, index}) => {
         return (
             <TouchableHighlight style={[styles.button, {backgroundColor: 'orange'}]}>
-                <TextInput placeholder="Type your feature..."/>
+                <TextInput placeholder="Type your feature..." onChangeText={(text) => this.inputChangeHandler(text, index)}/>
             </TouchableHighlight>
         )
 
@@ -173,13 +179,19 @@ class Template2Config extends Component {
                     </View>
                     <BugReportCheckBox textChange={(text) => this.addBugReportText(text)}/>
                     <View style={{flex: 1, justifyContent: 'center'}}>
-                        <Button title="Confirm" onPress={this.sendFeedback}/>
+                        <Button title="Confirm" onPress={this.confirm}/>
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>
         )
 
     }
+}
+
+Template2Config.propTypes = {
+    name: PropTypes.string,
+    logo: PropTypes.string,
+    password: PropTypes.string
 }
 
 const styles = StyleSheet.create({
@@ -260,4 +272,3 @@ const styles = StyleSheet.create({
 })
 
 
-export default Template2Config

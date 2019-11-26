@@ -13,24 +13,18 @@ import PropTypes from 'prop-types'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DeviceInfo from 'react-native-device-info';
 import RNPickerSelect from 'react-native-picker-select';
-import FeedbackPicker from './FeedbackPicker'
-import SmileSwitcher from './smileform/SmileSwitcher';
-import Constants from '../Constants';
-import ImagePickerButton from './ImagePickerButton';
+import FeedbackPicker from '../FeedbackPicker'
+import SmileSwitcher from '../smileform/SmileSwitcher';
+import Constants from '../../Constants';
+import ImagePickerButton from '../ImagePickerButton';
 
 
-class Template1Config extends Component {
+export default class Template1Config extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            modalVisible: false,
-            text: '',
             smile: 11,
-            image: '',
-            deviceInfo: '',
-            deviceOs: '',
-            appName: props.appName,
-            feedbackType: 'Feedback'
+
         };
 
         this.submit = this.submit.bind(this);
@@ -54,54 +48,20 @@ class Template1Config extends Component {
 
 
     submit() {
-        // create form data for screenshot
-        const createFormData = (photo) => {
-            if (!photo) return '';
-            const data = new FormData();
-
-            data.append("photo", {
-                name: photo.fileName,
-                type: photo.type,
-                uri:
-                    Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
-            });
-
-            return data;
-        };
-        // textfield cannot be empty
-        if (this.state.text) {
-            DeviceInfo.getModel().then(deviceModel => {
-                // set the device info and os in state
-                this.setState({
-                    deviceInfo: deviceModel,
-                    deviceOs: Platform.OS
-                });
-                // post the user feedback to the api
-                fetch(Constants.url+ 'post', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        feedback: this.state.text,
-                        app: this.state.appName,
-                        image: createFormData(this.state.image),
-                        smiley: this.state.smile,
-                        device: this.state.deviceInfo,
-                        os: this.state.deviceOs,
-                        category: this.state.feedbackType
-
-                    })
-                })
-                    .then(res => console.log(res))
-                    .catch(err => console.log(err));
-                this.setState({ text: '' });
-                this.props.navigation.navigate('Home');
-                // if (Platform.OS === "android") {
-                //     this.showToast()
-                // }
+        fetch(Constants.url + 'addAccount', {
+            method: 'POST',
+            body: JSON.stringify({
+                appName: this.props.name,
+                template: 'Template1',
+                logoURL: this.props.logo,
+                password: this.props.password,
+                featureConfig: "",
+                starQuestion: ""
             })
-        } else {
-            Alert.alert("Please fill in the textfield")
-        }
-
+        })
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+        this.props.navigation.navigate('Launch');
 
     }
 
@@ -141,7 +101,7 @@ class Template1Config extends Component {
                         setSmiley={this.setSmiley}
                     >
                     </SmileSwitcher>
-                    <Button title="Confirm"/>
+                    <Button title="Confirm" onPress={this.submit}/>
                 </View>
             </View>
         )
@@ -226,7 +186,9 @@ const styles = StyleSheet.create({
 })
 
 Template1Config.propTypes = {
-    name: PropTypes.string
+    name: PropTypes.string,
+    logo: PropTypes.string,
+    password: PropTypes.string
 }
 
-export default Template1Config
+

@@ -6,7 +6,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import _ from 'lodash';
 
 import Register from './screens/Register';
-import TemplatesConfig from './components/TemplatesConfig'
+import TemplatesConfig from './components/appconfiguration/TemplatesConfig'
 import Login from './screens/Login';
 import Templates from './components/Templates'
 import HomeScreen from './screens/HomeScreen'
@@ -30,8 +30,12 @@ const AppNavigator = createStackNavigator(
             screen: Login,
             path: 'screens/Login'
         },
-        Register: {
+        TemplateConfig: {
             screen: TemplatesConfig,
+            path: 'templateConfig'
+        },
+        Register: {
+            screen: Register,
             path: 'screens/Register'
         },
         Details: {

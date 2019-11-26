@@ -8,16 +8,19 @@ import {
     Platform, ScrollView, TextInput,
 } from 'react-native';
 import StarRating from 'react-native-star-rating';
-import BugReportCheckBox from './BugReportCheckBox'
+import PropTypes from "prop-types"
+import BugReportCheckBox from '../BugReportCheckBox'
 import DeviceInfo from "react-native-device-info";
-import Constants from "../Constants";
+import Constants from "../../Constants";
 
 var starMap = {};
+var questionMap = {};
 
-class Template3Config extends Component {
+export default class Template3Config extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            questionConfig: {},
             starCount: {},
             feedback: "",
             feedbackType: "",
@@ -25,11 +28,13 @@ class Template3Config extends Component {
             // appName: props.appName,
             // configData: props.config
         };
-        this.sendFeedback = this.sendFeedback.bind(this);
+        this.confirm = this.confirm.bind(this);
+        this.inputChangeHandler = this.inputChangeHandler.bind(this);
         this.addBugReport = this.addBugReport.bind(this);
     }
 
     componentDidMount() {
+        questionMap = {};
         starMap = {};
     }
 
@@ -41,47 +46,38 @@ class Template3Config extends Component {
 
     }
 
-    sendFeedback() {
-        if (this.state.feedback !== "") {
-            this.setState({ feedbackType: "bugreport"})
-        } else {
-            this.setState({ feedbackType: "feedback"})
-        }
-        DeviceInfo.getModel().then(deviceModel => {
-            // set the device info and os in state
-            var deviceInfo = deviceModel;
-            var deviceOs = Platform.OS;
-            // post the user feedback to the api
-            var starValues = this.state.starCount;
-            var appName = this.state.appName;
-            var feedback = this.state.feedback;
-            var feedbackType = this.state.feedbackType
-            Object.keys(starValues).map(function (key) {
-                fetch(Constants.url + 'post', {
-                    method: 'POST',
-                    body:
-                        JSON.stringify({
-                            feedback: feedback,
-                            app: appName,
-                            image: "",
-                            smiley: "",
-                            device: deviceInfo,
-                            os: deviceOs,
-                            category: feedbackType,
-                            stars: starValues[key].star,
-                            rating: "",
-                            feature: "",
-                            starQuestion: starValues[key].question
-
-                        })
-                })
-                    .then(res => console.log(res))
-                    .catch(err => console.log(err));
-            });
-            this.props.navigation.navigate('Home');
+    inputChangeHandler(text, index) {
+        questionMap[index] = text;
+        this.setState({
+            questionConfig: questionMap
         })
+    }
+
+    confirm() {
+        var appName = this.props.name;
+        var logo = this.props.logo;
+        var password = this.props.password;
+        var questionConfig = this.state.questionConfig;
+
+        Object.keys(questionConfig).map(function (key) {
+            fetch(Constants.url + 'addAccount', {
+                method: 'POST',
+                body: JSON.stringify({
+                    appName: appName,
+                    template: 'Template3',
+                    logoURL: logo,
+                    password:   password,
+                    featureConfig: "",
+                    starQuestion: questionConfig[key]
+                })
+            })
+                .then(res => console.log(res))
+                .catch(err => console.log(err))
+        })
+        this.props.navigation.navigate('Launch')
 
     }
+
 
     addBugReport(text) {
         this.setState({ feedback: text })
@@ -90,12 +86,12 @@ class Template3Config extends Component {
 
 
     renderItem = ({item, index}) => {
-        // var starQuestion = item.starQuestion;
         return (
             <View style={{margin: 5}}>
                 <TextInput style={styles.txtInput}
                            placeholder="Type your question..."
-                           placeholderTextColor="#C3C3C3"/>
+                           placeholderTextColor="#C3C3C3"
+                           onChangeText={(text) => this.inputChangeHandler(text, index)}/>
                 <StarRating starStyle={{color: 'orange'}}
                             disabled={false}
                             maxStars={5}
@@ -117,13 +113,17 @@ class Template3Config extends Component {
                               renderItem={this.renderItem}/>
                 </View>
                 <BugReportCheckBox textChange={(text) => this.addBugReport(text)}/>
-                <Button title="Confirm" onPress={this.sendFeedback}/>
+                <Button title="Confirm" onPress={this.confirm}/>
             </ScrollView>
         )
     }
 }
 
-
+Template3Config.propTypes = {
+    name: PropTypes.string,
+    logo: PropTypes.string,
+    password: PropTypes.string
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -153,4 +153,3 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Template3Config
