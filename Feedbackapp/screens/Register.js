@@ -56,6 +56,32 @@ export default class Register extends Component {
     }
 
     encrypt(stringToEncrypt){
+        var password = require('../node_modules/happn-password-hash-and-salt/index');
+        var myuser = [];
+        
+        // Creating hash and salt
+        password(stringToEncrypt).hash(function(error, hash) {
+            if(error){ throw new Error('Something went wrong!');}
+        
+            // Store hash (incl. algorithm, iterations, and salt)
+            myuser.hash = hash;
+
+            alert(myuser.hash);
+        
+            // Verifying a hash
+            // password('hack').verifyAgainst(myuser.hash, function(error, verified) {
+            //     if(error)
+            //         throw new Error('Something went wrong!');
+            //     if(!verified) {
+            //         console.log("Don't try! We got you!");
+            //     } else {
+            //         console.log("The secret is...");
+            //     }
+            // });
+        })
+
+        console.log("too late");
+
         return Base64.encode(stringToEncrypt);
     }
 

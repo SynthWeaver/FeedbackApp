@@ -842,7 +842,7 @@
   dependencies:
     serve-static "^1.13.1"
 
-"@react-native-community/cli-platform-android@^3.0.0-alpha.1":
+"@react-native-community/cli-platform-android@^3.0.0":
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-android/-/cli-platform-android-3.0.3.tgz#e652abce79a7c1e3a8280228123e99df2c4b97b6"
   integrity sha512-rNO9DmRiVhB6aP2DVUjEJv7ecriTARDZND88ny3xNVUkrD1Y+zwF6aZu3eoT52VXOxLCSLiJzz19OiyGmfqxYg==
@@ -855,7 +855,7 @@
     slash "^3.0.0"
     xmldoc "^1.1.2"
 
-"@react-native-community/cli-platform-ios@^3.0.0-alpha.1":
+"@react-native-community/cli-platform-ios@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-ios/-/cli-platform-ios-3.0.0.tgz#3a48a449c0c33af3b0b3d19d3256de99388fe15f"
   integrity sha512-QoNVlDj8eMXRZk9uktPFsctHurQpv9jKmiu6mQii4NEtT2npE7g1hbWpRNojutBsfgmCdQGDHd9uB54eeCnYgg==
@@ -880,10 +880,10 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-types/-/cli-types-3.0.0.tgz#488d46605cb05e88537e030f38da236eeda74652"
   integrity sha512-ng6Tm537E/M42GjE4TRUxQyL8sRfClcL7bQWblOCoxPZzJ2J3bdALsjeG3vDnVCIfI/R0AeFalN9KjMt0+Z/Zg==
 
-"@react-native-community/cli@^3.0.0-alpha.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli/-/cli-3.0.1.tgz#d7dfec14c867a17793bb981dd90eef2d8fc7808a"
-  integrity sha512-fh7hZHNmGciBOIJHUdS4D6/7KaIlmdJLG0i/efxm7spuMI0uviWwz4IcjNRanFbAgYu3Yp4rfke+Gm/gcHSRaA==
+"@react-native-community/cli@^3.0.0":
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cli/-/cli-3.0.4.tgz#a9dba1bc77855a6e45fccaabb017360645d936bb"
+  integrity sha512-kt+ENtC+eRUSfWPbbpx3r7fAQDcFwgM03VW/lBdVAUjkNxffPFT2GGdK23CJSBOXTjRSiGuwhvwH4Z28PdrlRA==
   dependencies:
     "@hapi/joi" "^15.0.3"
     "@react-native-community/cli-debugger-ui" "^3.0.0"
@@ -1019,25 +1019,6 @@
     "@types/istanbul-lib-coverage" "*"
     "@types/istanbul-lib-report" "*"
 
-"@types/mkdirp@^0.5.2":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@types/mkdirp/-/mkdirp-0.5.2.tgz#503aacfe5cc2703d5484326b1b27efa67a339c1f"
-  integrity sha512-U5icWpv7YnZYGsN4/cmh3WD2onMY0aJIiTE6+51TwJCttdHvtCYmkBNOobHlXwrJRL0nkH9jH4kD+1FAdMN4Tg==
-  dependencies:
-    "@types/node" "*"
-
-"@types/node-notifier@^5.4.0":
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/@types/node-notifier/-/node-notifier-5.4.0.tgz#4e66c85eb41cce8387b4cd9c6c67852be41a99db"
-  integrity sha512-M1XvCG6Rwej6+W0+kWultE46YS7erOy+W7suRmXtKwLGT3ytj6YEe9lqo47nRfL1xILzg9xJpKeNczIsWR8ymw==
-  dependencies:
-    "@types/node" "*"
-
-"@types/node@*":
-  version "12.12.7"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.7.tgz#01e4ea724d9e3bd50d90c11fd5980ba317d8fa11"
-  integrity sha512-E6Zn0rffhgd130zbCbAr/JdXfXkoOUFAKNs/rF8qnafSJ8KYaA/j3oz7dcwal+lYjLA7xvdd5J4wdYpCTlP8+w==
-
 "@types/prop-types@*":
   version "15.7.3"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
@@ -1067,22 +1048,10 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
-"@types/semver@^6.0.2":
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/@types/semver/-/semver-6.2.0.tgz#d688d574400d96c5b0114968705366f431831e1a"
-  integrity sha512-1OzrNb4RuAzIT7wHSsgZRlMBlNsJl+do6UblR7JMW4oB7bbR+uBEYtUh7gEc/jM84GGilh68lSOokyM/zNUlBA==
-
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
   integrity sha512-l42BggppR6zLmpfU6fq9HEa2oGPEI8yrSPL3GITjfRInppYFahObbIQOQK3UGxEnyQpltZLaPe75046NOZQikw==
-
-"@types/ws@^6.0.3":
-  version "6.0.3"
-  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-6.0.3.tgz#b772375ba59d79066561c8d87500144d674ba6b3"
-  integrity sha512-yBTM0P05Tx9iXGq00BbJPo37ox68R5vaGTXivs6RGh/BQ6QP5zqZDGWdAO6JbRE/iR1l80xeGAwCQS2nMV9S/w==
-  dependencies:
-    "@types/node" "*"
 
 "@types/yargs-parser@*":
   version "13.1.0"
@@ -2456,11 +2425,6 @@ diffie-hellman@^5.0.0:
     miller-rabin "^4.0.0"
     randombytes "^2.0.0"
 
-dns.js@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/dns.js/-/dns.js-1.0.1.tgz#bfc0950d79777728c67500b1c418075e653955ee"
-  integrity sha1-v8CVDXl3dyjGdQCxxBgHXmU5Ve4=
-
 doctrine@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-2.1.0.tgz#5cd01fc101621b42c4cd7f5d1a66243716d3f39d"
@@ -2479,11 +2443,6 @@ dom-walk@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/dom-walk/-/dom-walk-0.1.1.tgz#672226dc74c8f799ad35307df936aba11acd6018"
   integrity sha1-ZyIm3HTI95mtNTB9+TaroRrNYBg=
-
-domain-browser@^1.1.1:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/domain-browser/-/domain-browser-1.2.0.tgz#3d31f50191a6749dd1375a7f522e823d42e54eda"
-  integrity sha512-jnjyiM6eRyZl2H+W8Q/zLMA481hzi0eszAaBUzIVnmYVDBbnLxVNnfu1HgEBvCbL+71FrxMl3E6lpKH7Ge3OXA==
 
 domexception@^1.0.1:
   version "1.0.1"
@@ -2803,7 +2762,7 @@ eventemitter3@^3.0.0:
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.1.2.tgz#2d3d48f9c346698fce83a85d7d664e98535df6e7"
   integrity sha512-tvtQIeLVHjDkJYnzf2dgVMxfuSGJeM/7UCG17TT4EumTfNtF+0nebF/4zWOIkCreAbtNqhGEboB6BWrwqNaw4Q==
 
-events@^1.0.0, events@^1.0.2:
+events@^1.0.2:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/events/-/events-1.1.1.tgz#9ebdb7635ad099c70dcc4c2a1f5004288e8bd924"
   integrity sha1-nr23Y1rQmccNzEwqH1AEKI6L2SQ=
@@ -3099,6 +3058,11 @@ find-up@^4.1.0:
     locate-path "^5.0.0"
     path-exists "^4.0.0"
 
+findit@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/findit/-/findit-2.0.0.tgz#6509f0126af4c178551cfa99394e032e13a4d56e"
+  integrity sha1-ZQnwEmr0wXhVHPqZOU4DLhOk1W4=
+
 flat-cache@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/flat-cache/-/flat-cache-2.0.1.tgz#5d296d6f04bda44a4630a301413bdbc2ec085ec0"
@@ -3324,6 +3288,11 @@ handlebars@^4.1.2:
   optionalDependencies:
     uglify-js "^3.1.4"
 
+happn-password-hash-and-salt@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/happn-password-hash-and-salt/-/happn-password-hash-and-salt-1.2.0.tgz#54fec07d78486a9dfcbd9b152c4d564e7a19d5a8"
+  integrity sha512-wo4iaL3xWje78cUjDdzgmQKZR1seHOZurEwR2TFLrjO4RiM5wZw79KAjsS6qEyE/zKeoDUcZY+sQeWPgjm4GCQ==
+
 har-schema@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/har-schema/-/har-schema-2.0.0.tgz#a94c2224ebcac04782a0d9035521f24735b7ec92"
@@ -3397,10 +3366,35 @@ has@^1.0.1, has@^1.0.3:
   dependencies:
     function-bind "^1.1.1"
 
+hash-base@^3.0.0:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/hash-base/-/hash-base-3.0.4.tgz#5fc8686847ecd73499403319a6b0a3f3f6ae4918"
+  integrity sha1-X8hoaEfs1zSZQDMZprCj8/auSRg=
+  dependencies:
+    inherits "^2.0.1"
+    safe-buffer "^5.0.1"
+
+hash.js@^1.0.0, hash.js@^1.0.3:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/hash.js/-/hash.js-1.1.7.tgz#0babca538e8d4ee4a0f8988d68866537a003cf42"
+  integrity sha512-taOaskGt4z4SOANNseOviYDvjEJinIkRgmp7LbKP2YTTmVxWBl87s/uzK9r+44BclBSp2X7K1hqeNfz9JbBeXA==
+  dependencies:
+    inherits "^2.0.3"
+    minimalistic-assert "^1.0.1"
+
 hermes-engine@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/hermes-engine/-/hermes-engine-0.2.1.tgz#25c0f1ff852512a92cb5c5cc47cf967e1e722ea2"
   integrity sha512-eNHUQHuadDMJARpaqvlCZoK/Nitpj6oywq3vQ3wCwEsww5morX34mW5PmKWQTO7aU0ck0hgulxR+EVDlXygGxQ==
+
+hmac-drbg@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/hmac-drbg/-/hmac-drbg-1.0.1.tgz#d2745701025a6c775a6c545793ed502fc0c649a1"
+  integrity sha1-0nRXAQJabHdabFRXk+1QL8DGSaE=
+  dependencies:
+    hash.js "^1.0.3"
+    minimalistic-assert "^1.0.0"
+    minimalistic-crypto-utils "^1.0.1"
 
 hoist-non-react-statics@^2.2.0, hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
   version "2.5.5"
@@ -3445,11 +3439,6 @@ http-signature@~1.2.0:
     assert-plus "^1.0.0"
     jsprim "^1.2.2"
     sshpk "^1.7.0"
-
-https-browserify@0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-0.0.1.tgz#3f91365cabe60b77ed0ebba24b454e3e09d95a82"
-  integrity sha1-P5E2XKvmC3ftDruiS0VOPgnZWoI=
 
 iconv-lite@0.4.24, iconv-lite@^0.4.17, iconv-lite@^0.4.24, iconv-lite@^0.4.4, iconv-lite@~0.4.13:
   version "0.4.24"
@@ -5704,11 +5693,6 @@ pascalcase@^0.1.1:
   resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
   integrity sha1-s2PlXoAGym/iF4TS2yK9FdeRfxQ=
 
-path-browserify@0.0.0:
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/path-browserify/-/path-browserify-0.0.0.tgz#a0b870729aae214005b7d5032ec2cbbb0fb4451a"
-  integrity sha1-oLhwcpquIUAFt9UDLsLLuw+0RRo=
-
 path-exists@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/path-exists/-/path-exists-3.0.0.tgz#ce0ebeaa5f78cb18925ea7d810d7b59b010fd515"
@@ -6333,15 +6317,15 @@ react-native-vector-icons@^6.6.0:
     prop-types "^15.6.2"
     yargs "^13.2.2"
 
-react-native@^0.61.4:
-  version "0.61.4"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.61.4.tgz#9ec6e8a2aa8eac57143dcfa39115c7d9a139bc2c"
-  integrity sha512-L8U+dDEy4vP74yWYbb+2XKaZeUkbpCUoSzcmeEM8Oznt69q71Q4fuYyxZGrzVW6tMYw9ZzGXTkfLuOh2nvLeVw==
+react-native@^0.61.5:
+  version "0.61.5"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.61.5.tgz#6e21acb56cbd75a3baeb1f70201a66f42600bba8"
+  integrity sha512-MXqE3NoGO0T3dUKIKkIppijBhRRMpfN6ANbhMXHDuyfA+fSilRWgCwYgR/YNCC7ntECoJYikKaNTUBB0DeQy6Q==
   dependencies:
     "@babel/runtime" "^7.0.0"
-    "@react-native-community/cli" "^3.0.0-alpha.1"
-    "@react-native-community/cli-platform-android" "^3.0.0-alpha.1"
-    "@react-native-community/cli-platform-ios" "^3.0.0-alpha.1"
+    "@react-native-community/cli" "^3.0.0"
+    "@react-native-community/cli-platform-android" "^3.0.0"
+    "@react-native-community/cli-platform-ios" "^3.0.0"
     abort-controller "^3.0.0"
     art "^0.10.0"
     base64-js "^1.1.2"
@@ -6890,7 +6874,7 @@ scheduler@^0.13.6:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
 
-"semver@2 || 3 || 4 || 5", semver@^5.1.0, semver@^5.3.0, semver@^5.4.1, semver@^5.5.0, semver@^5.5.1, semver@^5.6.0:
+"semver@2 || 3 || 4 || 5", semver@^5.0.1, semver@^5.1.0, semver@^5.3.0, semver@^5.4.1, semver@^5.5.0, semver@^5.5.1, semver@^5.6.0:
   version "5.7.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.1.tgz#a954f931aeba508d307bbf069eff0c01c96116f7"
   integrity sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==
