@@ -31,8 +31,6 @@ export default class Login extends Component {
 
         const url = Constants.url + 'login';
 
-        console.log(url);
-
         fetch(url, {
             method: 'POST',
             headers: { 
