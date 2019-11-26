@@ -14,8 +14,6 @@ import {
 } from 'react-native';
 import Constants from '../Constants';
 
-import { Base64 } from 'js-base64';
-
 const image = 'https://www.w3schools.com/w3css/img_lights.jpg';
 const happy = 'https://knowledge.wharton.upenn.edu/wp-content/uploads/2016/01/compassion.jpg';
 const stars = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJLI1WKlFWlzI7kp0ia7fU-lYuRh96guVK27T7NiuOn_KF8bnSqQ&s';
@@ -41,7 +39,6 @@ export default class Register extends Component {
         };
         this.onChangeText = this.onChangeText.bind(this);
         this.setImage = this.setImage.bind(this);
-        this.encrypt = this.encrypt.bind(this);
     }
 
     componentDidMount() {
@@ -55,50 +52,16 @@ export default class Register extends Component {
         });
     }
 
-    encrypt(stringToEncrypt){
-        var password = require('../node_modules/happn-password-hash-and-salt/index');
-        var myuser = [];
-        
-        // Creating hash and salt
-        password(stringToEncrypt).hash(function(error, hash) {
-            if(error){ throw new Error('Something went wrong!');}
-        
-            // Store hash (incl. algorithm, iterations, and salt)
-            myuser.hash = hash;
-
-            alert(myuser.hash);
-        
-            // Verifying a hash
-            // password('hack').verifyAgainst(myuser.hash, function(error, verified) {
-            //     if(error)
-            //         throw new Error('Something went wrong!');
-            //     if(!verified) {
-            //         console.log("Don't try! We got you!");
-            //     } else {
-            //         console.log("The secret is...");
-            //     }
-            // });
-        })
-
-        console.log("too late");
-
-        return Base64.encode(stringToEncrypt);
-    }
-
     onRegister() {
         //get all data
 
         const { appName, logoURL, template, password, password2, configCount, starConfig} = this.state;
-
 
         //compare passwords
         if(password !== password2){
             alert("Passwords are not the same");
             return;
         }
-
-        //encrypt password
-        var encryptedPassword = this.encrypt(password);
 
         var configOpts;
 
@@ -115,7 +78,7 @@ export default class Register extends Component {
                     appName: appName,
                     logoURL: logoURL,
                     template: template,
-                    password: encryptedPassword,
+                    password: password,
                     featureConfig: '',
                     starQuestion: ''
                 })
@@ -134,7 +97,7 @@ export default class Register extends Component {
                         appName: appName,
                         logoURL: logoURL,
                         template: template,
-                        password: encryptedPassword,
+                        password: password,
                         featureConfig: (template === "Template2" ? configOpts[key] : ''),
                         starQuestion: (template === "Template3" ? configOpts[key] : '')
                     })
