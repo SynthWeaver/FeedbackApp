@@ -7,30 +7,24 @@ import {
     TextInput,
     StyleSheet,
     Dimensions,
-    Platform
+    Platform, Button
 } from 'react-native';
 import PropTypes from 'prop-types'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DeviceInfo from 'react-native-device-info';
 import RNPickerSelect from 'react-native-picker-select';
-import FeedbackPicker from './FeedbackPicker'
-import SmileSwitcher from './smileform/SmileSwitcher';
-import Constants from '../Constants';
-import ImagePickerButton from './ImagePickerButton';
+import FeedbackPicker from '../FeedbackPicker'
+import SmileSwitcher from '../smileform/SmileSwitcher';
+import Constants from '../../Constants';
+import ImagePickerButton from '../ImagePickerButton';
 
 
-class Template1 extends Component {
+export default class Template1Config extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            modalVisible: false,
-            text: '',
             smile: 11,
-            image: '',
-            deviceInfo: '',
-            deviceOs: '',
-            appName: props.appName,
-            feedbackType: 'Feedback'
+
         };
 
         this.submit = this.submit.bind(this);
@@ -42,66 +36,32 @@ class Template1 extends Component {
     //This method works with OS Android only
     showToast = () => {
         if(Platform.OS === 'android'){
-        ToastAndroid.showWithGravityAndOffset(
-            "Your feedback has been sent!",
-            ToastAndroid.LONG,
-            ToastAndroid.BOTTOM,
-            25,
-            50
-        );
+            ToastAndroid.showWithGravityAndOffset(
+                "Your feedback has been sent!",
+                ToastAndroid.LONG,
+                ToastAndroid.BOTTOM,
+                25,
+                50
+            );
         }
     };
 
 
     submit() {
-        // create form data for screenshot
-        const createFormData = (photo) => {
-            if (!photo) return '';
-            const data = new FormData();
-
-            data.append("photo", {
-                name: photo.fileName,
-                type: photo.type,
-                uri:
-                    Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
-            });
-
-            return data;
-        };
-        // textfield cannot be empty
-        if (this.state.text) {
-            DeviceInfo.getModel().then(deviceModel => {
-                // set the device info and os in state
-                this.setState({
-                    deviceInfo: deviceModel,
-                    deviceOs: Platform.OS
-                });
-                // post the user feedback to the api
-                fetch(Constants.url+ 'post', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        feedback: this.state.text,
-                        app: this.state.appName,
-                        image: createFormData(this.state.image),
-                        smiley: this.state.smile,
-                        device: this.state.deviceInfo,
-                        os: this.state.deviceOs,
-                        category: this.state.feedbackType
-
-                    })
-                })
-                    .then(res => console.log(res))
-                    .catch(err => console.log(err));
-                this.setState({ text: '' });
-                this.props.navigation.navigate('Home');
-                // if (Platform.OS === "android") {
-                //     this.showToast()
-                // }
+        fetch(Constants.url + 'addAccount', {
+            method: 'POST',
+            body: JSON.stringify({
+                appName: this.props.name,
+                template: 'Template1',
+                logoURL: this.props.logo,
+                password: this.props.password,
+                featureConfig: "",
+                starQuestion: ""
             })
-        } else {
-            Alert.alert("Please fill in the textfield")
-        }
-
+        })
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+        this.props.navigation.navigate('Launch');
 
     }
 
@@ -126,7 +86,7 @@ class Template1 extends Component {
                     <Text style={styles.modalHeader}>Give us your thoughts!</Text>
                     <FeedbackPicker feedbackTypeChange={(text) => this.setState({feedbackType: text})}/>
                     <View style={styles.searchSection}>
-                    {(this.state.image ? imageText : noImageText)}
+                        {(this.state.image ? imageText : noImageText)}
                         <TextInput style={styles.txtInput}
                                    numberOfLines={4}
                                    multiline={true} onChangeText={(text) => this.setState({ text })}
@@ -134,18 +94,14 @@ class Template1 extends Component {
                         />
                     </View>
                     <ImagePickerButton style={[styles.button, { backgroundColor: 'orange' }]}
-                        setImage={this.setImage}
+                                       setImage={this.setImage}
                     ></ImagePickerButton>
                     <SmileSwitcher
                         smile={this.state.smile}
                         setSmiley={this.setSmiley}
                     >
                     </SmileSwitcher>
-                    <TouchableHighlight  style={[styles.button, { backgroundColor: '#0984e3' }]}
-                        onPress={this.submit}
-                        underlayColor="#74b9ff">
-                        <Text style={styles.btnText}>Submit!</Text>
-                    </TouchableHighlight>
+                    <Button title="Confirm" onPress={this.submit}/>
                 </View>
             </View>
         )
@@ -229,8 +185,10 @@ const styles = StyleSheet.create({
     }
 })
 
-Template1.propTypes = {
-    name: PropTypes.string
+Template1Config.propTypes = {
+    name: PropTypes.string,
+    logo: PropTypes.string,
+    password: PropTypes.string
 }
 
-export default Template1
+

@@ -5,6 +5,15 @@ import Constants from '../Constants';
 import { Base64 } from 'js-base64';
 
 export default class Login extends Component {
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: 'Login',
+            headerTintColor: 'white',
+            headerStyle: {
+                backgroundColor: '#474747',
+            },
+        };
+    };
     constructor(props) {
         super(props);
 
@@ -12,7 +21,7 @@ export default class Login extends Component {
             name: '',
             password: '',
         };
-        
+
         this.encrypt = this.encrypt.bind(this);
         this.loginSuccessful = this.loginSuccessful.bind(this);
     }
@@ -31,7 +40,7 @@ export default class Login extends Component {
         fetch(Constants.url+ 'get/appByName/' + name)
             .then((response) => response.json())
             .then((responseJson) => {
-                
+
                 //check if passwords are the same
                 if(responseJson.password == encryptedPassword){
                     this.loginSuccessful();
@@ -65,6 +74,7 @@ export default class Login extends Component {
                         value={this.state.password}
                         onChangeText={(password) => this.setState({ password })}
                         placeholder={'Password'}
+                        placeholderTextColor="#C3C3C3"
                         secureTextEntry={true}
                         style={styles.input}
                     />
@@ -106,6 +116,7 @@ const styles = StyleSheet.create({
         height: 44,
         padding: 10,
         borderWidth: 1,
+        backgroundColor: 'white',
         borderColor: 'black',
         marginBottom: 10,
         backgroundColor: '#FFFFFF',
