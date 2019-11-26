@@ -24,6 +24,11 @@ export default class Login extends Component {
             password: this.state.password
         };
 
+        if(account.name == "" || account.password == ""){
+            alert("Name and password cannot be empty!")
+            return;
+        }
+
         const url = Constants.url + 'login';
 
         console.log(url);
