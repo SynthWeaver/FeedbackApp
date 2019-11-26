@@ -13,28 +13,32 @@ import {
     KeyboardAvoidingView
 } from 'react-native';
 import DeviceInfo from "react-native-device-info";
-import BugReportCheckBox from "./BugReportCheckBox"
-import Constants from "../Constants";
+import PropTypes from "prop-types"
+import BugReportCheckBox from "../BugReportCheckBox"
+import Constants from "../../Constants";
 
 
-class Template2 extends Component {
+var featureMap = {};
+
+export default class Template2Config extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            featureConfig: {},
             loadTextInput: false,
             loadBugInput: false,
             feedbackType: "",
             feedback: "",
-            appName: props.appName,
-            configData: props.config,
             featureHeader: '',
             loadInputSection: false
         };
-        this.sendFeedback = this.sendFeedback.bind(this);
+        this.inputChangeHandler = this.inputChangeHandler.bind(this);
+        this.confirm = this.confirm.bind(this);
         this.addBugReportText = this.addBugReportText.bind(this);
     }
 
     componentDidMount() {
+        featureMap = {};
         var even = [];
         var uneven = [];
         for (var i = 0; i < 11; i++) {
@@ -54,39 +58,39 @@ class Template2 extends Component {
         this.setState({ feedback: text})
     }
 
-    sendFeedback() {
-        if (this.state.feedback !== "") {
-            this.setState({feedbackType: "bugreport"})
-        }
-        DeviceInfo.getModel().then(deviceModel => {
-            // set the device info and os in state
-            this.setState({
-                deviceInfo: deviceModel,
-                deviceOs: Platform.OS
-            });
-            // post the user feedback to the api
-            fetch(Constants.url + 'post', {
+    inputChangeHandler(text, index) {
+        featureMap[index] = text;
+        this.setState({
+            featureConfig: featureMap
+        })
+    }
+
+    confirm() {
+        var appName = this.props.name;
+        var logo = this.props.logo;
+        var password = this.props.password;
+        var featureConfig = this.state.featureConfig;
+
+        Object.keys(featureConfig).map(function (key) {
+            fetch(Constants.url + 'addAccount', {
                 method: 'POST',
                 body: JSON.stringify({
-                    feedback: this.state.feedback,
-                    app: this.state.appName,
-                    image: "",
-                    smiley: "",
-                    device: this.state.deviceInfo,
-                    os: this.state.deviceOs,
-                    category: this.state.feedbackType,
-                    stars: "",
-                    rating: this.state.rating,
-                    feature: this.state.featurePick,
+                    appName: appName,
+                    template: 'Template2',
+                    logoURL: logo,
+                    password: password,
+                    featureConfig: featureConfig[key],
                     starQuestion: ""
-
-
                 })
             })
                 .then(res => console.log(res))
-                .catch(err => console.log(err));
-            this.props.navigation.navigate('Home');
+                .catch(err => console.log(err))
         })
+
+        this.props.navigation.navigate('Launch')
+
+
+
     }
 
     renderItem = ({item}) => {
@@ -97,8 +101,6 @@ class Template2 extends Component {
                 });
                 item.active = !item.active;
                 this.setState({
-                    loadTextInput: true,
-                    featureHeader: (item.val < 6 ? 'What did you dislike?' : 'What did you like?'),
                     rating: item.val
                 })
 
@@ -111,28 +113,10 @@ class Template2 extends Component {
 
 
 
-    renderButtonItem = ({item}) => {
+    renderButtonItem = ({item, index}) => {
         return (
-            <TouchableHighlight style={item.active ? [styles.button, {
-                backgroundColor: '#e67e22'
-            }] : [styles.button, {backgroundColor: 'orange'}]} onPress={() => {
-                this.state.configData.forEach((element) => {
-                    element.active = false;
-                })
-                item.active = !item.active;
-                if (item.featureConfig !== 'Other...') {
-                    this.setState({
-                        featurePick: item.featureConfig,
-                        loadInputSection: false
-                    })
-                } else {
-                    this.setState({
-                        loadInputSection: true
-                    })
-                }
-
-            }}>
-                <Text style={{color: 'white', fontWeight: 'bold'}}>{item.featureConfig}</Text>
+            <TouchableHighlight style={[styles.button, {backgroundColor: 'orange'}]}>
+                <TextInput placeholder="Type your feature..." onChangeText={(text) => this.inputChangeHandler(text, index)}/>
             </TouchableHighlight>
         )
 
@@ -178,12 +162,12 @@ class Template2 extends Component {
                         ListHeaderComponent={this.renderListHeader}
                         ListFooterComponent={this.renderListFooter}
                         renderItem={this.renderItem}/>
-                    {this.state.loadTextInput ? <View style={styles.btnContainer}>
-                        <Text style={styles.listHeader}>{this.state.featureHeader}</Text>
+                    <View style={styles.btnContainer}>
+                        <Text style={styles.listHeader}>What did you like?</Text>
                         <FlatList numColumns={2}
                                   horizontal={false}
                                   contentContainerStyle={styles.btnList}
-                                  data={this.state.configData}
+                                  data={[1,2,3,4]}
                                   extractData={this.state}
                                   renderItem={this.renderButtonItem}/>
                         {this.state.loadInputSection ? <View style={styles.inputSection}>
@@ -192,16 +176,22 @@ class Template2 extends Component {
                                        placeholderTextColor="#C3C3C3"
                                        onChangeText={(text) => this.setState({featurePick: text})} />
                         </View> : <View/>}
-                    </View> : <View style={styles.btnContainer}/>}
+                    </View>
                     <BugReportCheckBox textChange={(text) => this.addBugReportText(text)}/>
                     <View style={{flex: 1, justifyContent: 'center'}}>
-                        <Button title="Submit" onPress={this.sendFeedback}/>
+                        <Button title="Confirm" onPress={this.confirm}/>
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>
         )
 
     }
+}
+
+Template2Config.propTypes = {
+    name: PropTypes.string,
+    logo: PropTypes.string,
+    password: PropTypes.string
 }
 
 const styles = StyleSheet.create({
@@ -278,8 +268,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 17,
         color: 'white'
-    },
+    }
 })
 
 
-export default Template2
