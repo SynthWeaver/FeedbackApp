@@ -7,7 +7,7 @@ import {
     TextInput,
     StyleSheet,
     Dimensions,
-    Platform
+    Platform, Button
 } from 'react-native';
 import PropTypes from 'prop-types'
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -19,7 +19,7 @@ import Constants from '../Constants';
 import ImagePickerButton from './ImagePickerButton';
 
 
-class Template1 extends Component {
+class Template1Config extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -42,13 +42,13 @@ class Template1 extends Component {
     //This method works with OS Android only
     showToast = () => {
         if(Platform.OS === 'android'){
-        ToastAndroid.showWithGravityAndOffset(
-            "Your feedback has been sent!",
-            ToastAndroid.LONG,
-            ToastAndroid.BOTTOM,
-            25,
-            50
-        );
+            ToastAndroid.showWithGravityAndOffset(
+                "Your feedback has been sent!",
+                ToastAndroid.LONG,
+                ToastAndroid.BOTTOM,
+                25,
+                50
+            );
         }
     };
 
@@ -126,7 +126,7 @@ class Template1 extends Component {
                     <Text style={styles.modalHeader}>Give us your thoughts!</Text>
                     <FeedbackPicker feedbackTypeChange={(text) => this.setState({feedbackType: text})}/>
                     <View style={styles.searchSection}>
-                    {(this.state.image ? imageText : noImageText)}
+                        {(this.state.image ? imageText : noImageText)}
                         <TextInput style={styles.txtInput}
                                    numberOfLines={4}
                                    multiline={true} onChangeText={(text) => this.setState({ text })}
@@ -134,18 +134,14 @@ class Template1 extends Component {
                         />
                     </View>
                     <ImagePickerButton style={[styles.button, { backgroundColor: 'orange' }]}
-                        setImage={this.setImage}
+                                       setImage={this.setImage}
                     ></ImagePickerButton>
                     <SmileSwitcher
                         smile={this.state.smile}
                         setSmiley={this.setSmiley}
                     >
                     </SmileSwitcher>
-                    <TouchableHighlight  style={[styles.button, { backgroundColor: '#0984e3' }]}
-                        onPress={this.submit}
-                        underlayColor="#74b9ff">
-                        <Text style={styles.btnText}>Submit!</Text>
-                    </TouchableHighlight>
+                    <Button title="Confirm"/>
                 </View>
             </View>
         )
@@ -229,8 +225,8 @@ const styles = StyleSheet.create({
     }
 })
 
-Template1.propTypes = {
+Template1Config.propTypes = {
     name: PropTypes.string
 }
 
-export default Template1
+export default Template1Config
