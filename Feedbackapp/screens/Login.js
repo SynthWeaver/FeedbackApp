@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     input: {
+        backgroundColor: 'white',
         width: 200,
         height: 44,
         padding: 10,
