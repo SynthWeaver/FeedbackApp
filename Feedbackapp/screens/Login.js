@@ -22,27 +22,37 @@ export default class Login extends Component {
             password: '',
         };
 
-        this.encrypt = this.encrypt.bind(this);
         this.loginSuccessful = this.loginSuccessful.bind(this);
-    }
-
-    encrypt(stringToEncrypt){
-        return Base64.encode(stringToEncrypt);
     }
 
     onLogin() {
         //check name and password
-        const { name, password } = this.state;
 
-        //encrypt password
-        const encryptedPassword = this.encrypt(password);
+        const account = {
+            name: this.state.name,
+            password: this.state.password
+        };
 
-        fetch(Constants.url+ 'get/appByName/' + name)
+        if(account.name == "" || account.password == ""){
+            alert("Name and password cannot be empty!")
+            return;
+        }
+
+        const url = Constants.url + 'login';
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(account)
+        })
             .then((response) => response.json())
             .then((responseJson) => {
 
                 //check if passwords are the same
-                if(responseJson.password == encryptedPassword){
+                if(responseJson.result){
                     this.loginSuccessful();
                 }else{
                     alert('login failed');
@@ -118,7 +128,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'black',
         marginBottom: 10,
-        backgroundColor: '#FFFFFF',
     },
     button:{
         width: 97,

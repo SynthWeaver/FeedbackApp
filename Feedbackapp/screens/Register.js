@@ -15,8 +15,6 @@ import {
 import Constants from '../Constants';
 import Carousel from 'react-native-looped-carousel'
 
-import { Base64 } from 'js-base64';
-
 const image = 'https://www.w3schools.com/w3css/img_lights.jpg';
 const happy = 'https://knowledge.wharton.upenn.edu/wp-content/uploads/2016/01/compassion.jpg';
 const stars = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJLI1WKlFWlzI7kp0ia7fU-lYuRh96guVK27T7NiuOn_KF8bnSqQ&s';
@@ -52,7 +50,6 @@ export default class Register extends Component {
         };
         this.onChangeText = this.onChangeText.bind(this);
         this.setImage = this.setImage.bind(this);
-        this.encrypt = this.encrypt.bind(this);
     }
 
     componentDidMount() {
@@ -66,15 +63,10 @@ export default class Register extends Component {
         });
     }
 
-    encrypt(stringToEncrypt) {
-        return Base64.encode(stringToEncrypt);
-    }
-
     onRegister() {
         //get all data
 
         const { appName, logoURL, template, password, password2, configCount, starConfig } = this.state;
-
 
         //compare passwords
         if (password !== password2) {
@@ -91,12 +83,10 @@ export default class Register extends Component {
         }
 
 
-        //encrypt password
-        var encryptedPassword = this.encrypt(password);
         this.props.navigation.navigate('TemplateConfig', {
             appName: appName,
             logoURL: logoURL,
-            password: encryptedPassword
+            password: password
         })
 
 
