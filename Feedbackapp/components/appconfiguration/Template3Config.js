@@ -5,7 +5,7 @@ import {
     StyleSheet,
     FlatList,
     Button,
-    Platform, ScrollView, TextInput,
+    Platform, ScrollView, TextInput, TouchableHighlight,
 } from 'react-native';
 import StarRating from 'react-native-star-rating';
 import PropTypes from "prop-types"
@@ -28,6 +28,7 @@ export default class Template3Config extends Component {
             // appName: props.appName,
             // configData: props.config
         };
+        this.addQuestionButton = this.addQuestionButton.bind(this);
         this.confirm = this.confirm.bind(this);
         this.inputChangeHandler = this.inputChangeHandler.bind(this);
         this.addBugReport = this.addBugReport.bind(this);
@@ -50,6 +51,14 @@ export default class Template3Config extends Component {
         questionMap[index] = text;
         this.setState({
             questionConfig: questionMap
+        })
+    }
+
+    addQuestionButton() {
+        var questionList = this.state.configData;
+        questionList = questionList.concat(questionList.length + 1);
+        this.setState({
+            configData: questionList
         })
     }
 
@@ -83,6 +92,15 @@ export default class Template3Config extends Component {
         this.setState({ feedback: text })
     }
 
+    renderListFooter = () => {
+        return (
+            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <TouchableHighlight style={styles.addButton} onPress={this.addQuestionButton}>
+                    <Text style={{fontSize: 40, color: 'white', alignSelf: 'center'}}>+</Text>
+                </TouchableHighlight>
+            </View>
+        )
+    }
 
 
     renderItem = ({item, index}) => {
@@ -90,6 +108,7 @@ export default class Template3Config extends Component {
             <View style={{margin: 5}}>
                 <TextInput style={styles.txtInput}
                            placeholder="Type your question..."
+                           value={this.state.questionConfig[index]}
                            placeholderTextColor="#C3C3C3"
                            onChangeText={(text) => this.inputChangeHandler(text, index)}/>
                 <StarRating starStyle={{color: 'orange'}}
@@ -110,6 +129,7 @@ export default class Template3Config extends Component {
                               contentContainerStyle={styles.list}
                               data={this.state.configData}
                               extractData={this.state}
+                              ListFooterComponent={this.renderListFooter}
                               renderItem={this.renderItem}/>
                 </View>
                 <BugReportCheckBox textChange={(text) => this.addBugReport(text)}/>
@@ -150,6 +170,13 @@ const styles = StyleSheet.create({
         borderBottomWidth: 3,
         padding: 10,
         margin: 10,
+    },
+    addButton: {
+        alignItems: 'center',
+        backgroundColor: '#27ae60',
+        width: 50,
+        height: 50,
+        borderRadius: 100
     }
 })
 
