@@ -16,6 +16,7 @@ import Constants from "../../Constants";
 var starMap = {};
 var questionMap = {};
 
+
 export default class Template3Config extends Component {
     constructor(props) {
         super(props);
@@ -28,6 +29,8 @@ export default class Template3Config extends Component {
             // appName: props.appName,
             // configData: props.config
         };
+        this.basicQuestions = ['How did you like the app?', 'Click on text to change it', 'Swipe left or right to change the template', 'Your survey will look like this'];
+
         this.confirm = this.confirm.bind(this);
         this.inputChangeHandler = this.inputChangeHandler.bind(this);
         this.addBugReport = this.addBugReport.bind(this);
@@ -89,7 +92,7 @@ export default class Template3Config extends Component {
         return (
             <View style={{margin: 5}}>
                 <TextInput style={styles.txtInput}
-                           placeholder="Type your question..."
+                           placeholder= {this.basicQuestions[index]}    //"Type your question..."
                            placeholderTextColor="#C3C3C3"
                            onChangeText={(text) => this.inputChangeHandler(text, index)}/>
                 <StarRating starStyle={{color: 'orange'}}

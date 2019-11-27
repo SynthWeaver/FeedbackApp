@@ -78,6 +78,7 @@ export default class Login extends Component {
                         value={this.state.name}
                         onChangeText={(name) => this.setState({ name })}
                         placeholder={'Name'}
+                        placeholderTextColor="#C3C3C3"
                         style={styles.input}
                     />
                     <TextInput
@@ -128,6 +129,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'black',
         marginBottom: 10,
+        backgroundColor: 'white'
     },
     button:{
         width: 97,
