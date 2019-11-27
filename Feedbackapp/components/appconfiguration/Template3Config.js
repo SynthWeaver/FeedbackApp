@@ -96,7 +96,7 @@ export default class Template3Config extends Component {
         return (
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
                 <TouchableHighlight style={styles.addButton} onPress={this.addQuestionButton}>
-                    <Text style={{fontSize: 40, color: 'white', alignSelf: 'center'}}>+</Text>
+                    <Text style={{fontSize: 40, color: 'white'}}>+</Text>
                 </TouchableHighlight>
             </View>
         )
@@ -173,6 +173,7 @@ const styles = StyleSheet.create({
     },
     addButton: {
         alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: '#27ae60',
         width: 50,
         height: 50,

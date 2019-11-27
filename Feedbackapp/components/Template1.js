@@ -119,14 +119,13 @@ class Template1 extends Component {
     }
     render() {
         const imageText = <Icon style={styles.imageIcon} name="paperclip" size={25}/>;
-        const noImageText =<View style = {{height: 0, width: 0}}></View>;
         return (
             <View style={styles.container}>
                 <View>
                     <Text style={styles.modalHeader}>Give us your thoughts!</Text>
                     <FeedbackPicker feedbackTypeChange={(text) => this.setState({feedbackType: text})}/>
                     <View style={styles.searchSection}>
-                    {(this.state.image ? imageText : noImageText)}
+                    {(this.state.image ? imageText : null)}
                         <TextInput style={styles.txtInput}
                                    numberOfLines={4}
                                    multiline={true} onChangeText={(text) => this.setState({ text })}
@@ -207,12 +206,10 @@ const styles = StyleSheet.create({
 
     },
     searchSection: {
-
         flex: 0.5,
         flexDirection: 'column',
         justifyContent: 'space-between',
         borderColor: 'gray',
-
         borderWidth: 1,
         borderRadius: 10,
         backgroundColor: '#fff',
