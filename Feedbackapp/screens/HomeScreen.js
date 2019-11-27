@@ -1,6 +1,7 @@
 import * as React from "react";
 import {Animated, Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Constants from "../Constants";
+import Error from "../components/errorhandling/Error"
 import {SearchBar} from "react-native-elements";
 
 // what is 2.8?
@@ -64,7 +65,9 @@ export default class HomeScreen extends React.Component {
                     }
                 )
             }).catch((error) => {
-            console.error(error)
+            return(
+                <Error/>
+            )
         })
     }
 
@@ -118,6 +121,12 @@ export default class HomeScreen extends React.Component {
             duration: ANIMATION_DURATION,
             delay: 150
         }).start();
+
+        if (!this.state.dataSource) {
+            return (
+                <Error/>
+            )
+        }
 
         return (
             <View style={styles.container}>
