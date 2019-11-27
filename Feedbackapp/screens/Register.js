@@ -68,23 +68,23 @@ export default class Register extends Component {
 
         const { appName, logoURL, template, password, password2, configCount, starConfig } = this.state;
 
-        if(appName === ''){
-            alert("App Name cannot be empty");
-            return;
-        }
-        //compare passwords
-        else if (password !== password2) {
-            alert("Passwords are not the same");
-            return;
-        }
-        else if (password.length === null || password2.length === null) {
-            alert("Password can not be empty");
-            return;
-        }
-        else if (password.length < 5) {
-            alert("Password must at least 5 characters");
-            return;
-        }
+        // if(appName === ''){
+        //     alert("App Name cannot be empty");
+        //     return;
+        // }
+        // //compare passwords
+        // else if (password !== password2) {
+        //     alert("Passwords are not the same");
+        //     return;
+        // }
+        // else if (password.length === null || password2.length === null) {
+        //     alert("Password can not be empty");
+        //     return;
+        // }
+        // else if (password.length < 5) {
+        //     alert("Password must at least 5 characters");
+        //     return;
+        // }
 
 
         this.props.navigation.navigate('TemplateConfig', {
@@ -227,7 +227,6 @@ const styles = StyleSheet.create({
     input: {
         width: 160,
         height: 44,
-
         borderWidth: 1,
         borderColor: 'black',
         marginBottom: 10,

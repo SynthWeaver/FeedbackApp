@@ -8,7 +8,7 @@ import {
     Platform, ScrollView, TextInput, TouchableHighlight,
 } from 'react-native';
 import StarRating from 'react-native-star-rating';
-import PropTypes from "prop-types"
+import PropTypes, { object } from "prop-types"
 import BugReportCheckBox from '../BugReportCheckBox'
 import DeviceInfo from "react-native-device-info";
 import Constants from "../../Constants";
@@ -29,7 +29,8 @@ export default class Template3Config extends Component {
             // appName: props.appName,
             // configData: props.config
         };
-        this.basicQuestions = ['How did you like the app?', 'Click on text to change it', 'Swipe left or right to change the template', 'Your survey will look like this'];
+        this.basicQuestions = ['Click on text to change it', 'Swipe left or right to change the template', 'Your survey will look like this', 'How did you like the app?'];
+        this.stars= [1,2,3,4,5];
         this.addQuestionButton = this.addQuestionButton.bind(this);
 
         this.confirm = this.confirm.bind(this);
@@ -71,6 +72,25 @@ export default class Template3Config extends Component {
         var password = this.props.password;
         var questionConfig = this.state.questionConfig;
 
+        var i;
+        const MINIMUMQUESTIONAMOUNT = 4;
+
+        for(i = 0; i<MINIMUMQUESTIONAMOUNT; i++){
+            if(!questionConfig[i] || questionConfig[i] === ''){
+                alert('The first 4 questions must be filled in');
+                return;
+            }
+        }
+        for(i = MINIMUMQUESTIONAMOUNT; i< Object.keys(questionConfig).length ; i++){
+            if(questionConfig[i] === ''){
+                delete questionConfig[i]
+               
+            }
+        }
+            
+        
+        
+
         Object.keys(questionConfig).map(function (key) {
             fetch(Constants.url + 'addAccount', {
                 method: 'POST',
@@ -110,14 +130,15 @@ export default class Template3Config extends Component {
         return (
             <View style={{margin: 5}}>
                 <TextInput style={styles.txtInput}
-                            placeholder= {this.basicQuestions[index]}    /
-                           value={this.state.questionConfig[index]}
+                            placeholder= {!this.basicQuestions[index] ?  'Insert your question' : this.basicQuestions[index]  }    
+                           value= {this.state.questionConfig[index]} 
                            placeholderTextColor="#C3C3C3"
+                           multiline= {true}
                            onChangeText={(text) => this.inputChangeHandler(text, index)}/>
                 <StarRating starStyle={{color: 'orange'}}
-                            disabled={false}
+                            disabled={true}
                             maxStars={5}
-                            rating={this.state.starCount[index] ? this.state.starCount[index].star : 0}
+                            rating={this.stars[index%5]}
                             selectedStar={(rating) => this.onStarPressed(rating, index)}/>
             </View>
         )
@@ -173,6 +194,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 3,
         padding: 10,
         margin: 10,
+        fontSize: 22,
     },
     addButton: {
         alignItems: 'center',
