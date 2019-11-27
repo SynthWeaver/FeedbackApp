@@ -6,6 +6,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import _ from 'lodash';
 
 import Register from './screens/Register';
+import TemplatesConfig from './components/appconfiguration/TemplatesConfig'
 import Login from './screens/Login';
 import Templates from './components/Templates'
 import HomeScreen from './screens/HomeScreen'
@@ -29,6 +30,10 @@ const AppNavigator = createStackNavigator(
         Login:{
             screen: Login,
             path: 'screens/Login'
+        },
+        TemplateConfig: {
+            screen: TemplatesConfig,
+            path: 'templateConfig'
         },
         Register: {
             screen: Register,
@@ -61,4 +66,3 @@ export default class App extends React.Component {
         return <AppContainer />;
     }
 }
-

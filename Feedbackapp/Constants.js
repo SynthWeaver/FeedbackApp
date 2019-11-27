@@ -1,5 +1,9 @@
 export default class Constants {
-     static url = 'http://7cf324aa.ngrok.io/' //slash heeeeel belangrijk
-    // local url for testing
-    //static url = 'http://localhost:8085/'
+    //don't forget slashes!!!!
+
+    //heidi
+    //static url = 'http://7cf324aa.ngrok.io/'
+
+    //team frontend
+    static url = 'localhost:8085/'
 }

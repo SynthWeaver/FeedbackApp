@@ -104,7 +104,7 @@ export default class HomeScreen extends React.Component {
                                       app: item,
                                       logo: item.logoURL
                                   })}>
-                    <Image style={styles.logoicons} source={{ uri: item.logoURL }} />
+                        <Image style={styles.logoicons} source={{ uri: item.logoURL }} />
                 </TouchableOpacity>
                 <Text style={{marginBottom: 5, alignSelf: 'center', color: 'white'}}>{item.appName}</Text>
             </Animated.View>

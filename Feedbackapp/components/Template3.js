@@ -5,9 +5,10 @@ import {
     StyleSheet,
     FlatList,
     Button,
-    Platform,
+    Platform, ScrollView,
 } from 'react-native';
 import StarRating from 'react-native-star-rating';
+import BugReportCheckBox from './BugReportCheckBox'
 import DeviceInfo from "react-native-device-info";
 import Constants from "../Constants";
 
@@ -18,10 +19,13 @@ class Template3 extends Component {
         super(props);
         this.state = {
             starCount: {},
+            feedback: "",
+            feedbackType: "",
             appName: props.appName,
             configData: props.config
         };
         this.sendFeedback = this.sendFeedback.bind(this);
+        this.addBugReport = this.addBugReport.bind(this);
     }
 
     componentDidMount() {
@@ -38,7 +42,11 @@ class Template3 extends Component {
     }
 
     sendFeedback() {
-
+        if (this.state.feedback !== "") {
+            this.setState({ feedbackType: "bugreport"})
+        } else {
+            this.setState({ feedbackType: "feedback"})
+        }
         DeviceInfo.getModel().then(deviceModel => {
             // set the device info and os in state
             var deviceInfo = deviceModel;
@@ -46,18 +54,20 @@ class Template3 extends Component {
             // post the user feedback to the api
             var starValues = this.state.starCount;
             var appName = this.state.appName;
+            var feedback = this.state.feedback;
+            var feedbackType = this.state.feedbackType
             Object.keys(starValues).map(function (key) {
                 fetch(Constants.url + 'post', {
                     method: 'POST',
                     body:
                         JSON.stringify({
-                            feedback: "",
+                            feedback: feedback,
                             app: appName,
                             image: "",
                             smiley: "",
                             device: deviceInfo,
                             os: deviceOs,
-                            category: "feedback",
+                            category: feedbackType,
                             stars: starValues[key].star,
                             rating: "",
                             feature: "",
@@ -72,6 +82,11 @@ class Template3 extends Component {
         })
 
     }
+
+    addBugReport(text) {
+        this.setState({ feedback: text })
+    }
+
 
 
     renderItem = ({item, index}) => {
@@ -90,7 +105,7 @@ class Template3 extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <ScrollView style={styles.container}>
                 <View style={{flex: 4}}>
                     <FlatList numOfColumns={1}
                               horizontal={false}
@@ -99,8 +114,9 @@ class Template3 extends Component {
                               extractData={this.state}
                               renderItem={this.renderItem}/>
                 </View>
+                <BugReportCheckBox textChange={(text) => this.addBugReport(text)}/>
                 <Button title="Submit" onPress={this.sendFeedback}/>
-            </View>
+            </ScrollView>
         )
     }
 }

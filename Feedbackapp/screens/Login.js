@@ -1,22 +1,71 @@
 import React, { Component } from 'react';
 import { Alert, Button, TouchableHighlight, TextInput, View, StyleSheet, KeyboardAvoidingView,TouchableOpacity, Text } from 'react-native';
+import Constants from '../Constants';
+
+import { Base64 } from 'js-base64';
 
 export default class Login extends Component {
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: 'Login',
+            headerTintColor: 'white',
+            headerStyle: {
+                backgroundColor: '#474747',
+            },
+        };
+    };
     constructor(props) {
         super(props);
 
         this.state = {
-            email: '',
+            name: '',
             password: '',
         };
+
+        this.loginSuccessful = this.loginSuccessful.bind(this);
     }
 
     onLogin() {
-        //check email and password
-        const { email, password } = this.state;
-        Alert.alert('Credentials', `${email} + ${password}`);
+        //check name and password
 
-        //let user know if login was succesfull
+        const account = {
+            name: this.state.name,
+            password: this.state.password
+        };
+
+        if(account.name == "" || account.password == ""){
+            alert("Name and password cannot be empty!")
+            return;
+        }
+
+        const url = Constants.url + 'login';
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(account)
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+
+                //check if passwords are the same
+                if(responseJson.result){
+                    this.loginSuccessful();
+                }else{
+                    alert('login failed');
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    //todo: go to next screen.
+    loginSuccessful(){
+        alert('login successful');
     }
 
     render() {
@@ -26,15 +75,16 @@ export default class Login extends Component {
                 behavior="padding">
                 <View style={styles.container}>
                     <TextInput
-                        value={this.state.email}
-                        onChangeText={(email) => this.setState({ email })}
-                        placeholder={'Email'}
+                        value={this.state.name}
+                        onChangeText={(name) => this.setState({ name })}
+                        placeholder={'Name'}
                         style={styles.input}
                     />
                     <TextInput
                         value={this.state.password}
                         onChangeText={(password) => this.setState({ password })}
                         placeholder={'Password'}
+                        placeholderTextColor="#C3C3C3"
                         secureTextEntry={true}
                         style={styles.input}
                     />
@@ -64,7 +114,7 @@ const styles = StyleSheet.create({
         flex:1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#ecf0f1',
+        backgroundColor: '#313131',
     },
     row:{
         width: 200,

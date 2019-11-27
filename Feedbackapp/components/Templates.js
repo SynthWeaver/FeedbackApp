@@ -41,6 +41,7 @@ class Templates extends Component {
                         data: responseJson
                     })
                     this.props.navigation.setParams({ app: this.state.data[0].app })
+                    this.props.navigation.setParams({ name: this.state.data[0].appName})
                 }).catch((error) => {
                 console.error(error)
             })
