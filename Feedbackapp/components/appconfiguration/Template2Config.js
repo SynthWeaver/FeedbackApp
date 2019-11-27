@@ -24,6 +24,7 @@ export default class Template2Config extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            featureButtons: [1,2,3,4],
             featureConfig: {},
             loadTextInput: false,
             loadBugInput: false,
@@ -32,6 +33,7 @@ export default class Template2Config extends Component {
             featureHeader: '',
             loadInputSection: false
         };
+        this.addFeatureButton = this.addFeatureButton.bind(this);
         this.inputChangeHandler = this.inputChangeHandler.bind(this);
         this.confirm = this.confirm.bind(this);
         this.addBugReportText = this.addBugReportText.bind(this);
@@ -93,6 +95,14 @@ export default class Template2Config extends Component {
 
     }
 
+    addFeatureButton() {
+        var buttonList = this.state.featureButtons;
+        buttonList = buttonList.concat(buttonList.length + 1);
+        this.setState({
+            featureButtons: buttonList
+        })
+    }
+
     renderItem = ({item}) => {
         return (
             <TouchableHighlight style={item.active ? styles.circleButtonActive : styles.circleButton} onPress={() => {
@@ -116,7 +126,9 @@ export default class Template2Config extends Component {
     renderButtonItem = ({item, index}) => {
         return (
             <TouchableHighlight style={[styles.button, {backgroundColor: 'orange'}]}>
-                <TextInput placeholder="Type your feature..." onChangeText={(text) => this.inputChangeHandler(text, index)}/>
+                <TextInput placeholder="Type your feature..."
+                           value={this.state.featureConfig[index]}
+                           onChangeText={(text) => this.inputChangeHandler(text, index)}/>
             </TouchableHighlight>
         )
 
@@ -135,6 +147,16 @@ export default class Template2Config extends Component {
                 style={{flexDirection: 'row', justifyContent: 'space-between', width: Dimensions.get('window').width}}>
                 <Text style={{margin: 10, color: 'white'}}>Really Bad</Text>
                 <Text style={{margin: 10, color: 'white'}}>Really Good</Text>
+            </View>
+        )
+    }
+
+    renderFeatureListFooter = () => {
+        return (
+            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <TouchableHighlight style={styles.addButton} onPress={this.addFeatureButton}>
+                    <Text style={{fontSize: 40, color: 'white', alignSelf: 'center'}}>+</Text>
+                </TouchableHighlight>
             </View>
         )
     }
@@ -167,7 +189,8 @@ export default class Template2Config extends Component {
                         <FlatList numColumns={2}
                                   horizontal={false}
                                   contentContainerStyle={styles.btnList}
-                                  data={[1,2,3,4]}
+                                  data={this.state.featureButtons}
+                                  ListFooterComponent={this.renderFeatureListFooter}
                                   extractData={this.state}
                                   renderItem={this.renderButtonItem}/>
                         {this.state.loadInputSection ? <View style={styles.inputSection}>
@@ -217,12 +240,19 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center'
     },
+    addButton: {
+        alignItems: 'center',
+        backgroundColor: '#27ae60',
+        width: 50,
+        height: 50,
+        borderRadius: 100
+    },
     circleButton: {
         borderRadius: 100,
         margin: 3,
         backgroundColor: 'orange',
-        width: 50,
-        height: 50,
+        width: 40,
+        height: 40,
         justifyContent: 'center',
         alignItems: 'center'
     },

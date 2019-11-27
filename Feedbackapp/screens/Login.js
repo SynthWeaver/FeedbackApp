@@ -22,27 +22,37 @@ export default class Login extends Component {
             password: '',
         };
 
-        this.encrypt = this.encrypt.bind(this);
         this.loginSuccessful = this.loginSuccessful.bind(this);
-    }
-
-    encrypt(stringToEncrypt){
-        return Base64.encode(stringToEncrypt);
     }
 
     onLogin() {
         //check name and password
-        const { name, password } = this.state;
 
-        //encrypt password
-        const encryptedPassword = this.encrypt(password);
+        const account = {
+            name: this.state.name,
+            password: this.state.password
+        };
 
-        fetch(Constants.url+ 'get/appByName/' + name)
+        if(account.name == "" || account.password == ""){
+            alert("Name and password cannot be empty!")
+            return;
+        }
+
+        const url = Constants.url + 'login';
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(account)
+        })
             .then((response) => response.json())
             .then((responseJson) => {
 
                 //check if passwords are the same
-                if(responseJson.password == encryptedPassword){
+                if(responseJson.result){
                     this.loginSuccessful();
                 }else{
                     alert('login failed');
@@ -68,6 +78,7 @@ export default class Login extends Component {
                         value={this.state.name}
                         onChangeText={(name) => this.setState({ name })}
                         placeholder={'Name'}
+                        placeholderTextColor="#C3C3C3"
                         style={styles.input}
                     />
                     <TextInput
@@ -112,14 +123,13 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     input: {
+        backgroundColor: 'white',
         width: 200,
         height: 44,
         padding: 10,
         borderWidth: 1,
-        backgroundColor: 'white',
         borderColor: 'black',
         marginBottom: 10,
-        backgroundColor: '#FFFFFF',
     },
     button:{
         width: 97,
