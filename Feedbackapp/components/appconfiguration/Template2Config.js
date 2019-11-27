@@ -24,7 +24,7 @@ export default class Template2Config extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            featureButtons: [1,2,3,4],
+            featureButtons: [1,2,3,4,5],
             featureConfig: {},
             loadTextInput: false,
             loadBugInput: false,
@@ -68,10 +68,28 @@ export default class Template2Config extends Component {
     }
 
     confirm() {
+        
         var appName = this.props.name;
         var logo = this.props.logo;
         var password = this.props.password;
         var featureConfig = this.state.featureConfig;
+        featureConfig[Object.keys(featureConfig).length + 1] = 'Other...';
+        var i;
+        const MINIMUMFEATUREAMOUNT = 4;
+
+        for(i = 0; i<MINIMUMFEATUREAMOUNT; i++){
+            if(!featureConfig[i] || featureConfig[i] === ''){
+                alert('The first 4 features must be filled in');
+                return;
+            }
+        }
+        for(i = MINIMUMFEATUREAMOUNT; i< Object.keys(featureConfig).length ; i++){
+            if(featureConfig[i] === ''){
+                delete questionConfig[i]
+               
+            }
+        }
+           
 
         Object.keys(featureConfig).map(function (key) {
             fetch(Constants.url + 'addAccount', {
@@ -105,6 +123,7 @@ export default class Template2Config extends Component {
 
     renderItem = ({item}) => {
         return (
+          
             <TouchableHighlight style={item.active ? styles.circleButtonActive : styles.circleButton} onPress={() => {
                 this.state.data.forEach((element) => {
                     element.active = false;
@@ -124,15 +143,22 @@ export default class Template2Config extends Component {
 
 
     renderButtonItem = ({item, index}) => {
+        
         return (
+           
             <TouchableHighlight style={[styles.button, {backgroundColor: 'orange'}]}>
-                <TextInput placeholder="Type your feature..."
+            {index !== 4 ? <TextInput placeholder="Type your feature..." value={this.state.featureConfig[index]}
+                           onChangeText={(text) => this.inputChangeHandler(text, index)}/>  : <TextInput placeholder="Other..." 
+                           placeholderTextColor= 'black'
+                           editable = {false}
                            value={this.state.featureConfig[index]}
-                           onChangeText={(text) => this.inputChangeHandler(text, index)}/>
-            </TouchableHighlight>
+                           onChangeText={(text) => this.inputChangeHandler(text, index)}/>}                  
+            </TouchableHighlight>   
         )
+        
+        }
 
-    }
+    
 
 
     renderListHeader = () => {
