@@ -78,6 +78,7 @@ export default class Login extends Component {
                         value={this.state.name}
                         onChangeText={(name) => this.setState({ name })}
                         placeholder={'Name'}
+                        placeholderTextColor="#C3C3C3"
                         style={styles.input}
                     />
                     <TextInput
@@ -122,6 +123,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     input: {
+        backgroundColor: 'white',
         width: 200,
         height: 44,
         padding: 10,
