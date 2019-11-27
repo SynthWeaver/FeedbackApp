@@ -5,6 +5,7 @@ import {
     StyleSheet,
     FlatList,
     Button,
+    KeyboardAvoidingView,
     Platform, ScrollView, TextInput, TouchableHighlight,
 } from 'react-native';
 import StarRating from 'react-native-star-rating';
@@ -24,7 +25,7 @@ export default class Template3Config extends Component {
             starCount: {},
             feedback: "",
             feedbackType: "",
-            configData: [1,2,3,4]
+            configData: [1, 2, 3, 4]
             // appName: props.appName,
             // configData: props.config
         };
@@ -75,7 +76,7 @@ export default class Template3Config extends Component {
                     appName: appName,
                     template: 'Template3',
                     logoURL: logo,
-                    password:   password,
+                    password: password,
                     featureConfig: "",
                     starQuestion: questionConfig[key]
                 })
@@ -89,7 +90,7 @@ export default class Template3Config extends Component {
 
 
     addBugReport(text) {
-        this.setState({ feedback: text })
+        this.setState({feedback: text})
     }
 
     renderListFooter = () => {
@@ -122,7 +123,7 @@ export default class Template3Config extends Component {
 
     render() {
         return (
-            <ScrollView style={styles.container}>
+            <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
                 <View style={{flex: 4}}>
                     <FlatList numOfColumns={1}
                               horizontal={false}
@@ -134,7 +135,8 @@ export default class Template3Config extends Component {
                 </View>
                 <BugReportCheckBox textChange={(text) => this.addBugReport(text)}/>
                 <Button title="Confirm" onPress={this.confirm}/>
-            </ScrollView>
+            </KeyboardAvoidingView>
+
         )
     }
 }
@@ -148,7 +150,7 @@ Template3Config.propTypes = {
 const styles = StyleSheet.create({
     container: {
         flex: 5,
-        padding: 10,
+        // padding: 10,
         backgroundColor: '#313131'
     },
     header: {

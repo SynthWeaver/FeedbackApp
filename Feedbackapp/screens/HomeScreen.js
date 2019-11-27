@@ -24,7 +24,7 @@ export default class HomeScreen extends React.Component {
         },
     };
     state = {
-        text: ''
+        text: '',
 
 
     };
@@ -148,7 +148,7 @@ export default class HomeScreen extends React.Component {
                         numColumns={2}
                         horizontal={false}
                         contentContainerStyle={styles.list}
-                        data={this.state.dataSource}
+                        data={this.state.dataSource.length > 1 ? this.state.dataSource : []}
                         renderItem={this.renderItem}
 
                         style={{ backgroundColor: '#313131' }} />
