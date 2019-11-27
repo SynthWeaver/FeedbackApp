@@ -21,7 +21,7 @@ export default class Login extends Component {
             name: '',
             password: '',
         };
-        
+
         this.loginSuccessful = this.loginSuccessful.bind(this);
     }
 
@@ -42,9 +42,9 @@ export default class Login extends Component {
 
         fetch(url, {
             method: 'POST',
-            headers: { 
+            headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json' 
+                'Content-Type': 'application/json'
                 },
             body: JSON.stringify(account)
         })
@@ -129,7 +129,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderColor: 'black',
         marginBottom: 10,
-        backgroundColor: '#FFFFFF',
     },
     button:{
         width: 97,
