@@ -20,8 +20,7 @@ const happy = 'https://knowledge.wharton.upenn.edu/wp-content/uploads/2016/01/co
 const stars = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJLI1WKlFWlzI7kp0ia7fU-lYuRh96guVK27T7NiuOn_KF8bnSqQ&s';
 const bubbly = 'https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i9ZqFExK5zA0/v0/1000x-1.jpg'
 const textFields = ['1', '2', '3', '4'];
-var configMap = {};
-var starConfigMap = {};
+
 
 export default class Register extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -48,13 +47,7 @@ export default class Register extends Component {
 
 
         };
-        this.onChangeText = this.onChangeText.bind(this);
         this.setImage = this.setImage.bind(this);
-    }
-
-    componentDidMount() {
-        configMap = {};
-        starConfigMap = {};
     }
 
     setImage(url) {
@@ -91,26 +84,6 @@ export default class Register extends Component {
 
 
 
-    }
-
-    onChangeText(item, index) {
-        if (this.state.template === "Template2") {
-            configMap[index] = item;
-            this.setState({ configCount: configMap });
-        } else if (this.state.template === "Template3") {
-            starConfigMap[index] = item;
-            this.setState({ starConfig: starConfigMap });
-        }
-
-
-
-    }
-
-
-    renderItem = ({ item }) => {
-        return (
-            <TextInput style={styles.textInput} onChangeText={(text) => this.onChangeText(text, item)} />
-        )
     }
 
 

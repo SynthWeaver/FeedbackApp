@@ -15,7 +15,6 @@ import DeviceInfo from "react-native-device-info";
 import Constants from "../../Constants";
 
 var starMap = {};
-var questionMap = {};
 
 export default class Template3Config extends Component {
     constructor(props) {
@@ -29,6 +28,8 @@ export default class Template3Config extends Component {
             // appName: props.appName,
             // configData: props.config
         };
+
+        this.questionMap = {};
         this.addQuestionButton = this.addQuestionButton.bind(this);
         this.confirm = this.confirm.bind(this);
         this.inputChangeHandler = this.inputChangeHandler.bind(this);
@@ -36,7 +37,6 @@ export default class Template3Config extends Component {
     }
 
     componentDidMount() {
-        questionMap = {};
         starMap = {};
     }
 
@@ -49,10 +49,7 @@ export default class Template3Config extends Component {
     }
 
     inputChangeHandler(text, index) {
-        questionMap[index] = text;
-        this.setState({
-            questionConfig: questionMap
-        })
+        this.questionMap[index] = text;
     }
 
     addQuestionButton() {
@@ -67,7 +64,7 @@ export default class Template3Config extends Component {
         var appName = this.props.name;
         var logo = this.props.logo;
         var password = this.props.password;
-        var questionConfig = this.state.questionConfig;
+        var questionConfig = this.questionMap;
 
         Object.keys(questionConfig).map(function (key) {
             fetch(Constants.url + 'addAccount', {
@@ -109,7 +106,7 @@ export default class Template3Config extends Component {
             <View style={{margin: 5}}>
                 <TextInput style={styles.txtInput}
                            placeholder="Type your question..."
-                           value={this.state.questionConfig[index]}
+                           value={this.questionMap[index]}
                            placeholderTextColor="#C3C3C3"
                            onChangeText={(text) => this.inputChangeHandler(text, index)}/>
                 <StarRating starStyle={{color: 'orange'}}
