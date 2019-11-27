@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Animated, Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Animated, Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator} from "react-native";
 import Constants from "../Constants";
 import Error from "../components/errorhandling/Error"
 import {SearchBar} from "react-native-elements";
@@ -124,7 +124,9 @@ export default class HomeScreen extends React.Component {
 
         if (!this.state.dataSource) {
             return (
-                <Error/>
+                <View style={{flex: 1, backgroundColor: '#313131', alignItems: 'center', justifyContent: 'center'}}>
+                    <ActivityIndicator size="large" color="#3498db"/>
+                </View>
             )
         }
 

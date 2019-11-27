@@ -2,13 +2,14 @@ import React, {Component} from 'react';
 import {
     Text,
     Image,
-    View
+    View, ActivityIndicator
 } from 'react-native';
 
 import Template1 from './Template1'
 import Template2 from './Template2'
 import Template3 from './Template3'
 import Constants from '../Constants'
+import Error from './errorhandling/Error'
 
 
 // Switcher to retrieve the template associated with the app and render the correct template
@@ -43,7 +44,9 @@ class Templates extends Component {
                     this.props.navigation.setParams({ app: this.state.data[0].app })
                     this.props.navigation.setParams({ name: this.state.data[0].appName})
                 }).catch((error) => {
-                console.error(error)
+                return(
+                    <Error/>
+                )
             })
 
     }
@@ -52,7 +55,9 @@ class Templates extends Component {
     render() {
         if (!this.state.data) {
             return (
-                <Text>Loading...</Text>
+                <View style={{flex: 1, backgroundColor: '#313131', alignItems: 'center', justifyContent: 'center'}}>
+                    <ActivityIndicator size="large" color="#3498db"/>
+                </View>
             )
         }
 
