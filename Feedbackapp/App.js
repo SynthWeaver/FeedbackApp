@@ -59,7 +59,7 @@ const AppNavigator = createStackNavigator(
         }
     },
     {
-        initialRouteName: 'Frankenstein',
+        initialRouteName: 'Launch',
     }
 );
 
