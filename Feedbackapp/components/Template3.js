@@ -40,7 +40,7 @@ class Template3 extends Component {
         this.setState({starCount: starMap})
 
     }
-    
+
     sendFeedback() {
         var i;
         //Hier alleen even this.state.configData.question veranderen in de som van het aantal vragen van de template
