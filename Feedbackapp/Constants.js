@@ -5,5 +5,5 @@ export default class Constants {
     //static url = 'http://7cf324aa.ngrok.io/'
 
     //team frontend
-    static url = 'localhost:8085/'
+    static url = 'http://1804e5df.ngrok.io/'
 }

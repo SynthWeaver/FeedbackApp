@@ -10,6 +10,7 @@ import {
     FlatList,
     Button,
     ScrollView,
+    Alert,
     KeyboardAvoidingView
 } from 'react-native';
 import DeviceInfo from "react-native-device-info";
@@ -28,7 +29,9 @@ class Template2 extends Component {
             appName: props.appName,
             configData: props.config,
             featureHeader: '',
-            loadInputSection: false
+            loadInputSection: false,
+            rating: '',
+            feature: ''
         };
         this.sendFeedback = this.sendFeedback.bind(this);
         this.addBugReportText = this.addBugReportText.bind(this);
@@ -55,6 +58,8 @@ class Template2 extends Component {
     }
 
     sendFeedback() {
+        if(this.state.rating !== ''){
+            if(this.state.feature !== ''){
         if (this.state.feedback !== "") {
             this.setState({feedbackType: "bugreport"})
         }
@@ -65,6 +70,7 @@ class Template2 extends Component {
                 deviceOs: Platform.OS
             });
             // post the user feedback to the api
+            
             fetch(Constants.url + 'post', {
                 method: 'POST',
                 body: JSON.stringify({
@@ -87,6 +93,13 @@ class Template2 extends Component {
                 .catch(err => console.log(err));
             this.props.navigation.navigate('Home');
         })
+    }else{
+        Alert.alert('You must pick a feature');
+    }
+    }else{
+        Alert.alert('Rating cannot be empty');
+    }
+    
     }
 
     renderItem = ({item}) => {
