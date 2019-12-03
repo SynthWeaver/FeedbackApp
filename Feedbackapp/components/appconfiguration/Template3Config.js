@@ -71,6 +71,7 @@ export default class Template3Config extends Component {
         var i;
         const MINIMUMQUESTIONAMOUNT = 4;
 
+        //undefined is not an object evaluating quesionConfig[i]
         for(i = 0; i<MINIMUMQUESTIONAMOUNT; i++){
             if(!questionConfig[i] || questionConfig[i] === ''){
                 alert('The first 4 questions must be filled in');

@@ -58,8 +58,12 @@ class Template2 extends Component {
     }
 
     sendFeedback() {
+
+        
         if(this.state.rating !== ''){
-            if(this.state.feature !== ''){
+            var chosenFeature = this.state.featurePick;
+            if(chosenFeature !== ''){
+                
         if (this.state.feedback !== "") {
             this.setState({feedbackType: "bugreport"})
         } else {

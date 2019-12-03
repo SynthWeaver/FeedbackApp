@@ -69,7 +69,7 @@ export default class Template2Config extends Component {
         var appName = this.props.name;
         var logo = this.props.logo;
         var password = this.props.password;
-        var featureConfig = this.state.featureConfig;
+        var featureConfig = this.featureMap;
         featureConfig[Object.keys(featureConfig).length + 1] = 'Other...';
         var i;
         const MINIMUMFEATUREAMOUNT = 4;
@@ -81,8 +81,8 @@ export default class Template2Config extends Component {
             }
         }
         for(i = MINIMUMFEATUREAMOUNT; i< Object.keys(featureConfig).length ; i++){
-            if(featureConfig[i] === ''){
-                delete questionConfig[i]
+            if(this.state.featureConfig[i] === ''){
+                delete featureConfig[i]
                
             }
         }
