@@ -63,27 +63,83 @@ export default class Register extends Component {
         });
     }
 
+    encrypt(stringToEncrypt) {
+        return Base64.encode(stringToEncrypt);
+    }
+
     onRegister() {
         //get all data
 
         const { appName, logoURL, template, password, password2, configCount, starConfig } = this.state;
+
 
         if(appName === ''){
             alert("App Name cannot be empty");
             return;
         }
         //compare passwords
-        else if (password !== password2) {
-            alert("Passwords are not the same");
-            return;
+else if (password !== password2) {
+    alert("Passwords are not the same");
+    return;
+}
+else if (password.length === null || password2.length === null) {
+    alert("Password can not be empty");
+    return;
+}
+else if (password.length < 5) {
+    alert("Password must at least 5 characters");
+    return;
+
+
+        //encrypt password
+        var encryptedPassword = this.encrypt(password);
+
+        var configOpts;
+
+        if (template === "Template2") {
+            configOpts = configCount;
+            var keys = Object.keys(configOpts);
+            configOpts[keys.length + 1] = "Other...";
+        } else if (template === "Template3") {
+            configOpts = starConfig;
+        } else if (template === "Template1") {
+            fetch(Constants.url + 'addAccount', {
+                method: 'POST',
+                body: JSON.stringify({
+                    appName: appName,
+                    logoURL: logoURL,
+                    template: template,
+                    password: encryptedPassword,
+                    featureConfig: '',
+                    starQuestion: ''
+                })
+            })
+
+                .then(res => console.log(res))
+                .catch(err => console.log(err));
+
+            this.props.navigation.navigate('Launch')
         }
-        else if (password.length === null || password2.length === null) {
-            alert("Password can not be empty");
-            return;
-        }
-        else if (password.length < 5) {
-            alert("Password must at least 5 characters");
-            return;
+
+        if (template !== "Template1") {
+            //do a post to the rest server
+            //const { appName, logoURL, template, password,}
+            Object.keys(configOpts).map(function (key) {
+                fetch(Constants.url + 'addAccount', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        appName: appName,
+                        logoURL: logoURL,
+                        template: template,
+                        password: encryptedPassword,
+                        featureConfig: (template === "Template2" ? configOpts[key] : ''),
+                        starQuestion: (template === "Template3" ? configOpts[key] : '')
+                    })
+                })
+                    .then(res => console.log(res))
+                    .catch(err => console.log(err));
+            })
+            this.props.navigation.navigate('Launch')
         }
 
 
@@ -122,52 +178,75 @@ export default class Register extends Component {
         return (
 
             <View style={styles.container}>
-                <Text style={{ fontSize: 36, color: 'white', textAlign: 'center' }}>Register an App</Text>
-                <View style={{ flexDirection: 'row'}}>
-
-                    <View style={styles.top}>
-                        <View style={{ marginLeft: 20, flexDirection: 'column' }}>
-                            <Text style= {styles.text}>App Name:</Text>
-                            <TextInput placeholder="type a name..."
-                                       style={styles.input}
-                                       onChangeText={(text) => this.setState({ appName: text })} />
-                        </View>
-                        <View style={{ marginLeft: 20, flexDirection: 'column' }}>
-                            <Text style= {styles.text}>Image URL: </Text>
-                            <TextInput placeholder="type the url..."
-                                       style={styles.input}
-                                       onChangeText={(text) => this.setState({ logoURL: text })} />
-                        </View>
-                    </View>
-                    <View>
-                        <Image source={{ uri: this.state.logoURL }} style={styles.imageicon} />
-                    </View>
-
-                </View>
-
-                <View style={{ flexDirection: 'column', justifyContent: 'space-between', padding: 20 }}>
-                    <View style = {{flexDirection: 'column'}}>
-                        <Text style= {styles.text}>Create a password</Text>
-                        <TextInput placeholder="Enter a Password"
-                                   secureTextEntry={true}
-                                   style={styles.input2}
-                                   onChangeText={(text) => this.setState({ password: text })} />
-                    </View>
-                    <Text style= {styles.text}>Repeat Password</Text>
-                    <TextInput placeholder="Reytpe password..."
-                               secureTextEntry={true}
-                               style={styles.input2}
-                               onChangeText={(text) => this.setState({ password2: text })} />
-                </View>
-
-
                 <View>
+                    <View style={{ flexDirection: 'row' }}>
+                        <View style={styles.top}>
+                            <View style={{ marginLeft: 20 }}>
 
-                    <View style={{ width: Dimensions.get('window').width, height: 100,  alignContent: 'center', alignItems: 'center' }}>
-                        <Button onPress={this.onRegister.bind(this)} style = {styles.button}
-                                title= "Submit and Configure"/>
+                                <TextInput placeholder="type a name..."
+                                    style={styles.input}
+                                    onChangeText={(text) => this.setState({ appName: text })} />
+
+                                <TextInput placeholder="type the url..."
+                                    style={styles.input}
+                                    onChangeText={(text) => this.setState({ logoURL: text })} />
+                            </View>
+                        </View>
+                        <View>
+                            <Image source={{ uri: this.state.logoURL }} style={styles.imageicon} />
+                        </View>
+                    </View>
+
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginLeft: 20 }}>
+                        <View>
+
+                            <TextInput placeholder="Enter a password"
+                                secureTextEntry={true}
+                                style={styles.input}
+                                onChangeText={(text) => this.setState({ password: text })} />
+                        </View>
+                        <View>
+
+                            <TextInput placeholder="Reytpe password..."
+                                secureTextEntry={true}
+                                style={styles.input2}
+                                onChangeText={(text) => this.setState({ password2: text })} />
+                        </View>
+                    </View>
+
+                    <View>
+                        <View style={{ marginLeft: 20, paddingBottom: 0 }}>
+                            <Text style={styles.text}>Select Template</Text>
+                            <Text style={styles.text}>Happy:</Text>
+                            <View style={styles.templates}>
+
+                                <TouchableOpacity onPress={() => this.setState({ template: "Template1" })}>
+                                    <Image source={{ uri: happy }} style={(this.state.template !== 'Template1' && this.state.template !== null) ? styles.templatepickeractive : styles.templatepicker} />
+                                </TouchableOpacity>
+                            </View>
+
+                            <View>
+                                <Text style={styles.text}>Stars:</Text>
+                                <TouchableOpacity onPress={() => this.setState({ template: "Template3" })}>
+                                    <Image source={{ uri: stars }} style={(this.state.template !== 'Template3' && this.state.template !== null) ? styles.templatepickeractive : styles.templatepicker} />
+                                </TouchableOpacity>
+                            </View>
+
+                            <View>
+                                <Text style={styles.text}>Bubbly:</Text>
+                                <TouchableOpacity onPress={() => this.setState({ template: "Template2" })}>
+                                    <Image source={{ uri: bubbly }} style={(this.state.template !== 'Template2' && this.state.template !== null) ? styles.templatepickeractive : styles.templatepicker} />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
 
 
+                    </View>
+
+                    <View style={{ width: Dimensions.get('window').width, height: 30, alignContent: 'center', alignItems: 'center' }}>
+                        <TouchableOpacity onPress={this.onRegister.bind(this)} style={styles.button}>
+                            <Text style={{ textAlign: 'center', color: 'white' }}>Submit</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>
@@ -199,8 +278,8 @@ const styles = StyleSheet.create({
         padding: 5
     },
     imageicon: {
-        height: Dimensions.get('window').width / 3.2,
-        width: Dimensions.get('window').width / 2.4,
+        height: Dimensions.get('window').width / 3.4,
+        width: Dimensions.get('window').width / 2.7,
         borderRadius: 15,
         marginTop: 10,
         marginRight: 20
