@@ -38,7 +38,7 @@ export default class HomeScreen extends React.Component {
             //applying filter for the inserted text in search bar
             const itemData = item.appName ? item.appName.toUpperCase() : ''.toUpperCase();
             const textData = text.toUpperCase();
-            return itemData.indexOf(textData) > -1;
+            return itemData.includes(textData);
         });
 
         this.setState({
@@ -148,7 +148,7 @@ export default class HomeScreen extends React.Component {
                         numColumns={2}
                         horizontal={false}
                         contentContainerStyle={styles.list}
-                        data={this.state.dataSource.length > 1 ? this.state.dataSource : []}
+                        data={this.state.dataSource}
                         renderItem={this.renderItem}
 
                         style={{ backgroundColor: '#313131' }} />

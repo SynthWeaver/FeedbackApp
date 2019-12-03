@@ -57,6 +57,8 @@ class Template2 extends Component {
     sendFeedback() {
         if (this.state.feedback !== "") {
             this.setState({feedbackType: "bugreport"})
+        } else {
+            this.setState({ feedbackType: "feedback"})
         }
         DeviceInfo.getModel().then(deviceModel => {
             // set the device info and os in state
