@@ -56,21 +56,27 @@ class Template3 extends Component {
             var appName = this.state.appName;
             var feedback = this.state.feedback;
             var feedbackType = this.state.feedbackType;
+
+            fetch(Constants.url + 'post', {
+                method: 'POST',
+                body:
+                    JSON.stringify({
+                        feedback: feedback,
+                        app: appName,
+                        device: deviceInfo,
+                        os: deviceOs,
+                        category: feedbackType,
+
+                    })
+            })
+                .then(res => console.log(res))
+                .catch(err => console.log(err));
             Object.keys(starValues).map(function (key) {
-                fetch(Constants.url + 'post', {
+                fetch(Constants.url + 'post/questions', {
                     method: 'POST',
                     body:
                         JSON.stringify({
-                            feedback: feedback,
-                            app: appName,
-                            image: "",
-                            smiley: "",
-                            device: deviceInfo,
-                            os: deviceOs,
-                            category: feedbackType,
                             stars: starValues[key].star,
-                            rating: "",
-                            feature: "",
                             starQuestion: starValues[key].question
 
                         })
