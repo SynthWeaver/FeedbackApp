@@ -24,7 +24,7 @@ export default class HomeScreen extends React.Component {
         },
     };
     state = {
-        text: ''
+        text: '',
 
 
     };
@@ -38,7 +38,7 @@ export default class HomeScreen extends React.Component {
             //applying filter for the inserted text in search bar
             const itemData = item.appName ? item.appName.toUpperCase() : ''.toUpperCase();
             const textData = text.toUpperCase();
-            return itemData.indexOf(textData) > -1;
+            return itemData.includes(textData);
         });
 
         this.setState({

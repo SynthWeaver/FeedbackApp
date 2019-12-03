@@ -20,8 +20,7 @@ const happy = 'https://knowledge.wharton.upenn.edu/wp-content/uploads/2016/01/co
 const stars = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJLI1WKlFWlzI7kp0ia7fU-lYuRh96guVK27T7NiuOn_KF8bnSqQ&s';
 const bubbly = 'https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i9ZqFExK5zA0/v0/1000x-1.jpg'
 const textFields = ['1', '2', '3', '4'];
-var configMap = {};
-var starConfigMap = {};
+
 
 export default class Register extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -48,13 +47,7 @@ export default class Register extends Component {
 
 
         };
-        this.onChangeText = this.onChangeText.bind(this);
         this.setImage = this.setImage.bind(this);
-    }
-
-    componentDidMount() {
-        configMap = {};
-        starConfigMap = {};
     }
 
     setImage(url) {
@@ -93,26 +86,6 @@ export default class Register extends Component {
 
     }
 
-    onChangeText(item, index) {
-        if (this.state.template === "Template2") {
-            configMap[index] = item;
-            this.setState({ configCount: configMap });
-        } else if (this.state.template === "Template3") {
-            starConfigMap[index] = item;
-            this.setState({ starConfig: starConfigMap });
-        }
-
-
-
-    }
-
-
-    renderItem = ({ item }) => {
-        return (
-            <TextInput style={styles.textInput} onChangeText={(text) => this.onChangeText(text, item)} />
-        )
-    }
-
 
     render() {
         return (
@@ -124,13 +97,13 @@ export default class Register extends Component {
                     <View style={styles.top}>
                         <View style={{ marginLeft: 20, flexDirection: 'column' }}>
                             <Text style= {styles.text}>App Name:</Text>
-                            <TextInput placeholder="type a name..."
+                            <TextInput placeholder="Type a name..."
                                        style={styles.input}
                                        onChangeText={(text) => this.setState({ appName: text })} />
                         </View>
                         <View style={{ marginLeft: 20, flexDirection: 'column' }}>
                             <Text style= {styles.text}>Image URL: </Text>
-                            <TextInput placeholder="type the url..."
+                            <TextInput placeholder="Type the url..."
                                        style={styles.input}
                                        onChangeText={(text) => this.setState({ logoURL: text })} />
                         </View>
@@ -143,13 +116,13 @@ export default class Register extends Component {
 
                 <View style={{ flexDirection: 'column', justifyContent: 'space-between', padding: 20 }}>
                     <View style = {{flexDirection: 'column'}}>
-                        <Text style= {styles.text}>Create a password</Text>
+                        <Text style= {styles.text}>Create a password:</Text>
                         <TextInput placeholder="Enter a Password"
                                    secureTextEntry={true}
                                    style={styles.input2}
                                    onChangeText={(text) => this.setState({ password: text })} />
                     </View>
-                    <Text style= {styles.text}>Repeat Password</Text>
+                    <Text style= {styles.text}>Repeat Password:</Text>
                     <TextInput placeholder="Reytpe password..."
                                secureTextEntry={true}
                                style={styles.input2}
@@ -223,7 +196,7 @@ const styles = StyleSheet.create({
     input: {
         width: 160,
         height: 44,
-
+        padding: 5,
         borderWidth: 1,
         borderColor: 'black',
         marginBottom: 10,
@@ -232,7 +205,7 @@ const styles = StyleSheet.create({
     input2: {
         width: Dimensions.get('window').width / 1.4,
         height: 44,
-
+        padding: 5,
         borderWidth: 1,
         borderColor: 'black',
         marginBottom: 10,

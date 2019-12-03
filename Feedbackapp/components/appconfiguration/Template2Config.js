@@ -33,6 +33,7 @@ export default class Template2Config extends Component {
             featureHeader: '',
             loadInputSection: false
         };
+        this.featureMap = {};
         this.addFeatureButton = this.addFeatureButton.bind(this);
         this.inputChangeHandler = this.inputChangeHandler.bind(this);
         this.confirm = this.confirm.bind(this);
@@ -40,7 +41,6 @@ export default class Template2Config extends Component {
     }
 
     componentDidMount() {
-        featureMap = {};
         var even = [];
         var uneven = [];
         for (var i = 0; i < 11; i++) {
@@ -61,17 +61,14 @@ export default class Template2Config extends Component {
     }
 
     inputChangeHandler(text, index) {
-        featureMap[index] = text;
-        this.setState({
-            featureConfig: featureMap
-        })
+        this.featureMap[index] = text
     }
 
     confirm() {
         var appName = this.props.name;
         var logo = this.props.logo;
         var password = this.props.password;
-        var featureConfig = this.state.featureConfig;
+        var featureConfig = this.featureMap;
 
         Object.keys(featureConfig).map(function (key) {
             fetch(Constants.url + 'addAccount', {
@@ -127,7 +124,7 @@ export default class Template2Config extends Component {
         return (
             <TouchableHighlight style={[styles.button, {backgroundColor: 'orange'}]}>
                 <TextInput placeholder="Type your feature..."
-                           value={this.state.featureConfig[index]}
+                           value={this.featureMap[index]}
                            onChangeText={(text) => this.inputChangeHandler(text, index)}/>
             </TouchableHighlight>
         )

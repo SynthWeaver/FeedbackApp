@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Dimensions } from 'react-native';
+import { Text, View, Dimensions, KeyboardAvoidingView } from 'react-native';
 import Carousel from 'react-native-looped-carousel';
 
 

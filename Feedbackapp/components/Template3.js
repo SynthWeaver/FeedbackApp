@@ -55,7 +55,7 @@ class Template3 extends Component {
             var starValues = this.state.starCount;
             var appName = this.state.appName;
             var feedback = this.state.feedback;
-            var feedbackType = this.state.feedbackType
+            var feedbackType = this.state.feedbackType;
             Object.keys(starValues).map(function (key) {
                 fetch(Constants.url + 'post', {
                     method: 'POST',
