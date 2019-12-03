@@ -31,7 +31,7 @@ export default class FeedbackPicker extends Component {
         return (
             <TouchableHighlight style={[styles.picker, {backgroundColor: 'white'}]} >
                 <RNPickerSelect
-                    style = {{height: 20, color: 'black'}}
+                    style = {{height: 20}}
                     itemStyle={{height: 44}}
                     placeholder={placeholder}
                     onValueChange={(value) => this.handlePickerValueChange(value)}

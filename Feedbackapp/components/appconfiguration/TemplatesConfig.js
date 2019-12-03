@@ -40,27 +40,26 @@ export default class TemplatesConfig extends Component {
                     style={this.state.size}
                     autoplay={false}
                     pageInfo
-                    currentPage={0}
+                    currentPage={2}
                     onAnimateNextPage={p => console.log(p)}>
-                    <View style={[{ backgroundColor: 'blue' }, this.state.size]}>
-                        <Template3Config name={this.props.navigation.getParam('appName')}
-                            password={this.props.navigation.getParam('password')}
-                            logo={this.props.navigation.getParam('logoURL')}
-                            navigation={this.props.navigation} />
+                    <View style={[{ backgroundColor: '#BADA55' }, this.state.size]}>
+                        <Template1Config name={this.props.navigation.getParam('appName')}
+                                         password={this.props.navigation.getParam('password')}
+                                         logo={this.props.navigation.getParam('logoURL')}
+                                         navigation={this.props.navigation}/>
                     </View>
                     <View style={[{ backgroundColor: 'red' }, this.state.size]}>
                         <Template2Config name={this.props.navigation.getParam('appName')}
-                            password={this.props.navigation.getParam('password')}
-                            logo={this.props.navigation.getParam('logoURL')}
-                            navigation={this.props.navigation} />
+                                         password={this.props.navigation.getParam('password')}
+                                         logo={this.props.navigation.getParam('logoURL')}
+                                         navigation={this.props.navigation}/>
                     </View>
-                    <View style={[{ backgroundColor: '#BADA55' }, this.state.size]}>
-                        <Template1Config name={this.props.navigation.getParam('appName')}
-                            password={this.props.navigation.getParam('password')}
-                            logo={this.props.navigation.getParam('logoURL')}
-                            navigation={this.props.navigation} />
+                    <View style={[{ backgroundColor: 'blue' }, this.state.size]}>
+                        <Template3Config name={this.props.navigation.getParam('appName')}
+                                         password={this.props.navigation.getParam('password')}
+                                         logo={this.props.navigation.getParam('logoURL')}
+                                         navigation={this.props.navigation}/>
                     </View>
-
                 </Carousel>
             </View>
         );

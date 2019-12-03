@@ -61,21 +61,17 @@ export default class Register extends Component {
 
         const { appName, logoURL, template, password, password2, configCount, starConfig } = this.state;
 
-        if(appName === ''){
-            alert("App Name cannot be empty");
-            return;
-        }
         //compare passwords
-        else if (password !== password2) {
+        if (password !== password2) {
             alert("Passwords are not the same");
             return;
         }
-        else if (password.length === null || password2.length === null) {
+        if (password.length === null || password2.length === null) {
             alert("Password can not be empty");
             return;
         }
-        else if (password.length < 5) {
-            alert("Password must at least 5 characters");
+        if (password.length < 5) {
+            alert("Password must be larger than characters");
             return;
         }
 
@@ -136,7 +132,7 @@ export default class Register extends Component {
 
                 <View>
 
-                    <View style={{ width: Dimensions.get('window').width, height: 100,  alignContent: 'center', alignItems: 'center' }}>
+                    <View style={{ width: Dimensions.get('window').width, height: 1000000,  alignContent: 'center', alignItems: 'center' }}>
                         <Button onPress={this.onRegister.bind(this)} style = {styles.button}
                                 title= "Submit and Configure"/>
 
@@ -200,6 +196,7 @@ const styles = StyleSheet.create({
     input: {
         width: 160,
         height: 44,
+        padding: 5,
         borderWidth: 1,
         borderColor: 'black',
         marginBottom: 10,
