@@ -1,4 +1,4 @@
 export default class Constants {
-    // local url for testing
-    static url = 'http://7cf324aa.ngrok.io/'
+    // local url for testg
+    static url = 'http://5f7d4964.ngrok.io/'
 }
