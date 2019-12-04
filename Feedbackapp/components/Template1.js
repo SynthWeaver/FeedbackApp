@@ -81,6 +81,7 @@ class Template1 extends Component {
                 fetch(Constants.url+ 'post', {
                     method: 'POST',
                     body: JSON.stringify({
+                        template: 'Template1',
                         feedback: this.state.text,
                         app: this.state.appName,
                         image: createFormData(this.state.image),

@@ -81,17 +81,14 @@ class Template2 extends Component {
             fetch(Constants.url + 'post', {
                 method: 'POST',
                 body: JSON.stringify({
+                    template: 'Template2',
                     feedback: this.state.feedback,
                     app: this.state.appName,
-                    image: "",
-                    smiley: "",
                     device: this.state.deviceInfo,
                     os: this.state.deviceOs,
                     category: this.state.feedbackType,
-                    stars: "",
                     rating: this.state.rating,
                     feature: this.state.featurePick,
-                    starQuestion: "",
                     tag: feedbackTag
 
 

@@ -85,6 +85,7 @@ class Template3 extends Component {
                     method: 'POST',
                     body:
                         JSON.stringify({
+                            template: 'Template3',
                             feedback: feedback,
                             app: appName,
                             device: deviceInfo,
