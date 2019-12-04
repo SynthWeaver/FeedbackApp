@@ -30,7 +30,7 @@ class Template1 extends Component {
             deviceInfo: '',
             deviceOs: '',
             appName: props.appName,
-            feedbackType: 'Feedback'
+            feedbackType: ''
         };
 
         this.submit = this.submit.bind(this);
@@ -98,7 +98,9 @@ class Template1 extends Component {
                 //     this.showToast()
                 // }
             })
-        } else {
+        } else if(this.state.feedbackType === ''){
+            Alert.alert("Please select a type of feedback")
+        } else if(this.state.text === ''){
             Alert.alert("Please fill in the textfield")
         }
 

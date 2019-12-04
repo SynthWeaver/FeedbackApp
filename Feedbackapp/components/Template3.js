@@ -42,6 +42,14 @@ class Template3 extends Component {
     }
 
     sendFeedback() {
+        var i;
+        //Hier alleen even this.state.configData.question veranderen in de som van het aantal vragen van de template
+        for(i = 0; i<this.state.configData.length; i++){
+            if(!starMap[i] || starMap[i] === 0){
+                alert('Please press on a star for every question');
+                return;
+            }
+        }
         if (this.state.feedback !== "") {
             this.setState({ feedbackType: "bugreport"})
         } else {

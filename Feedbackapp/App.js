@@ -11,6 +11,9 @@ import Login from './screens/Login';
 import Templates from './components/Templates'
 import HomeScreen from './screens/HomeScreen'
 import DefaultPage from './screens/DefaultPage'
+import CreateCompany from './screens/CreateCompany'
+import Template2 from './components/Template2'
+import Template3 from './components/Template3'
 
 
 
@@ -42,10 +45,18 @@ const AppNavigator = createStackNavigator(
             screen: Templates,
             path: 'app/:id'
         },
-        Anyname: {
+        Applications: {
             screen: Templates,
             path: 'applications/:id'
         },
+        CreateCompany: {
+            screen: CreateCompany,
+            path: 'screens/CreateCompany'
+        },
+        Frankenstein: {
+            screen: Template3,
+            path: 'components/template3'
+        }
     },
     {
         initialRouteName: 'Launch',
