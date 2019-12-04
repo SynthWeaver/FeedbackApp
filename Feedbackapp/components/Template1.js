@@ -54,6 +54,7 @@ class Template1 extends Component {
 
 
     submit() {
+        var feedbackTag = Constants.makeId();
         // create form data for screenshot
         const createFormData = (photo) => {
             if (!photo) return '';
@@ -86,7 +87,8 @@ class Template1 extends Component {
                         smiley: this.state.smile,
                         device: this.state.deviceInfo,
                         os: this.state.deviceOs,
-                        category: this.state.feedbackType
+                        category: this.state.feedbackType,
+                        tag: feedbackTag
 
                     })
                 })

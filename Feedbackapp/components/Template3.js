@@ -64,28 +64,35 @@ class Template3 extends Component {
             var appName = this.state.appName;
             var feedback = this.state.feedback;
             var feedbackType = this.state.feedbackType;
+            var feedbackTag = Constants.makeId();
 
-            fetch(Constants.url + 'post', {
-                method: 'POST',
-                body:
-                    JSON.stringify({
-                        feedback: feedback,
-                        app: appName,
-                        device: deviceInfo,
-                        os: deviceOs,
-                        category: feedbackType,
-
-                    })
-            })
-                .then(res => console.log(res))
-                .catch(err => console.log(err));
+            // fetch(Constants.url + 'post', {
+            //     method: 'POST',
+            //     body:
+            //         JSON.stringify({
+            //             feedback: feedback,
+            //             app: appName,
+            //             device: deviceInfo,
+            //             os: deviceOs,
+            //             category: feedbackType,
+            //
+            //         })
+            // })
+            //     .then(res => console.log(res))
+            //     .catch(err => console.log(err));
             Object.keys(starValues).map(function (key) {
-                fetch(Constants.url + 'post/questions', {
+                fetch(Constants.url + 'post', {
                     method: 'POST',
                     body:
                         JSON.stringify({
+                            feedback: feedback,
+                            app: appName,
+                            device: deviceInfo,
+                            os: deviceOs,
+                            category: feedbackType,
                             stars: starValues[key].star,
-                            starQuestion: starValues[key].question
+                            starQuestion: starValues[key].question,
+                            tag: feedbackTag
 
                         })
                 })

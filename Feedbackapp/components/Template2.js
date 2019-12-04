@@ -59,7 +59,7 @@ class Template2 extends Component {
     }
 
     sendFeedback() {
-
+        var feedbackTag = Constants.makeId();
 
         if(this.state.rating !== ''){
             var chosenFeature = this.state.featurePick;
@@ -91,7 +91,8 @@ class Template2 extends Component {
                     stars: "",
                     rating: this.state.rating,
                     feature: this.state.featurePick,
-                    starQuestion: ""
+                    starQuestion: "",
+                    tag: feedbackTag
 
 
                 })
